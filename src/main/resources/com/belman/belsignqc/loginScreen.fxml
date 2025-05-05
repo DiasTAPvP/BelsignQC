@@ -93,7 +93,7 @@
                                     </ImageView>
                                  </children>
                               </VBox>
-                              <VBox alignment="TOP_CENTER" spacing="50.0" styleClass="logo-image">
+                              <VBox alignment="TOP_CENTER" onMouseClicked="#handleLogin" spacing="50.0" styleClass="logo-image">
                                  <children>
                                     <Label text="Bjarne Olsen" wrapText="true">
                                        <font>
@@ -107,7 +107,7 @@
                                     </ImageView>
                                  </children>
                               </VBox>
-                              <VBox alignment="TOP_CENTER" spacing="50.0" styleClass="logo-image">
+                              <VBox alignment="TOP_CENTER" onMouseClicked="#handleLogin" spacing="50.0" styleClass="logo-image">
                                  <children>
                                     <Label text="Hans Christian Valentin" wrapText="true">
                                        <font>
@@ -121,7 +121,7 @@
                                     </ImageView>
                                  </children>
                               </VBox>
-                              <VBox alignment="TOP_CENTER" spacing="50.0" styleClass="logo-image">
+                              <VBox alignment="TOP_CENTER" onMouseClicked="#handleLogin" spacing="50.0" styleClass="logo-image">
                                  <children>
                                     <Label text="Kim Kronborg" wrapText="true">
                                        <font>
@@ -135,7 +135,7 @@
                                     </ImageView>
                                  </children>
                               </VBox>
-                              <VBox alignment="TOP_CENTER" spacing="50.0" styleClass="logo-image">
+                              <VBox alignment="TOP_CENTER" onMouseClicked="#handleLogin" spacing="50.0" styleClass="logo-image">
                                  <children>
                                     <Label text="Lars Junker" wrapText="true">
                                        <font>

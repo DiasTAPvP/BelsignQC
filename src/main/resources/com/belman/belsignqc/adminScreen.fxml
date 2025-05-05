@@ -40,7 +40,7 @@
                <children>
                   <ImageView fx:id="adminLogoutButton" onMouseClicked="#handleLogout" styleClass="logo-image">
                      <image>
-                        <Image url="@images/login_icon.png" />
+                        <Image url="@images/logout_icon.png" />
                      </image>
                   </ImageView>
                </children>
@@ -49,9 +49,9 @@
       </HBox>
       <BorderPane layoutX="100.0" layoutY="114.0" prefHeight="533.0" prefWidth="1000.0">
          <left>
-            <TableView prefHeight="533.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
+            <TableView fx:id="adminOrderTable" prefHeight="533.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
                <columns>
-                  <TableColumn prefWidth="291.0" text="Order Number" />
+                  <TableColumn fx:id="adminOrderColumn" prefWidth="291.0" text="Order Number" />
                </columns>
             </TableView>
          </left>
@@ -73,14 +73,14 @@
             </HBox>
          </bottom>
          <right>
-            <TableView prefHeight="200.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
+            <TableView fx:id="adminUserTable" prefHeight="200.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn prefWidth="292.0" text="Users" />
+                <TableColumn fx:id="adminUserColumn" prefWidth="292.0" text="Users" />
               </columns>
             </TableView>
          </right>
       </BorderPane>
-      <TextField alignment="CENTER" layoutX="100.0" layoutY="85.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" styleClass="textfields" />
-      <TextField alignment="CENTER" layoutX="807.0" layoutY="85.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" styleClass="textfields" />
+      <TextField fx:id="adminOrderSearch" alignment="CENTER" layoutX="100.0" layoutY="85.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" styleClass="textfields" />
+      <TextField fx:id="adminUserSearch" alignment="CENTER" layoutX="807.0" layoutY="85.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" styleClass="textfields" />
    </children>
 </AnchorPane>

@@ -46,9 +46,9 @@
       </HBox>
       <BorderPane layoutX="100.0" layoutY="114.0" prefHeight="533.0" prefWidth="1000.0">
          <left>
-            <TableView prefHeight="533.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
+            <TableView fx:id="qaOrderTable" prefHeight="533.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn prefWidth="291.0" text="Order Number" />
+                <TableColumn fx:id="qaOrderColumn" prefWidth="291.0" text="Order Number" />
               </columns>
             </TableView>
          </left>
