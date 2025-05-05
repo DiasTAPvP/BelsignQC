@@ -49,13 +49,13 @@
             </HBox>
          </children>
       </HBox>
-      <TextField alignment="CENTER" layoutX="399.0" layoutY="267.0" promptText="Username" />
-      <PasswordField alignment="CENTER" layoutX="399.0" layoutY="308.0" promptText="Password" />
-      <TextField alignment="CENTER" layoutX="399.0" layoutY="225.0" promptText="Email" />
+      <TextField alignment="CENTER" layoutX="399.0" layoutY="267.0" promptText="Username" styleClass="textfields" />
+      <PasswordField alignment="CENTER" layoutX="399.0" layoutY="308.0" promptText="Password" styleClass="textfields" />
+      <TextField alignment="CENTER" layoutX="399.0" layoutY="225.0" promptText="Email" styleClass="textfields" />
       <Button layoutX="399.0" layoutY="349.0" mnemonicParsing="false" text="Operator" />
       <Button layoutX="461.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Admin" />
       <Button layoutX="517.0" layoutY="349.0" mnemonicParsing="false" text="QA" />
-      <ImageView fitHeight="377.0" fitWidth="294.0" layoutX="656.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="377.0" fitWidth="294.0" layoutX="656.0" layoutY="142.0" pickOnBounds="true" preserveRatio="true" styleClass="mockborders" />
       <Text layoutX="656.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile Picture">
          <font>
             <Font size="20.0" />

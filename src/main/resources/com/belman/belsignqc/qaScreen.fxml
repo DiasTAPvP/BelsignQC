@@ -55,7 +55,7 @@
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <FlowPane prefHeight="496.0" prefWidth="699.0" VBox.vgrow="ALWAYS" />
+                  <FlowPane prefHeight="496.0" prefWidth="699.0" styleClass="mockborders" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
          </center>

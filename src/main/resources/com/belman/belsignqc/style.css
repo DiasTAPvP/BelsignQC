@@ -59,7 +59,22 @@
 }
 
 .tables {
-    -fx-background-color: -fx-company-belman20grey;
+    -fx-background-color: -fx-company-belman15grey;
+    -fx-border-color: -fx-company-belmandarkgrey;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-radius: 1px;
+}
+
+.textfields {
+    -fx-border-color: -fx-company-belmanblue;
+    -fx-border-width: 2px;
+    -fx-border-style: solid;
+    -fx-border-radius: 1px;
+}
+
+.mockborders {
+    -fx-background-color: -fx-company-belman15grey;
     -fx-border-color: -fx-company-belmandarkgrey;
     -fx-border-width: 1px;
     -fx-border-style: solid;

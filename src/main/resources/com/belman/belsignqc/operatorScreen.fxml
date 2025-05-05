@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="anchors" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.OperatorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="anchors" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.OperatorController">
    <children>
       <HBox alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="78.0" prefWidth="1190.0">
          <children>
@@ -49,13 +44,13 @@
             </HBox>
          </children>
       </HBox>
-      <BorderPane layoutX="100.0" layoutY="178.0" prefHeight="470.0" prefWidth="1000.0" />
+      <BorderPane layoutX="100.0" layoutY="178.0" prefHeight="470.0" prefWidth="1000.0" styleClass="mockborders" />
       <ImageView fitHeight="90.0" fitWidth="92.0" layoutX="1008.0" layoutY="83.0" styleClass="logo-image">
          <image>
             <Image url="@images/camera_icon.png" />
          </image>
       </ImageView>
-      <TextField alignment="CENTER" layoutX="100.0" layoutY="103.0" prefHeight="51.0" prefWidth="386.0" promptText="Search">
+      <TextField alignment="CENTER" layoutX="100.0" layoutY="103.0" prefHeight="51.0" prefWidth="386.0" promptText="Search" styleClass="textfields">
          <font>
             <Font size="28.0" />
          </font>
