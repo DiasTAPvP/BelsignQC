@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="anchors" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.QAController">
    <children>
       <HBox alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="78.0" prefWidth="1190.0">
          <children>
@@ -37,16 +37,16 @@
                </padding>
             </HBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="64.0" prefHeight="64.0" prefWidth="659.0" spacing="20.0" />
-            <ImageView>
+            <ImageView fx:id="qaReturnButton" onMouseClicked="#handleLogout" styleClass="logo-image">
                <image>
-                  <Image url="@images/login_icon.png" />
+                  <Image url="@images/logout_icon.png" />
                </image>
             </ImageView>
          </children>
       </HBox>
       <BorderPane layoutX="100.0" layoutY="114.0" prefHeight="533.0" prefWidth="1000.0">
          <left>
-            <TableView prefHeight="533.0" prefWidth="293.0" BorderPane.alignment="CENTER">
+            <TableView prefHeight="533.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn prefWidth="291.0" text="Order Number" />
               </columns>
@@ -62,10 +62,10 @@
          <bottom>
             <HBox prefHeight="37.0" prefWidth="706.0" spacing="170.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" text="Contact" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" text="Generate Report" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" text="Audit LOG" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" text="Delete" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Contact" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Generate Report" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Audit LOG" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Delete" />
                </children>
             </HBox>
          </bottom></BorderPane>

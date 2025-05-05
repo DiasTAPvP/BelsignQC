@@ -14,9 +14,9 @@ public class LoginController extends BaseController {
 
     @FXML
     private void handleLogin() {
-        screenManager.setScreen("operator");
+        //screenManager.setScreen("operator");
 
-        /*String username = usernameField.getText();
+        String username = usernameField.getText();
         String password = passwordField.getText();
 
         // Simple login logic for demonstration
@@ -27,6 +27,6 @@ public class LoginController extends BaseController {
         } else {
             // Default to operator screen for any other login
             screenManager.setScreen("operator");
-        }*/
+        }
     }
 }
