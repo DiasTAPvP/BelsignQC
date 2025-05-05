@@ -64,7 +64,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.belman.belsignqc/com.belman.belsignqc.HelloApplication</mainClass>
+                            <mainClass>com.belman.belsignqc/com.belman.belsignqc.BelsignApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
