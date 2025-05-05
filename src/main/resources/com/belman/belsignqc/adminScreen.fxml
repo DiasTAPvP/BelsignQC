@@ -15,9 +15,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.AdminController">
+<AnchorPane prefHeight="700.0" prefWidth="1200.0" styleClass="anchors" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.AdminController">
    <children>
-      <HBox alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="78.0" prefWidth="1190.0">
+      <HBox alignment="CENTER" layoutX="5.0" layoutY="5.0">
          <children>
             <HBox alignment="CENTER_LEFT" maxHeight="63.0" prefHeight="63.0" prefWidth="518.0" spacing="15.0">
                <children>
@@ -38,7 +38,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="64.0" prefHeight="64.0" prefWidth="659.0" spacing="20.0">
                <children>
-                  <ImageView>
+                  <ImageView fx:id="adminLogoutButton" onMouseClicked="#handleLogout" styleClass="logo-image">
                      <image>
                         <Image url="@images/login_icon.png" />
                      </image>
@@ -49,7 +49,7 @@
       </HBox>
       <BorderPane layoutX="100.0" layoutY="114.0" prefHeight="533.0" prefWidth="1000.0">
          <left>
-            <TableView prefHeight="533.0" prefWidth="293.0" BorderPane.alignment="CENTER">
+            <TableView prefHeight="533.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
                <columns>
                   <TableColumn prefWidth="291.0" text="Order Number" />
                </columns>
@@ -58,29 +58,29 @@
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <FlowPane prefHeight="498.0" prefWidth="507.0" />
+                  <FlowPane prefHeight="498.0" prefWidth="507.0" styleClass="mockborders" />
                </children>
             </VBox>
          </center>
          <bottom>
             <HBox alignment="CENTER" prefHeight="37.0" prefWidth="706.0" spacing="170.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" text="Create" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" text="Edit" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" text="Audit LOG" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" text="Delete" />
+                  <Button fx:id="createUserButton" mnemonicParsing="false" onMouseClicked="#createButtonPressed" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Create" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Edit" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Audit LOG" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Delete" />
                </children>
             </HBox>
          </bottom>
          <right>
-            <TableView prefHeight="200.0" prefWidth="293.0" BorderPane.alignment="CENTER">
+            <TableView prefHeight="200.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn prefWidth="292.0" text="Users" />
               </columns>
             </TableView>
          </right>
       </BorderPane>
-      <TextField alignment="CENTER" layoutX="100.0" layoutY="89.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" />
-      <TextField alignment="CENTER" layoutX="807.0" layoutY="89.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" />
+      <TextField alignment="CENTER" layoutX="100.0" layoutY="85.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" styleClass="textfields" />
+      <TextField alignment="CENTER" layoutX="807.0" layoutY="85.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" styleClass="textfields" />
    </children>
 </AnchorPane>

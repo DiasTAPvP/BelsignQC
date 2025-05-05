@@ -80,3 +80,10 @@
     -fx-border-style: solid;
     -fx-border-radius: 1px;
 }
+
+.barborder {
+    -fx-border-color: -fx-company-dark;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+    -fx-border-radius: 1px;
+}
