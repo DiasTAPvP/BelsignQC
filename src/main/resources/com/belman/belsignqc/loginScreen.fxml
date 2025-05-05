@@ -8,17 +8,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="anchors" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.LoginController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="78.0" prefWidth="1190.0">
+      <HBox alignment="CENTER" layoutX="5.0" layoutY="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="275.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="63.0" prefHeight="63.0" prefWidth="518.0" spacing="15.0">
+            <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="37.0" fitWidth="44.0">
                      <image>
@@ -31,20 +31,20 @@
                      </font>
                   </Text>
                </children>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
+               <HBox.margin>
+                  <Insets left="25.0" />
+               </HBox.margin>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" maxHeight="64.0" prefHeight="64.0" prefWidth="659.0" spacing="20.0">
+            <HBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="25.0">
                <children>
-                  <Label prefHeight="42.0" prefWidth="212.0" text="Admin and QC Login">
+                  <Label text="Admin and QC Login">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
                   <TextField alignment="CENTER" promptText="Username" />
                   <PasswordField alignment="CENTER" promptText="Password" />
-                  <ImageView fx:id="loginButton" onMouseClicked="#handleLogin" styleClass="logo-image">
+                  <ImageView>
                      <image>
                         <Image url="@images/login_icon.png" />
                      </image>
@@ -52,14 +52,22 @@
                </children>
             </HBox>
          </children>
+         <padding>
+            <Insets left="25.0" right="25.0" />
+         </padding>
       </HBox>
-      <BorderPane layoutX="100.0" layoutY="178.0" prefHeight="470.0" prefWidth="1000.0">
-         <center>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <Label layoutX="587.0" layoutY="125.0" text="Operator Login">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="NEVER">
                <content>
-                  <HBox prefHeight="458.0" prefWidth="1455.0">
+                  <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="1160.0" spacing="20.0">
                      <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="458.0" prefWidth="216.0" spacing="50.0">
+                        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="50.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="114.0" prefWidth="208.0" text="Jørgen Makholm" textAlignment="CENTER" wrapText="true">
                                  <font>
@@ -72,8 +80,11 @@
                                  </image>
                               </ImageView>
                            </children>
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="10.0" right="10.0" top="10.0" />
+                           </HBox.margin>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="458.0" prefWidth="216.0" spacing="50.0">
+                        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="50.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="114.0" prefWidth="208.0" text="Bjarne Olsen" textAlignment="CENTER" wrapText="true">
                                  <font>
@@ -87,7 +98,7 @@
                               </ImageView>
                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="458.0" prefWidth="216.0" spacing="50.0">
+                        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="50.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="114.0" prefWidth="208.0" text="Hans Christian Valentin" textAlignment="CENTER" wrapText="true">
                                  <font>
@@ -101,7 +112,7 @@
                               </ImageView>
                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="458.0" prefWidth="216.0" spacing="50.0">
+                        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="50.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="114.0" prefWidth="208.0" text="Kim Kronborg" textAlignment="CENTER" wrapText="true">
                                  <font>
@@ -115,7 +126,7 @@
                               </ImageView>
                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="458.0" prefWidth="216.0" spacing="50.0">
+                        <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" spacing="50.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="114.0" prefWidth="208.0" text="Lars Junker" textAlignment="CENTER" wrapText="true">
                                  <font>
@@ -130,14 +141,16 @@
                            </children>
                         </VBox>
                      </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
                   </HBox>
                </content>
             </ScrollPane>
-         </center></BorderPane>
-      <Label layoutX="506.0" layoutY="116.0" text="Operator Login">
-         <font>
-            <Font size="28.0" />
-         </font>
-      </Label>
+         </children>
+      </StackPane>
    </children>
+   <padding>
+      <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+   </padding>
 </AnchorPane>
