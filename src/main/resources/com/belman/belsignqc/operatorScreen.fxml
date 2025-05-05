@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="anchors" stylesheets="@style.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.OperatorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="anchors" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.OperatorController">
    <children>
       <HBox alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="78.0" prefWidth="1190.0">
          <children>
@@ -30,7 +37,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="63.0" prefHeight="63.0" prefWidth="590.0" spacing="20.0">
                <children>
-                  <Label text="Welcome Gadarne!">
+                  <Label text="Welcome!">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -44,7 +51,6 @@
             </HBox>
          </children>
       </HBox>
-      <BorderPane layoutX="100.0" layoutY="178.0" prefHeight="470.0" prefWidth="1000.0" styleClass="mockborders" />
       <ImageView fitHeight="90.0" fitWidth="92.0" layoutX="1008.0" layoutY="83.0" styleClass="logo-image">
          <image>
             <Image url="@images/camera_icon.png" />
@@ -56,5 +62,97 @@
          </font>
       </TextField>
       <Line endX="1100.0" layoutX="100.0" layoutY="85.0" startX="-100.0" />
+      <StackPane layoutX="25.0" layoutY="173.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+         <children>
+            <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="NEVER" StackPane.alignment="CENTER">
+               <content>
+                  <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="471.0" prefWidth="1107.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" HBox.hgrow="ALWAYS">
+                           <children>
+                              <VBox alignment="TOP_CENTER" onMouseClicked="#handleLogout" spacing="50.0" styleClass="logo-image">
+                                 <children>
+                                    <Label text="015-149-0026" wrapText="true">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="180.0" fitWidth="200.0">
+                                       <image>
+                                          <Image url="@images/belmanProduct1.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" spacing="50.0" styleClass="logo-image">
+                                 <children>
+                                    <Label text="015-149-0027" wrapText="true">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="181.0" fitWidth="200.0">
+                                       <image>
+                                          <Image url="@images/belmanProduct2.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" spacing="50.0" styleClass="logo-image">
+                                 <children>
+                                    <Label text="015-149-0028" wrapText="true">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="180.0" fitWidth="200.0">
+                                       <image>
+                                          <Image url="@images/belmanProduct3.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" spacing="50.0" styleClass="logo-image">
+                                 <children>
+                                    <Label text="015-149-0029" wrapText="true">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="180.0" fitWidth="200.0">
+                                       <image>
+                                          <Image url="@images/belmanProduct4.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" spacing="50.0" styleClass="logo-image">
+                                 <children>
+                                    <Label text="015-149-0030" wrapText="true">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ImageView fitHeight="180.0" fitWidth="200.0">
+                                       <image>
+                                          <Image url="@images/belmanProduct5.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </StackPane>
    </children>
 </AnchorPane>
