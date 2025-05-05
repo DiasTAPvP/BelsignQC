@@ -49,7 +49,7 @@
       </HBox>
       <BorderPane layoutX="100.0" layoutY="114.0" prefHeight="533.0" prefWidth="1000.0">
          <left>
-            <TableView fx:id="adminOrderTable" prefHeight="533.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
+            <TableView fx:id="adminOrderTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="tables" BorderPane.alignment="CENTER">
                <columns>
                   <TableColumn fx:id="adminOrderColumn" prefWidth="291.0" text="Order Number" />
                </columns>
@@ -58,7 +58,44 @@
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <FlowPane prefHeight="498.0" prefWidth="507.0" styleClass="mockborders" />
+                  <FlowPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="496.0" prefWidth="409.0" styleClass="mockborders">
+                     <children>
+                        <ImageView fitHeight="180.0" fitWidth="200.0">
+                           <image>
+                              <Image url="@images/belmanProduct1.png" />
+                           </image>
+                           <FlowPane.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </FlowPane.margin>
+                        </ImageView>
+                        <ImageView fitHeight="181.0" fitWidth="200.0">
+                           <image>
+                              <Image url="@images/belmanProduct2.png" />
+                           </image>
+                           <FlowPane.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </FlowPane.margin>
+                        </ImageView>
+                        <ImageView fitHeight="180.0" fitWidth="200.0">
+                           <image>
+                              <Image url="@images/belmanProduct3.png" />
+                           </image>
+                           <FlowPane.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </FlowPane.margin>
+                        </ImageView>
+                        <ImageView fitHeight="180.0" fitWidth="200.0">
+                           <image>
+                              <Image url="@images/belmanProduct4.png" />
+                           </image>
+                           <FlowPane.margin>
+                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                           </FlowPane.margin>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin></FlowPane>
                </children>
             </VBox>
          </center>
@@ -73,7 +110,7 @@
             </HBox>
          </bottom>
          <right>
-            <TableView fx:id="adminUserTable" prefHeight="200.0" prefWidth="293.0" styleClass="tables" BorderPane.alignment="CENTER">
+            <TableView fx:id="adminUserTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="tables" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="adminUserColumn" prefWidth="292.0" text="Users" />
               </columns>
