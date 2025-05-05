@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" styleClass="anchors" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.LoginController">
    <children>
       <HBox alignment="CENTER" layoutX="5.0" layoutY="5.0" prefHeight="78.0" prefWidth="1190.0">
          <children>
@@ -42,7 +42,7 @@
                   </Label>
                   <TextField alignment="CENTER" promptText="Username" />
                   <PasswordField alignment="CENTER" promptText="Password" />
-                  <ImageView>
+                  <ImageView fx:id="loginButton" onMouseClicked="#handleLogin" styleClass="logo-image">
                      <image>
                         <Image url="@images/login_icon.png" />
                      </image>
