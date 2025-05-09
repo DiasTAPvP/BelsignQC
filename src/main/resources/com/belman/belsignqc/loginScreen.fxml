@@ -33,10 +33,9 @@
                   </Text>
                </children>
                <HBox.margin>
-                  <Insets left="25.0" />
+                  <Insets />
                </HBox.margin>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" spacing="25.0" />
          </children>
          <padding>
             <Insets left="25.0" right="25.0" />
