@@ -4,6 +4,7 @@ module com.belman.belsignqc {
 
     requires org.kordamp.bootstrapfx.core;
     requires bcrypt;
+    requires opencv;
 
     opens com.belman.belsignqc to javafx.fxml;
     exports com.belman.belsignqc;
