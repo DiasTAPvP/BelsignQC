@@ -4,10 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,11 +13,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1200.0" styleClass="anchors" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.AdminController">
-   <children>
-      <HBox alignment="CENTER" layoutX="5.0" layoutY="5.0">
-         <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="63.0" prefHeight="63.0" prefWidth="518.0" spacing="15.0">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.AdminController">
+   <top>
+      <BorderPane BorderPane.alignment="CENTER">
+         <left>
+            <HBox spacing="5.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="37.0" fitWidth="44.0">
                      <image>
@@ -32,92 +30,98 @@
                      </font>
                   </Text>
                </children>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
             </HBox>
-            <HBox alignment="CENTER_RIGHT" maxHeight="64.0" prefHeight="64.0" prefWidth="659.0" spacing="20.0">
+         </left>
+         <right>
+            <Button fx:id="adminLogoutButton1" mnemonicParsing="false" onMouseClicked="#handleLogout" text="Logout" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+         </right>
+         <center>
+            <HBox alignment="CENTER" spacing="170.0" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </top>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <left>
+      <TableView styleClass="tables" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn prefWidth="292.0" text="Users" />
+         </columns>
+      </TableView>
+   </left>
+   <right>
+      <TableView styleClass="tables" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn prefWidth="291.0" text="Order Number" />
+         </columns>
+      </TableView>
+   </right>
+   <center>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <FlowPane hgap="10.0" styleClass="mockborders" vgap="10.0">
                <children>
-                  <ImageView fx:id="adminLogoutButton" onMouseClicked="#handleLogout" styleClass="logo-image">
+                  <ImageView fitHeight="180.0" fitWidth="200.0">
                      <image>
-                        <Image url="@images/logout_icon.png" />
+                        <Image url="@images/belmanProduct1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="181.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@images/belmanProduct2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="180.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@images/belmanProduct3.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="180.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@images/belmanProduct4.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="180.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@images/belmanProduct5.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="104.0" fitWidth="200.0">
+                     <image>
+                        <Image url="@images/belmanProduct6.png" />
                      </image>
                   </ImageView>
                </children>
-            </HBox>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </FlowPane>
          </children>
-      </HBox>
-      <BorderPane layoutX="100.0" layoutY="114.0" prefHeight="533.0" prefWidth="1000.0">
+      </VBox>
+   </center>
+   <bottom>
+      <BorderPane BorderPane.alignment="CENTER">
          <left>
-            <TableView fx:id="adminOrderTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="tables" BorderPane.alignment="CENTER">
-               <columns>
-                  <TableColumn fx:id="adminOrderColumn" prefWidth="291.0" text="Order Number" />
-               </columns>
-            </TableView>
-         </left>
-         <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <HBox BorderPane.alignment="CENTER">
                <children>
-                  <FlowPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="496.0" prefWidth="409.0" styleClass="mockborders">
-                     <children>
-                        <ImageView fitHeight="180.0" fitWidth="200.0">
-                           <image>
-                              <Image url="@images/belmanProduct1.png" />
-                           </image>
-                           <FlowPane.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </FlowPane.margin>
-                        </ImageView>
-                        <ImageView fitHeight="181.0" fitWidth="200.0">
-                           <image>
-                              <Image url="@images/belmanProduct2.png" />
-                           </image>
-                           <FlowPane.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </FlowPane.margin>
-                        </ImageView>
-                        <ImageView fitHeight="180.0" fitWidth="200.0">
-                           <image>
-                              <Image url="@images/belmanProduct3.png" />
-                           </image>
-                           <FlowPane.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </FlowPane.margin>
-                        </ImageView>
-                        <ImageView fitHeight="180.0" fitWidth="200.0">
-                           <image>
-                              <Image url="@images/belmanProduct4.png" />
-                           </image>
-                           <FlowPane.margin>
-                              <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
-                           </FlowPane.margin>
-                        </ImageView>
-                     </children>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin></FlowPane>
-               </children>
-            </VBox>
-         </center>
-         <bottom>
-            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="706.0" spacing="170.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="createUserButton" mnemonicParsing="false" onMouseClicked="#createButtonPressed" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Create" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Edit" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Audit LOG" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="134.0" styleClass="buttons" text="Delete" />
+                  <Button fx:id="createUserButton" mnemonicParsing="false" onMouseClicked="#createButtonPressed" prefHeight="40.0" prefWidth="146.5" styleClass="buttons" text="Create" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.5" styleClass="buttons" text="Edit" />
                </children>
             </HBox>
-         </bottom>
+         </left>
          <right>
-            <TableView fx:id="adminUserTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="tables" BorderPane.alignment="CENTER">
-              <columns>
-                <TableColumn fx:id="adminUserColumn" prefWidth="292.0" text="Users" />
-              </columns>
-            </TableView>
+            <HBox BorderPane.alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.5" styleClass="buttons" text="Audit LOG" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.5" styleClass="buttons" text="Delete" />
+               </children>
+            </HBox>
          </right>
       </BorderPane>
-      <TextField fx:id="adminOrderSearch" alignment="CENTER" layoutX="100.0" layoutY="85.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" styleClass="textfields" />
-      <TextField fx:id="adminUserSearch" alignment="CENTER" layoutX="807.0" layoutY="85.0" prefHeight="25.0" prefWidth="293.0" promptText="Search" styleClass="textfields" />
-   </children>
-</AnchorPane>
+   </bottom>
+</BorderPane>
