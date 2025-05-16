@@ -1,4 +1,4 @@
 package com.belman.belsignqc.GUI.Controller;
 
-public class CameraController {
+public class CameraController extends BaseController {
 }
