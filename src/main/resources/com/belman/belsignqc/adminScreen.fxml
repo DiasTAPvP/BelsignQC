@@ -33,7 +33,7 @@
             </HBox>
          </left>
          <right>
-            <Button fx:id="adminLogoutButton1" mnemonicParsing="false" onMouseClicked="#handleLogout" text="Logout" BorderPane.alignment="CENTER">
+            <Button fx:id="adminLogoutButton" mnemonicParsing="false" onMouseClicked="#handleLogout" text="Logout" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
@@ -48,16 +48,16 @@
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
    <left>
-      <TableView styleClass="tables" BorderPane.alignment="CENTER">
+      <TableView fx:id="adminUserTable" styleClass="tables" BorderPane.alignment="CENTER">
          <columns>
-            <TableColumn prefWidth="292.0" text="Users" />
+            <TableColumn fx:id="adminUserColumn" prefWidth="292.0" text="Users" />
          </columns>
       </TableView>
    </left>
    <right>
-      <TableView styleClass="tables" BorderPane.alignment="CENTER">
+      <TableView fx:id="adminOrderTable" styleClass="tables" BorderPane.alignment="CENTER">
          <columns>
-            <TableColumn prefWidth="291.0" text="Order Number" />
+            <TableColumn fx:id="adminOrderColumn" prefWidth="291.0" text="Order Number" />
          </columns>
       </TableView>
    </right>

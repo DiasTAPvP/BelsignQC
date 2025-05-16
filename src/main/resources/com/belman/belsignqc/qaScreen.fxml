@@ -115,9 +115,9 @@
             <TextField fx:id="qaSearch" alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER" />
          </top>
          <center>
-            <TableView styleClass="tables" BorderPane.alignment="CENTER">
+            <TableView fx:id="qaOrderTable" styleClass="tables" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" text="Order Number" />
+                <TableColumn fx:id="qaOrderColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" text="Order Number" />
               </columns>
             </TableView>
          </center>

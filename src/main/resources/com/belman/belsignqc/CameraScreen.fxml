@@ -51,7 +51,7 @@
             </HBox>
          </left>
          <right>
-            <Button fx:id="adminLogoutButton1" mnemonicParsing="false" onMouseClicked="#handleLogout" text="Logout" BorderPane.alignment="CENTER">
+            <Button fx:id="CameraReturn" mnemonicParsing="false" onMouseClicked="#handleLogout" text="Return" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
