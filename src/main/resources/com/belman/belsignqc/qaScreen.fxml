@@ -94,7 +94,6 @@
          <right>
             <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" styleClass="buttons" text="Audit LOG" />
                   <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" styleClass="buttons" text="Delete" />
                </children>
             </HBox>
@@ -110,14 +109,14 @@
       </BorderPane>
    </bottom>
    <left>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane BorderPane.alignment="CENTER">
          <top>
             <TextField fx:id="qaSearch" alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER" />
          </top>
          <center>
-            <TableView fx:id="qaOrderTable" styleClass="tables" BorderPane.alignment="CENTER">
+            <TableView fx:id="qaOrderTable" minWidth="289.0" styleClass="tables" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="qaOrderColumn" maxWidth="1.7976931348623157E308" minWidth="200.0" prefWidth="200.0" text="Order Number" />
+                <TableColumn fx:id="qaOrderColumn" maxWidth="1.7976931348623157E308" minWidth="289.0" prefWidth="200.0" text="Order Number" />
               </columns>
             </TableView>
          </center>

@@ -66,7 +66,7 @@
                   <Font size="24.0" />
                </font>
             </PasswordField>
-            <Button fx:id="loginButton1" accessibleRole="IMAGE_VIEW" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#handleLogin" styleClass="imagebutton" text="LoginButton">
+            <Button fx:id="loginButton1" accessibleRole="IMAGE_VIEW" minHeight="60.0" minWidth="60.0" mnemonicParsing="false" onMouseClicked="#handleLogin" text="LoginButton">
                <effect>
                   <ImageInput>
                      <source>
