@@ -74,7 +74,7 @@
                            <children>
                               <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMouseClicked="#handleLogout" spacing="50.0" styleClass="logo-image">
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="50.0" styleClass="logo-image">
                                        <children>
                                           <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="015-149-0026" wrapText="true">
                                              <font>
@@ -160,11 +160,11 @@
             </StackPane>
          </center>
          <right>
-            <Button maxWidth="1.7976931348623157E308" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@style.css" BorderPane.alignment="TOP_CENTER">
+            <Button fx:id="openCamera" maxWidth="1.7976931348623157E308" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@style.css" BorderPane.alignment="TOP_CENTER">
                <effect>
                   <ImageInput>
                      <source>
-                        <Image url="file:/C:/Users/bruger/Documents/GitHub/BelsignQC/src/main/resources/com/belman/belsignqc/images/camera_icon.png" />
+                        <Image url="@images/camera_icon.png" />
                      </source>
                   </ImageInput>
                </effect>
