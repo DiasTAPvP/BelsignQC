@@ -69,7 +69,7 @@
                <effect>
                   <ImageInput>
                      <source>
-                        <Image url="file:/C:/Users/bruger/Documents/GitHub/BelsignQC/src/main/resources/com/belman/belsignqc/images/circleArrowLogin_icon.png" />
+                        <Image url="@images/circleArrowLogin_icon.png" />
                      </source>
                   </ImageInput>
                </effect>
