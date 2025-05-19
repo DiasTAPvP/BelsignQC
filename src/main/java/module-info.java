@@ -6,6 +6,7 @@ module com.belman.belsignqc {
     requires bcrypt;
     requires com.microsoft.sqlserver.jdbc;
     requires java.sql;
+    requires java.naming;
 
     opens com.belman.belsignqc to javafx.fxml;
     exports com.belman.belsignqc;

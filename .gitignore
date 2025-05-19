@@ -5,7 +5,7 @@ target/
 
 # Ignore config directory and files
 /config/
-/config/config.settings
+/config/config.settings.local
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

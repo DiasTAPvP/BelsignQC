@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class DBConnector {
     //designate file path for db settings
-    private static final String PROPERTIES_FILE = "config/config.settings";
+    private static final String PROPERTIES_FILE = "config/config.settings.local";
     private final SQLServerDataSource dataSource;
 
     public DBConnector() throws IOException {
