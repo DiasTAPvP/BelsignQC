@@ -42,7 +42,7 @@
          </padding>
       </HBox>
    </top>
-   <center>
+   <bottom>
       <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="350.0" minWidth="704.0" BorderPane.alignment="CENTER">
          <children>
             <Label contentDisplay="CENTER" text="Login" textAlignment="CENTER" VBox.vgrow="ALWAYS">
@@ -70,7 +70,7 @@
                <effect>
                   <ImageInput>
                      <source>
-                        <Image url="file:/C:/Users/bruger/Documents/GitHub/BelsignQC/src/main/resources/com/belman/belsignqc/images/circleArrowLogin_icon.png" />
+                        <Image url="file:/D:/SKOLE/BelsignQC/src/main/resources/com/belman/belsignqc/images/circleArrowLogin_icon.png" />
                      </source>
                   </ImageInput>
                </effect>
@@ -83,5 +83,5 @@
             </Button>
          </children>
       </VBox>
-   </center>
+   </bottom>
 </BorderPane>
