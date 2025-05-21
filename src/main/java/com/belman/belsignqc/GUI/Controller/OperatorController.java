@@ -11,7 +11,7 @@ public class OperatorController extends BaseController {
     private void handleLogout() {
         screenManager.setScreen("login");
 
-        //Make it forget who is logged in later too
+        //Make it forget who is logged in later too (LoginModel)
     }
 
 
