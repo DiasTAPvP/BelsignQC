@@ -1,5 +1,6 @@
 package com.belman.belsignqc.BE;
 
+
 import java.time.LocalDateTime;
 
 public class Photos {
@@ -49,5 +50,11 @@ public class Photos {
 
     public void setUploadTime(LocalDateTime uploadTime) {
         this.uploadTime = uploadTime;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Photo [id=" + id + ", orderNumber=" + orderNumber + ", filepath=" + filepath + ", uploadedBy=" + uploadedBy + ", uploadTime=" + uploadTime + "]";
     }
 }
