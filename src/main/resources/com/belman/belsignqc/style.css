@@ -87,3 +87,12 @@
     -fx-border-style: solid;
     -fx-border-radius: 1px;
 }
+.imagebutton {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-radius: 0;
+    -fx-border-color: transparent;
+}
+.imagebutton:hover {
+    -fx-effect: dropshadow(three-pass-box, -fx-company-belmanblue, 15, 0.3, 0, 0);
+}

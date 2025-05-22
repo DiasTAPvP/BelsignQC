@@ -27,6 +27,7 @@ public class BelsignApplication extends Application {
         loadScreen("admin", "adminScreen.fxml");
         loadScreen("qa", "qaScreen.fxml");
         loadScreen("createuser", "createScreen.fxml");
+        loadScreen("camera", "cameraScreen.fxml");
 
         // Set initial screen to login
         screenManager.setScreen("login");
