@@ -1,7 +1,5 @@
 package com.belman.belsignqc.DAL;
 
-
-
 import com.microsoft.sqlserver.jdbc.SQLServerDataSource;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 
