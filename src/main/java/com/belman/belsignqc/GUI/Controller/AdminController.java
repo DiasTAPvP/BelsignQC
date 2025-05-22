@@ -1,7 +1,6 @@
 package com.belman.belsignqc.GUI.Controller;
 
-import com.belman.belsignqc.BE.Users;
-import com.belman.belsignqc.GUI.Model.OrderNumberModel;
+import com.belman.belsignqc.GUI.Model.OrderModel;
 import com.belman.belsignqc.GUI.Model.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,15 +17,15 @@ import javafx.scene.image.ImageView;
 public class AdminController extends BaseController {
 
    @FXML private Button createUserButton;
-   @FXML private Button adminLogoutButton;
-   @FXML private TableView<OrderNumberModel> adminOrderTable;
-   @FXML private TableColumn<OrderNumberModel, String> adminOrderColumn;
+   @FXML private ImageView adminLogoutButton;
+   @FXML private TableView<OrderModel> adminOrderTable;
+   @FXML private TableColumn<OrderModel, String> adminOrderColumn;
    @FXML private TableView<UserModel> adminUserTable;
    @FXML private TableColumn<UserModel, String> adminUserColumn;
-   /* @FXML private TextField adminOrderSearch;
-    @FXML private TextField adminUserSearch;*/
+    @FXML private TextField adminOrderSearch;
+    @FXML private TextField adminUserSearch;
 
-   private ObservableList<OrderNumberModel> allOrders;
+   private ObservableList<OrderModel> allOrders;
    private ObservableList<UserModel> allUsers;
 
     @FXML
@@ -42,8 +41,8 @@ public class AdminController extends BaseController {
         loadMockUsers();
 
         //Setup search functionality
-        /*setupOrderSearch();
-        setupUserSearch();*/
+        setupOrderSearch();
+        setupUserSearch();
     }
 
     @FXML
@@ -70,18 +69,18 @@ public class AdminController extends BaseController {
 
     private void loadMockOrders() {
         allOrders = FXCollections.observableArrayList(
-                new OrderNumberModel("015-05012-111-1"),
-                new OrderNumberModel("018-12019-123-3"),
-                new OrderNumberModel("014-02028-182-5"),
-                new OrderNumberModel("016-01001-123-7"),
-                new OrderNumberModel("015-11027-199-8")
+                new OrderModel("015-05012-111-1"),
+                new OrderModel("018-12019-123-3"),
+                new OrderModel("014-02028-182-5"),
+                new OrderModel("016-01001-123-7"),
+                new OrderModel("015-11027-199-8")
         );
         adminOrderTable.setItems(allOrders);
     }
 
-    /*private void setupOrderSearch() {
+    private void setupOrderSearch() {
         // Create a filtered list wrapping the observable list
-        FilteredList<OrderNumberModel> filteredOrders = new FilteredList<>(allOrders, p -> true);
+        FilteredList<OrderModel> filteredOrders = new FilteredList<>(allOrders, p -> true);
 
         // Add listener to the search field
         adminOrderSearch.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -102,7 +101,7 @@ public class AdminController extends BaseController {
         });
 
         // Wrap the filtered list in a sorted list
-        SortedList<OrderNumberModel> sortedOrders = new SortedList<>(filteredOrders);
+        SortedList<OrderModel> sortedOrders = new SortedList<>(filteredOrders);
 
         // Bind the sorted list comparator to the TableView comparator
         sortedOrders.comparatorProperty().bind(adminOrderTable.comparatorProperty());
@@ -141,7 +140,7 @@ public class AdminController extends BaseController {
 
         // Add sorted (and filtered) data to the table
         adminUserTable.setItems(sortedUsers);
-    }*/
+    }
 
 
 

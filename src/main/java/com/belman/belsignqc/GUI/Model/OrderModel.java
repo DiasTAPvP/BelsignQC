@@ -1,9 +1,9 @@
 package com.belman.belsignqc.GUI.Model;
 
-public class OrderNumberModel {
+public class OrderModel {
     private String orderNumber;
 
-    public OrderNumberModel(String orderNumber) {
+    public OrderModel(String orderNumber) {
         this.orderNumber = orderNumber;
     }
 
