@@ -1,14 +1,15 @@
 package com.belman.belsignqc.BE;
 
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Photos {
     int id;
-    String orderNumber;
+    OrderNumbers orderNumber;
     String filepath;
     int uploadedBy;
-    LocalDateTime uploadTime;
+    Timestamp uploadTime;
 
     public Photos(){}
 
@@ -20,11 +21,11 @@ public class Photos {
         this.id = id;
     }
 
-    public String getOrderNumber() {
+    public OrderNumbers getOrderNumber() {
         return orderNumber;
     }
 
-    public void setOrderNumber(String orderNumber) {
+    public void setOrderNumber(OrderNumbers orderNumber) {
         this.orderNumber = orderNumber;
     }
 
@@ -44,17 +45,18 @@ public class Photos {
         this.uploadedBy = uploadedBy;
     }
 
-    public LocalDateTime getUploadTime() {
+    public Timestamp getUploadTime() {
         return uploadTime;
     }
 
-    public void setUploadTime(LocalDateTime uploadTime) {
+    public void setUploadTime(Timestamp uploadTime) {
         this.uploadTime = uploadTime;
     }
 
     @Override
     public String toString()
     {
-        return "Photo [id=" + id + ", orderNumber=" + orderNumber + ", filepath=" + filepath + ", uploadedBy=" + uploadedBy + ", uploadTime=" + uploadTime + "]";
+        String orderNumberStr = orderNumber != null ? orderNumber.getOrderNumber() : "null";
+        return "Photo [id=" + id + ", orderNumber=" + orderNumberStr + ", filepath=" + filepath + ", uploadedBy=" + uploadedBy + ", uploadTime=" + uploadTime + "]";
     }
 }

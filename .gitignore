@@ -41,3 +41,4 @@ build/
 ### Mac OS ###
 .DS_Store
 lib/opencv-4.9.0-0.jar
+config/config.setting.local

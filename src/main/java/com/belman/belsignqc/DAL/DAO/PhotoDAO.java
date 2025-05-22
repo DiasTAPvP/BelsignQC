@@ -1,12 +1,12 @@
 package com.belman.belsignqc.DAL.DAO;
 
+import com.belman.belsignqc.BE.OrderNumbers;
 import com.belman.belsignqc.BE.Photos;
-import com.belman.belsignqc.BE.Product;
 import com.belman.belsignqc.BE.Users;
 import com.belman.belsignqc.DAL.DBConnector;
+import com.belman.belsignqc.DAL.IPhotoDataAccess;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import javafx.collections.ObservableList;
-import org.opencv.photo.Photo;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -26,7 +26,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class PhotoDAO {
+public class PhotoDAO implements IPhotoDataAccess {
 
     private static DateTimeFormatter Filenameformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-SSS");
 
@@ -43,15 +43,16 @@ public class PhotoDAO {
      * @param photos      List of BufferedImage objects to be saved.
      * @param fileNames   List of file names for the images.
      * @param uploader    User who uploaded the images.
-     * @param productNumber Product number associated with the images.
+     * @param orderNumber OrderNumbers object associated with the images.
      * @return true if successful, false otherwise.
      * @throws Exception if an error occurs during the process.
      */
 
+    @Override
     public boolean saveImageAndPath(List<BufferedImage> photos,
                                     List<String> fileNames,
                                     Users uploader,
-                                    String productNumber) throws Exception {
+                                    OrderNumbers orderNumber) throws Exception {
 
         //check if the lists are of the same size, if not throw an exception.
         if (photos.size() != fileNames.size()) {
@@ -64,10 +65,10 @@ public class PhotoDAO {
             connection = dbConnector.getConnection();
             connection.setAutoCommit(false);
 
-            Path orderFolderPath = baseRelativePath.resolve(productNumber + "_Images");
+            Path orderFolderPath = Paths.get(baseRelativePath).resolve(orderNumber.getOrderNumber() + "_Images");
             persistedPaths = saveImages(photos, fileNames, orderFolderPath);
 
-            insertImagePathToDatabase(connection, persistedPaths, uploader, getProductFromNumber(productNumber));
+            insertImagePathToDatabase(connection, persistedPaths, uploader, orderNumber);
 
             connection.commit();
             return true;
@@ -193,7 +194,7 @@ public class PhotoDAO {
      * @param connection Database connection.
      * @param filePaths List of file paths to be inserted.
      * @param uploader User who uploaded the images.
-     * @param product Product associated with the images.
+     * @param orderNumber OrderNumbers object associated with the images.
      * @throws SQLException if an error occurs during the insertion process.
      */
 
@@ -201,16 +202,16 @@ public class PhotoDAO {
     public void insertImagePathToDatabase(Connection connection,
                                           List<Path> filePaths,
                                           Users uploader,
-                                          Product product) throws SQLException {
+                                          OrderNumbers orderNumber) throws SQLException {
 
-        String sql = "INSERT INTO Photos (product_id, file_path, uploaded_by, uploaded_at) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Photos (order_number_id, file_path, uploaded_by, uploaded_at) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Path path : filePaths) {
-                statement.setInt(1, product.getId());
+                statement.setInt(1, orderNumber.getOrderNumberID());
                 statement.setString(2, path.toString());
-                statement.setInt(3, uploader.getId());
-                statement.setObject(4, LocalDateTime.now());
+                statement.setInt(3, uploader.getUserID());
+                statement.setTimestamp(4, new java.sql.Timestamp(System.currentTimeMillis()));
                 statement.addBatch();
             }
             statement.executeBatch();
@@ -218,23 +219,28 @@ public class PhotoDAO {
     }
 
     @Override
-    public ObservableList<Photos> getImagesForProduct(String productNumber) throws SQLException {
+    public ObservableList<Photos> getImagesForOrderNumber(OrderNumbers orderNumber) throws SQLException {
         ObservableList<Photos> photos = javafx.collections.FXCollections.observableArrayList();
-        String sql = "SELECT p.* FROM Photos p INNER JOIN Products pr ON p.product_id = pr.id WHERE pr.products_order_number = ?";
-
+        String sql = "SELECT p.* FROM Photos p WHERE p.order_number_id = ?";
 
         try(Connection conn = dbConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
-            ps.setString(1, productNumber);
+            ps.setInt(1, orderNumber.getOrderNumberID());
 
             ResultSet rs = ps.executeQuery();
             while(rs.next())
             {
                 Photos tempImg = new Photos();
                 tempImg.setId(rs.getInt("id"));
-                tempImg.setOrderNumber(rs.getString("product_id"));
+
+                // Create OrderNumbers object for this photo
+                OrderNumbers photoOrderNumber = new OrderNumbers();
+                photoOrderNumber.setOrderNumberID(rs.getInt("order_number_id"));
+                photoOrderNumber.setOrderNumber(orderNumber.getOrderNumber());
+                tempImg.setOrderNumber(photoOrderNumber);
+
                 tempImg.setFilepath(rs.getString("file_path"));
                 tempImg.setUploadedBy(rs.getInt("uploaded_by"));
-                tempImg.setUploadTime(rs.getObject("uploaded_at", LocalDateTime.class));
+                tempImg.setUploadTime(new java.sql.Timestamp(rs.getTimestamp("uploaded_at").getTime()));
                 photos.add(tempImg);
             }
             System.out.println("length:" + photos.size());
@@ -249,20 +255,37 @@ public class PhotoDAO {
     }
 
     @Override
-    public Product getProductFromNumber(String productNumber) throws SQLException {
-        Product product = new Product();
-        String sql = "SELECT * FROM Products WHERE products_order_number = ?";
+    public OrderNumbers getOrderNumberFromString(String orderNumberStr) throws SQLException {
+        OrderNumbers orderNumber = new OrderNumbers();
+        String sql = "SELECT * FROM OrderNumbers WHERE order_number = ?";
         try(Connection conn = dbConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, productNumber);
+            ps.setString(1, orderNumberStr);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                product.setId(rs.getInt("id"));
-                product.setOrder_id(rs.getInt("order_id"));
-                product.setProduct_number(rs.getString("products_order_number"));
-            }
-            return product;
-        }
+            if (rs.next()) {
+                orderNumber.setOrderNumberID(rs.getInt("order_number_id"));
+                orderNumber.setOrderNumber(rs.getString("order_number"));
+                orderNumber.setUserID(rs.getInt("user_id"));
+                orderNumber.setCreatedAt(rs.getTimestamp("created_at"));
+            } else {
+                // If order number doesn't exist, create it
+                sql = "INSERT INTO OrderNumbers (order_number, user_id, created_at) VALUES (?, ?, ?)";
+                try (PreparedStatement insertPs = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                    insertPs.setString(1, orderNumberStr);
+                    insertPs.setInt(2, 1); // Default user ID, should be replaced with actual user
+                    insertPs.setTimestamp(3, new java.sql.Timestamp(System.currentTimeMillis()));
+                    insertPs.executeUpdate();
 
+                    ResultSet generatedKeys = insertPs.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        orderNumber.setOrderNumberID(generatedKeys.getInt(1));
+                    }
+                    orderNumber.setOrderNumber(orderNumberStr);
+                    orderNumber.setUserID(1); // Default user ID
+                    orderNumber.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));
+                }
+            }
+            return orderNumber;
+        }
     }
 
     @Override
