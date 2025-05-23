@@ -7,6 +7,7 @@ import com.belman.belsignqc.BLL.showAlert;
 import com.belman.belsignqc.BE.OrderNumbers;
 import com.belman.belsignqc.BE.Users;
 import com.belman.belsignqc.BLL.Util.UserSession;
+import com.belman.belsignqc.GUI.Model.OrderNumberModel;
 import com.belman.belsignqc.GUI.Model.PhotoModel;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
@@ -61,7 +62,7 @@ public class CameraController extends BaseController implements Initializable {
 
     private final ArrayDeque<Image> gallery = new ArrayDeque<>();
     private PhotoModel photoModel;
-    private List<Image> imagesToSave = new ArrayList<>();
+    private List<BufferedImage> imagesToSave = new ArrayList<>();
     private OrderNumbers orderNumber;
     private int currentPreviewIndex = -1;
 
@@ -186,68 +187,33 @@ public class CameraController extends BaseController implements Initializable {
             return;
         }
 
-        // Get the current user from UserSession
-        Users currentUser = UserSession.getInstance().getUser();
-        if (currentUser == null) {
-            showAlert.display("Error", "No user is logged in. Please log in and try again.");
-            return;
-        }
-
-        // Get the order number string
-        String orderNumberStr = orderNumber != null ? orderNumber.getOrderNumber() : null;
-        if (orderNumberStr == null) {
-            showAlert.display("Error", "No order number is set. Please select an order number and try again.");
-            return;
+        List<String> fileNames = new ArrayList<>();
+        for (int i = 0; i < imagesToSave.size(); i++) {
+            fileNames.add(String.valueOf(i));
         }
 
         try {
-            // Convert JavaFX Image objects to BufferedImage objects
-            List<BufferedImage> bufferedImages = new ArrayList<>();
-            List<String> fileNames = new ArrayList<>();
-
-            // Generate a timestamp for the file names
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
-            String timestamp = LocalDateTime.now().format(formatter);
-
-            // Convert each image and generate a file name
-            for (int i = 0; i < imagesToSave.size(); i++) {
-                Image image = imagesToSave.get(i);
-                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
-                bufferedImages.add(bufferedImage);
-
-                // Generate a unique file name for each image
-                String fileName = "order_" + orderNumberStr + "_" + timestamp + "_" + i + ".png";
-                fileNames.add(fileName);
-            }
-
-            // Save the images using PhotoModel
-            boolean success = photoModel.saveImageAndPath(bufferedImages, fileNames, currentUser, orderNumberStr);
-
-            if (success) {
-                System.out.println("Successfully saved " + imagesToSave.size() + " images for order number: " + orderNumberStr);
-            } else {
-                showAlert.display("Error", "Failed to save images. Please try again.");
-            }
+            photoModel.saveImageAndPath(imagesToSave, fileNames, currentUser, orderNumber);
         } catch (Exception e) {
-            System.err.println("Error saving images: " + e.getMessage());
-            showAlert.display("Error", "An error occurred while saving the images: " + e.getMessage());
+            e.printStackTrace();
+            //TODO alert
         }
 
-        //shut down the ExecutorService and stop the use of camera
+        shutdownCamera();
+    }
+
+    private void shutdownCamera() {
         if (mainPreviewExecutor != null && !mainPreviewExecutor.isShutdown()) {
             mainPreviewExecutor.shutdownNow();
             mainPreviewExecutor = null;
             try {
                 strategy.stop();
             } catch (Exception e) {
-                System.err.println("Error stopping camera: " + e.getMessage());
-                showAlert.display("Camera Error", "An error occurred while stopping the camera: " + e.getMessage());
+                //TODO exception
             }
         }
-
-        // Navigate back to the previous screen
-        screenManager.setScreen("photo_doc");
     }
+
 
     @FXML
     public void handleLogOut(ActionEvent actionEvent) {

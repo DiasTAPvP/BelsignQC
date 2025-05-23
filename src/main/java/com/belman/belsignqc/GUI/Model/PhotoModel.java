@@ -1,6 +1,5 @@
 package com.belman.belsignqc.GUI.Model;
 
-import com.belman.belsignqc.BE.OrderNumbers;
 import com.belman.belsignqc.BE.Photos;
 import com.belman.belsignqc.BE.Users;
 import com.belman.belsignqc.BLL.PhotoManager;
@@ -24,8 +23,8 @@ public class PhotoModel {
     public boolean saveImageAndPath(List<BufferedImage> images,
                                     List<String> fileNames,
                                     Users uploader,
-                                    String productNumber) throws Exception {
-        return photoManager.saveImageAndPath(images, fileNames, uploader, productNumber);
+                                    String orderNumber) throws Exception {
+        return photoManager.saveImageAndPath(images, fileNames, uploader, orderNumber);
     }
     public ObservableList<Photos> getImagesForOrder(String orderNumber) throws Exception {
         return photoManager.getImagesForOrder(orderNumber);
