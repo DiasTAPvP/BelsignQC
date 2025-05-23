@@ -1,50 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.effect.ImageInput?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane minHeight="720.0" minWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="rootPane" minHeight="720.0" minWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.CameraController">
    <children>
-      <StackPane>
+      <StackPane fx:id="cameraStackpane">
          <children>
-            <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-            <ImageView pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgFullPreview" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgCamera" pickOnBounds="true" preserveRatio="true" />
          </children>
       </StackPane>
-      <HBox maxHeight="100.0" minHeight="100.0" prefHeight="100.0" StackPane.alignment="BOTTOM_RIGHT">
+      <HBox fx:id="cameraBottemHbox" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" stylesheets="@style.css" StackPane.alignment="BOTTOM_RIGHT">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button alignment="BOTTOM_CENTER" mnemonicParsing="false" text="Button">
+                  <Button fx:id="btnPhotoLogout" alignment="BOTTOM_CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="40.0" prefWidth="40.0" styleClass="iconButton" stylesheets="@style.css" text="Button">
                      <effect>
-                        <ImageInput />
-                     </effect></Button>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Button mnemonicParsing="false" text="Button">
-                     <effect>
-                        <ImageInput />
-                     </effect></Button>
-               </children>
-            </HBox>
-            <HBox prefHeight="79.0" prefWidth="576.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                  <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="takePicture" alignment="CENTER_RIGHT" mnemonicParsing="false" text="Button">
-                     <effect>
-                        <ImageInput />
+                        <ImageInput>
+                           <source>
+                              <Image url="@images/icons8-return-50.png" />
+                           </source></ImageInput>
                      </effect>
+                     <HBox.margin>
+                        <Insets left="12.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="btnConfirmation" mnemonicParsing="false" onAction="#handleFinishCamera" styleClass="iconButton" text="Button">
+                     <effect>
+                        <ImageInput>
+                           <source>
+                              <Image url="@images/Checkmark_Icon.png" />
+                           </source></ImageInput>
+                     </effect></Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <ImageView fx:id="imgPreview2" fitHeight="90.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="imgPreview1" fitHeight="90.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+                  <Button fx:id="btnTakePicture" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#handleCaptureImage" styleClass="iconButton" text="Button">
+                     <effect>
+                        <ImageInput>
+                           <source>
+                              <Image url="@images/icons8-camera-50.png" />
+                           </source></ImageInput>
+                     </effect>
+                     <HBox.margin>
+                        <Insets right="12.0" />
+                     </HBox.margin>
                   </Button>
                </children>
             </HBox>
          </children>
       </HBox>
-      <HBox maxHeight="100.0" minHeight="100.0" prefHeight="100.0" prefWidth="200.0" StackPane.alignment="BOTTOM_RIGHT" />
+      <HBox fx:id="previewControls" alignment="CENTER" maxHeight="100.0" minHeight="100.0" prefHeight="100.0" prefWidth="200.0" stylesheets="@style.css" visible="false" StackPane.alignment="BOTTOM_RIGHT">
+         <children>
+            <Button fx:id="btnClosePreview" mnemonicParsing="false" onAction="#handleClosePreview" styleClass="previewButton" stylesheets="@style.css" text="Button">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+               <effect>
+                  <ImageInput>
+                     <source>
+                        <Image url="@images/icons8-return-50.png" />
+                     </source>
+                  </ImageInput>
+               </effect>
+            </Button>
+            <Button fx:id="btnDeletePreview" mnemonicParsing="false" onAction="#handleDeletePreview" styleClass="previewButton" stylesheets="@style.css" text="Button">
+               <HBox.margin>
+                  <Insets left="50.0" />
+               </HBox.margin>
+               <effect>
+                  <ImageInput>
+                     <source>
+                        <Image url="@images/Trash-can_Icon.png" />
+                     </source>
+                  </ImageInput>
+               </effect>
+            </Button>
+         </children></HBox>
    </children>
 </StackPane>
