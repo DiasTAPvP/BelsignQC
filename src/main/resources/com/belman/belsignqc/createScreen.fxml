@@ -48,9 +48,9 @@
             </HBox>
          </children>
       </HBox>
-      <TextField alignment="CENTER" layoutX="399.0" layoutY="267.0" promptText="Username" styleClass="textfields" />
-      <PasswordField alignment="CENTER" layoutX="399.0" layoutY="308.0" promptText="Password" styleClass="textfields" />
-      <TextField alignment="CENTER" layoutX="399.0" layoutY="225.0" promptText="Email" styleClass="textfields" />
+      <TextField fx:id="createUsernameField" alignment="CENTER" layoutX="399.0" layoutY="267.0" promptText="Username" styleClass="textfields" />
+      <PasswordField fx:id="createPasswordField" alignment="CENTER" layoutX="399.0" layoutY="308.0" promptText="Password" styleClass="textfields" />
+      <TextField fx:id="createRoleField" alignment="CENTER" layoutX="399.0" layoutY="225.0" promptText="Email" styleClass="textfields" />
       <Button layoutX="399.0" layoutY="349.0" mnemonicParsing="false" text="Operator" />
       <Button layoutX="461.0" layoutY="349.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="Admin" />
       <Button layoutX="517.0" layoutY="349.0" mnemonicParsing="false" text="QA" />
