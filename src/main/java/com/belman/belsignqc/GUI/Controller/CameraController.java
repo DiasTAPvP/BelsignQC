@@ -3,10 +3,13 @@ package com.belman.belsignqc.GUI.Controller;
 import com.belman.belsignqc.BLL.Exceptions.CameraNotFound;
 import com.belman.belsignqc.BLL.OpenCV;
 import com.belman.belsignqc.BLL.PhotoTaking;
-import com.belman.belsignqc.BLL.Util.UserSession;
+import com.belman.belsignqc.BLL.showAlert;
+import com.belman.belsignqc.BE.OrderNumbers;
 import com.belman.belsignqc.BE.Users;
+import com.belman.belsignqc.BLL.Util.UserSession;
 import com.belman.belsignqc.GUI.Model.PhotoModel;
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +20,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.image.BufferedImage;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -56,15 +62,15 @@ public class CameraController extends BaseController implements Initializable {
     private final ArrayDeque<Image> gallery = new ArrayDeque<>();
     private PhotoModel photoModel;
     private List<Image> imagesToSave = new ArrayList<>();
-    private String productNumber;
+    private OrderNumbers orderNumber;
     private int currentPreviewIndex = -1;
 
     public CameraController() {
         photoModel = new PhotoModel();
     }
 
-    public void setProductNumber(String productNumber) {
-        this.productNumber = productNumber;
+    public void setOrderNumber(OrderNumbers orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
     @Override
@@ -88,11 +94,11 @@ public class CameraController extends BaseController implements Initializable {
             strategy.start();
         } catch (CameraNotFound e) {
             System.err.println("Camera not found: " + e.getMessage());
-            //TODO alert
+            showAlert.display("Camera Not Found", "No camera was detected. Please connect a camera and try again.");
         } catch (Exception e) {
             System.err.println("Error starting camera: " + e.getMessage());
-            //TODO alert blank frames VISUALLY INFORM THE USER THAT NO CAMERA WAS FOUND USING AN IMAGE ON THE IMAGEVIEW
-            // SAYING - NO CAMERA FOUND
+            showAlert.display("Camera Error", "An error occurred while starting the camera: " + e.getMessage());
+            // TODO: Display a placeholder image on the imageview indicating no camera was found
         }
         mainPreviewExecutor = Executors.newSingleThreadScheduledExecutor();
         mainPreviewExecutor.scheduleAtFixedRate(() -> {
@@ -159,7 +165,7 @@ public class CameraController extends BaseController implements Initializable {
 
         } catch (Exception e) {
             System.err.println("Error capturing image: " + e.getMessage());
-            //TODO alert
+            showAlert.display("Image Capture Error", "An error occurred while capturing the image: " + e.getMessage());
         }
     }
 
@@ -180,9 +186,52 @@ public class CameraController extends BaseController implements Initializable {
             return;
         }
 
-        // TODO: Implement image saving functionality when PhotoModel is ready
-        // For now, just log that images would be saved
-        System.out.println("Would save " + imagesToSave.size() + " images for product number: " + productNumber);
+        // Get the current user from UserSession
+        Users currentUser = UserSession.getInstance().getUser();
+        if (currentUser == null) {
+            showAlert.display("Error", "No user is logged in. Please log in and try again.");
+            return;
+        }
+
+        // Get the order number string
+        String orderNumberStr = orderNumber != null ? orderNumber.getOrderNumber() : null;
+        if (orderNumberStr == null) {
+            showAlert.display("Error", "No order number is set. Please select an order number and try again.");
+            return;
+        }
+
+        try {
+            // Convert JavaFX Image objects to BufferedImage objects
+            List<BufferedImage> bufferedImages = new ArrayList<>();
+            List<String> fileNames = new ArrayList<>();
+
+            // Generate a timestamp for the file names
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+            String timestamp = LocalDateTime.now().format(formatter);
+
+            // Convert each image and generate a file name
+            for (int i = 0; i < imagesToSave.size(); i++) {
+                Image image = imagesToSave.get(i);
+                BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+                bufferedImages.add(bufferedImage);
+
+                // Generate a unique file name for each image
+                String fileName = "order_" + orderNumberStr + "_" + timestamp + "_" + i + ".png";
+                fileNames.add(fileName);
+            }
+
+            // Save the images using PhotoModel
+            boolean success = photoModel.saveImageAndPath(bufferedImages, fileNames, currentUser, orderNumberStr);
+
+            if (success) {
+                System.out.println("Successfully saved " + imagesToSave.size() + " images for order number: " + orderNumberStr);
+            } else {
+                showAlert.display("Error", "Failed to save images. Please try again.");
+            }
+        } catch (Exception e) {
+            System.err.println("Error saving images: " + e.getMessage());
+            showAlert.display("Error", "An error occurred while saving the images: " + e.getMessage());
+        }
 
         //shut down the ExecutorService and stop the use of camera
         if (mainPreviewExecutor != null && !mainPreviewExecutor.isShutdown()) {
@@ -192,7 +241,7 @@ public class CameraController extends BaseController implements Initializable {
                 strategy.stop();
             } catch (Exception e) {
                 System.err.println("Error stopping camera: " + e.getMessage());
-                //TODO exception
+                showAlert.display("Camera Error", "An error occurred while stopping the camera: " + e.getMessage());
             }
         }
 
@@ -210,7 +259,7 @@ public class CameraController extends BaseController implements Initializable {
                 strategy.stop();
             } catch (Exception e) {
                 System.err.println("Error stopping camera: " + e.getMessage());
-                //TODO exception
+                showAlert.display("Camera Error", "An error occurred while stopping the camera: " + e.getMessage());
             }
         }
 

@@ -1,6 +1,7 @@
 module com.belman.belsignqc {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.swing;
 
     requires org.kordamp.bootstrapfx.core;
     requires bcrypt;
