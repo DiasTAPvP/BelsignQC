@@ -23,20 +23,12 @@ public class UserModel {
     }
 
     /**
-     * Creates a new user
-     * @param username Username for new user
-     * @param password Password for new user
-     * @param isAdmin Admin status
-     * @param isQA QA status
-     * @param isOperator Operator status
-     * @param profilePicture Profile picture as byte array for BLOB
-     * @return Created user with generated ID
+     * Sends the created user from the GUI to the BLL
+     * @param newUser User to be created
      * @throws Exception if creation fails
      */
-    public Users createUser(String username, String password, boolean isAdmin,
-                            boolean isQA, boolean isOperator, byte[] profilePicture) throws Exception {
-        Users newUser = new Users(0, username, password, isAdmin, isQA, isOperator, profilePicture);
-        return userManager.createUser(newUser);
+    public void createUser(Users newUser) throws Exception {
+        userManager.createUser(newUser);
     }
 
     /**
