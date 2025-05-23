@@ -160,7 +160,7 @@
             </StackPane>
          </center>
          <right>
-            <Button fx:id="openCamera" maxWidth="1.7976931348623157E308" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@style.css" BorderPane.alignment="TOP_CENTER">
+            <Button fx:id="openCamera" maxWidth="1.7976931348623157E308" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleOpenCamera" styleClass="buttons" stylesheets="@style.css" BorderPane.alignment="TOP_CENTER">
                <effect>
                   <ImageInput>
                      <source>

@@ -63,19 +63,19 @@ public class CameraController extends BaseController implements Initializable {
     private final ArrayDeque<Image> gallery = new ArrayDeque<>();
     private PhotoModel photoModel;
     private List<BufferedImage> imagesToSave = new ArrayList<>();
-    private OrderNumbers orderNumber;
+    private String orderNumber;
     private int currentPreviewIndex = -1;
+    private Users currentUser;
 
     public CameraController() {
         photoModel = new PhotoModel();
     }
 
-    public void setOrderNumber(OrderNumbers orderNumber) {
-        this.orderNumber = orderNumber;
-    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Initialize currentUser from UserSession
+        currentUser = UserSession.getInstance().getUser();
 
         Rectangle clip = new Rectangle();
         clip.widthProperty().bind(cameraStackpane.widthProperty());
@@ -156,7 +156,9 @@ public class CameraController extends BaseController implements Initializable {
         try {
             Image image = strategy.takePhoto();
             sendToGallery(image);
-            imagesToSave.add(image);
+            // Convert JavaFX Image to BufferedImage before adding to imagesToSave
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+            imagesToSave.add(bufferedImage);
             btnConfirmation.setDisable(false);
 
 
@@ -200,6 +202,9 @@ public class CameraController extends BaseController implements Initializable {
         }
 
         shutdownCamera();
+
+        // Navigate back to the operator screen after saving images
+        screenManager.setScreen("operator");
     }
 
     private void shutdownCamera() {
@@ -230,7 +235,7 @@ public class CameraController extends BaseController implements Initializable {
         }
 
         // Navigate back to the previous screen
-        screenManager.setScreen("photo_doc");
+        screenManager.setScreen("operator");
     }
 
     private void openOverlayPreview(int i) {

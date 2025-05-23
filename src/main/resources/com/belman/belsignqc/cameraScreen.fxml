@@ -20,7 +20,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="btnPhotoLogout" alignment="BOTTOM_CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="40.0" prefWidth="40.0" styleClass="iconButton" stylesheets="@style.css" text="Button">
+                  <Button fx:id="btnPhotoLogout" alignment="BOTTOM_CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="40.0" prefWidth="40.0" styleClass="iconButton" stylesheets="@style.css">
                      <effect>
                         <ImageInput>
                            <source>
