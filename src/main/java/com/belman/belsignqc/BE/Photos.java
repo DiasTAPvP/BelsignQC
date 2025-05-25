@@ -12,7 +12,7 @@ public class Photos {
     Timestamp uploadTime;
 
     public Photos(){}
-
+//
     public int getId() {
         return id;
     }
