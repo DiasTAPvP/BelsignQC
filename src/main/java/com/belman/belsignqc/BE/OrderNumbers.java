@@ -9,6 +9,18 @@ public class OrderNumbers {
     private int userID;
     private Timestamp createdAt;
 
+    // Default constructor
+    public OrderNumbers() {
+    }
+
+    // Parameterized constructor
+    public OrderNumbers(int orderNumberID, String orderNumber, int userID, Timestamp createdAt) {
+        this.orderNumberID = orderNumberID;
+        this.orderNumber = orderNumber;
+        this.userID = userID;
+        this.createdAt = createdAt;
+    }
+//
     // Getter and Setter for orderNumberID
     public int getOrderNumberID() {
         return orderNumberID;
