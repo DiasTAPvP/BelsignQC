@@ -7,7 +7,7 @@ import com.belman.belsignqc.BLL.showAlert;
 import com.belman.belsignqc.BE.OrderNumbers;
 import com.belman.belsignqc.BE.Users;
 import com.belman.belsignqc.BLL.Util.UserSession;
-import com.belman.belsignqc.GUI.Model.OrderNumberModel;
+import com.belman.belsignqc.GUI.Model.OrderModel;
 import com.belman.belsignqc.GUI.Model.PhotoModel;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;

@@ -250,8 +250,8 @@ public class PhotoDAO implements IPhotoDataAccess {
 
     @Override
     public ObservableList<Photos> getImagesForOrder(String orderNumber) throws SQLException {
-        //todo: make this??
-        return null;
+        OrderNumbers orderNum = getOrderNumberFromString(orderNumber);
+        return getImagesForOrderNumber(orderNum);
     }
 
     @Override
@@ -264,7 +264,6 @@ public class PhotoDAO implements IPhotoDataAccess {
             if (rs.next()) {
                 orderNumber.setOrderNumberID(rs.getInt("order_number_id"));
                 orderNumber.setOrderNumber(rs.getString("order_number"));
-                orderNumber.setUserID(rs.getInt("user_id"));
                 orderNumber.setCreatedAt(rs.getTimestamp("created_at"));
             } else {
                 // If order number doesn't exist, create it
@@ -280,7 +279,6 @@ public class PhotoDAO implements IPhotoDataAccess {
                         orderNumber.setOrderNumberID(generatedKeys.getInt(1));
                     }
                     orderNumber.setOrderNumber(orderNumberStr);
-                    orderNumber.setUserID(1); // Default user ID
                     orderNumber.setCreatedAt(new java.sql.Timestamp(System.currentTimeMillis()));
                 }
             }

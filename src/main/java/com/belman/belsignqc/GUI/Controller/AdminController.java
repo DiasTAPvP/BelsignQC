@@ -17,7 +17,7 @@ import javafx.scene.image.ImageView;
 public class AdminController extends BaseController {
 
    @FXML private Button createUserButton;
-   @FXML private ImageView adminLogoutButton;
+   @FXML private Button adminLogoutButton;
    @FXML private TableView<OrderModel> adminOrderTable;
    @FXML private TableColumn<OrderModel, String> adminOrderColumn;
    @FXML private TableView<UserModel> adminUserTable;
@@ -41,8 +41,8 @@ public class AdminController extends BaseController {
         loadMockUsers();
 
         //Setup search functionality
-        setupOrderSearch();
-        setupUserSearch();
+        //setupOrderSearch();
+        //setupUserSearch();
     }
 
     @FXML
@@ -78,7 +78,7 @@ public class AdminController extends BaseController {
         adminOrderTable.setItems(allOrders);
     }
 
-    private void setupOrderSearch() {
+    /*private void setupOrderSearch() {
         // Create a filtered list wrapping the observable list
         FilteredList<OrderModel> filteredOrders = new FilteredList<>(allOrders, p -> true);
 
@@ -140,7 +140,7 @@ public class AdminController extends BaseController {
 
         // Add sorted (and filtered) data to the table
         adminUserTable.setItems(sortedUsers);
-    }
+    }*/
 
 
 
