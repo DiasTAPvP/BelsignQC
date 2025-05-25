@@ -13,7 +13,7 @@ import java.io.ByteArrayInputStream;
 public class OpenCV implements PhotoTaking {
 
     private VideoCapture camera;
-
+//
     @Override
     /* Starts the camera and sets the resolution to 1280x720.
      * @throws CameraNotFound if the camera is not found.

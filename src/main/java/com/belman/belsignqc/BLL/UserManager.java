@@ -51,7 +51,7 @@ public class UserManager {
     public void updateUser(Users user) throws Exception {
         userDAO.updateUser(user);
     }
-
+//
     /**
      * Gets a user by username
      * @param username Username to search for

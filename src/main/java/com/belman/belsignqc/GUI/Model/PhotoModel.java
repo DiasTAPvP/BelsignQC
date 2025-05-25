@@ -19,7 +19,7 @@ public class PhotoModel {
             throw new RuntimeException(e);
         }
     }
-
+//
     public boolean saveImageAndPath(List<BufferedImage> images,
                                     List<String> fileNames,
                                     Users uploader,

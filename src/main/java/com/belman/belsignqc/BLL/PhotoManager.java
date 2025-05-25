@@ -17,7 +17,7 @@ public class PhotoManager {
     public PhotoManager() throws Exception {
         photoDataAccess = new PhotoDAO(); // PhotoDAO now implements IPhotoDataAccess
     }
-
+//
     public boolean saveImageAndPath(List<BufferedImage> images,
                                     List<String> fileNames,
                                     Users uploader,

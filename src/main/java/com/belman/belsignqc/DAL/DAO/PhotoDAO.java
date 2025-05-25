@@ -36,7 +36,7 @@ public class PhotoDAO implements IPhotoDataAccess {
     public PhotoDAO() throws Exception {
         dbConnector = new DBConnector();
     }
-
+//
     /**
      * Saves the images and their paths to the database.
      *
