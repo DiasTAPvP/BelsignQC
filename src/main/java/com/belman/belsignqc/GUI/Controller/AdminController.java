@@ -1,5 +1,10 @@
 package com.belman.belsignqc.GUI.Controller;
 
+import com.belman.belsignqc.BE.OrderNumbers;
+import com.belman.belsignqc.BE.Users;
+import com.belman.belsignqc.BLL.showAlert;
+import com.belman.belsignqc.DAL.DAO.OrderDAO;
+import com.belman.belsignqc.DAL.DAO.UserDAO;
 import com.belman.belsignqc.GUI.Model.OrderModel;
 import com.belman.belsignqc.GUI.Model.UserModel;
 import javafx.collections.FXCollections;
@@ -14,6 +19,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
 public class AdminController extends BaseController {
 
    @FXML private Button createUserButton;
@@ -22,27 +31,42 @@ public class AdminController extends BaseController {
    @FXML private TableColumn<OrderModel, String> adminOrderColumn;
    @FXML private TableView<UserModel> adminUserTable;
    @FXML private TableColumn<UserModel, String> adminUserColumn;
-    @FXML private TextField adminOrderSearch;
-    @FXML private TextField adminUserSearch;
+   @FXML private TextField adminOrderSearch;
+   @FXML private TextField adminUserSearch;
 
    private ObservableList<OrderModel> allOrders;
    private ObservableList<UserModel> allUsers;
+   private OrderDAO orderDAO;
+   private UserDAO userDAO;
 //
     @FXML
     private void initialize() {
-        // Configure the order table column
-        adminOrderColumn.setCellValueFactory(new PropertyValueFactory<>("orderNumber"));
+        try {
+            // Initialize DAOs
+            orderDAO = new OrderDAO();
+            userDAO = new UserDAO();
 
-        // Configure the user table column
-        adminUserColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
+            // Configure the order table column
+            adminOrderColumn.setCellValueFactory(new PropertyValueFactory<>("orderNumber"));
 
-        // Add mock data to tables
-        loadMockOrders();
-        loadMockUsers();
+            // Configure the user table column
+            adminUserColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        //Setup search functionality
-        //setupOrderSearch();
-        //setupUserSearch();
+            // Load real data to tables
+            loadOrders();
+            loadUsers();
+
+            // Setup search functionality
+            setupOrderSearch();
+            setupUserSearch();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Show error message to user
+            showAlert.display("Error", "Failed to initialize data: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert.display("Error", "An error occurred: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -56,29 +80,35 @@ public class AdminController extends BaseController {
         screenManager.setScreen("createuser");
     }
 
-    private void loadMockUsers() {
-        allUsers = FXCollections.observableArrayList(
-                new UserModel("Jørgen Makholm"),
-                new UserModel("Bjarne Olsen"),
-                new UserModel("Hans Christian Valentin"),
-                new UserModel("Kim Kronborg"),
-                new UserModel("Lars Junker")
-        );
+    private void loadUsers() throws Exception {
+        // Get all users from the database
+        List<Users> users = userDAO.getAllUsers();
+
+        // Convert Users to UserModel objects
+        allUsers = FXCollections.observableArrayList();
+        for (Users user : users) {
+            allUsers.add(new UserModel(user.getUsername()));
+        }
+
+        // Set the items in the table
         adminUserTable.setItems(allUsers);
     }
 
-    private void loadMockOrders() {
-        allOrders = FXCollections.observableArrayList(
-                new OrderModel("015-05012-111-1"),
-                new OrderModel("018-12019-123-3"),
-                new OrderModel("014-02028-182-5"),
-                new OrderModel("016-01001-123-7"),
-                new OrderModel("015-11027-199-8")
-        );
+    private void loadOrders() throws SQLException {
+        // Get all order numbers from the database
+        ObservableList<String> orderNumbers = orderDAO.getAllOrderNumbers();
+
+        // Convert order numbers to OrderModel objects
+        allOrders = FXCollections.observableArrayList();
+        for (String orderNumber : orderNumbers) {
+            allOrders.add(new OrderModel(orderNumber));
+        }
+
+        // Set the items in the table
         adminOrderTable.setItems(allOrders);
     }
 
-    /*private void setupOrderSearch() {
+    private void setupOrderSearch() {
         // Create a filtered list wrapping the observable list
         FilteredList<OrderModel> filteredOrders = new FilteredList<>(allOrders, p -> true);
 
@@ -140,9 +170,6 @@ public class AdminController extends BaseController {
 
         // Add sorted (and filtered) data to the table
         adminUserTable.setItems(sortedUsers);
-    }*/
-
-
-
+    }
 
 }

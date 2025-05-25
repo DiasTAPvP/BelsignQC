@@ -33,14 +33,14 @@ public class UserDAO implements IUserDataAccess {
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
-                int userid = rs.getInt("userid");
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-                boolean isadmin = rs.getBoolean("isadmin");
-                boolean isqa = rs.getBoolean("isqa");
-                boolean isoperator = rs.getBoolean("isoperator");
+                int userid = rs.getInt("UserID");
+                String username = rs.getString("Username");
+                String password = rs.getString("PasswordHash");
+                boolean isadmin = rs.getBoolean("IsAdmin");
+                boolean isqa = rs.getBoolean("IsQAEmployee");
+                boolean isoperator = rs.getBoolean("IsOperator");
                 byte[] profilepicture = null;
-                Blob blob = rs.getBlob("profilepicture");
+                Blob blob = rs.getBlob("ProfilePicture");
                 if (blob != null) {
                     profilepicture = blob.getBytes(1, (int) blob.length());
                 } else {
@@ -140,13 +140,13 @@ public class UserDAO implements IUserDataAccess {
 
             if (resultSet.next()) {
                 return new Users(
-                        resultSet.getInt("userid"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getBoolean("isadmin"),
-                        resultSet.getBoolean("isqa"),
-                        resultSet.getBoolean("isoperator"),
-                        resultSet.getBytes("profilepicture")
+                        resultSet.getInt("UserID"),
+                        resultSet.getString("Username"),
+                        resultSet.getString("PasswordHash"),
+                        resultSet.getBoolean("IsAdmin"),
+                        resultSet.getBoolean("IsQA"),
+                        resultSet.getBoolean("IsOperator"),
+                        resultSet.getBytes("ProfilePicture")
                 );
             }
         } catch (SQLException e) {
