@@ -67,7 +67,7 @@ public class UserDAO implements IUserDataAccess {
     @Override
     public Users createUser(Users newUser) throws Exception {
         try (Connection connection = dbConnector.getConnection()) {
-            String sql = "INSERT INTO Users (username, password, isadmin, isqa, isoperator, profilepicture) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO Users (username, passwordhash, isadmin, isqaemployee, isoperator, profilepicture) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, newUser.getUsername());
             statement.setString(2, newUser.getPassword());
@@ -144,7 +144,7 @@ public class UserDAO implements IUserDataAccess {
                         resultSet.getString("Username"),
                         resultSet.getString("PasswordHash"),
                         resultSet.getBoolean("IsAdmin"),
-                        resultSet.getBoolean("IsQA"),
+                        resultSet.getBoolean("IsQAEmployee"),
                         resultSet.getBoolean("IsOperator"),
                         resultSet.getBytes("ProfilePicture")
                 );

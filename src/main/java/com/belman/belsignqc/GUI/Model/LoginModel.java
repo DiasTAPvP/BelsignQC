@@ -20,8 +20,8 @@ public class LoginModel {
      * @param password Plain text password to validate
      * @return true if authentication succeeds, false otherwise
      */
-    public boolean authenticate(String username, String password) {
-        Users user = userManager.getUserByUsername(username);
+    public boolean authenticate(String username, String password) throws Exception {
+        Users user = userManager.getByUsername(username);
 
         // Check if the user exists and if the password matches
         if (user != null && BCryptUtil.checkPassword(password, user.getPassword())) {

@@ -57,7 +57,7 @@ public class UserManager {
      * @param username Username to search for
      * @return User with the specified username or null if not found
      */
-    public Users getUserByUsername(String username) {
+    public Users getByUsername(String username) throws Exception {
         return userDAO.getUsername(username);
     }
 }

@@ -54,8 +54,8 @@ public class UserModel {
      * @param username Username to search for
      * @return User with the specified username or null if not found
      */
-    public Users getUserByUsername(String username) {
-        return userManager.getUserByUsername(username);
+    public Users getUserByUsername(String username) throws Exception {
+        return userManager.getByUsername(username);
     }
 
     //Mock data versions for initial testing
