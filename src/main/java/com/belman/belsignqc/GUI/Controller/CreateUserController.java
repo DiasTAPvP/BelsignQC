@@ -29,9 +29,15 @@ public class CreateUserController extends BaseController {
     @FXML
     private void initialize() {
         // Add listeners to update the menu button text when items are selected
-        createAdminItem.selectedProperty().addListener((obs, oldVal, newVal) -> updateRoleMenuButtonText());
-        createOperatorItem.selectedProperty().addListener((obs, oldVal, newVal) -> updateRoleMenuButtonText());
-        createQAItem.selectedProperty().addListener((obs, oldVal, newVal) -> updateRoleMenuButtonText());
+        if (createAdminItem != null) {
+            createAdminItem.selectedProperty().addListener((obs, oldVal, newVal) -> updateRoleMenuButtonText());
+        }
+        if (createOperatorItem != null) {
+            createOperatorItem.selectedProperty().addListener((obs, oldVal, newVal) -> updateRoleMenuButtonText());
+        }
+        if (createQAItem != null) {
+            createQAItem.selectedProperty().addListener((obs, oldVal, newVal) -> updateRoleMenuButtonText());
+        }
     }
 
     private void updateRoleMenuButtonText() {
