@@ -37,7 +37,7 @@ public class UserDAO implements IUserDataAccess {
                 String username = rs.getString("Username");
                 String password = rs.getString("PasswordHash");
                 boolean isadmin = rs.getBoolean("IsAdmin");
-                boolean isqa = rs.getBoolean("IsQA");
+                boolean isqa = rs.getBoolean("IsQAEmployee");
                 boolean isoperator = rs.getBoolean("IsOperator");
                 byte[] profilepicture = null;
                 Blob blob = rs.getBlob("ProfilePicture");
