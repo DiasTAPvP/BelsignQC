@@ -37,8 +37,8 @@ public class AdminController extends BaseController {
         adminUserColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         // Add mock data to tables
-        loadMockOrders();
-        loadMockUsers();
+        /*loadMockOrders();
+        loadMockUsers();*/
 
         //Setup search functionality
         //setupOrderSearch();
@@ -56,7 +56,7 @@ public class AdminController extends BaseController {
         screenManager.setScreen("createuser");
     }
 
-    private void loadMockUsers() {
+    /*private void loadMockUsers() {
         allUsers = FXCollections.observableArrayList(
                 new UserModel("Jørgen Makholm"),
                 new UserModel("Bjarne Olsen"),
@@ -76,7 +76,7 @@ public class AdminController extends BaseController {
                 new OrderModel("015-11027-199-8")
         );
         adminOrderTable.setItems(allOrders);
-    }
+    }*/
 
     /*private void setupOrderSearch() {
         // Create a filtered list wrapping the observable list
