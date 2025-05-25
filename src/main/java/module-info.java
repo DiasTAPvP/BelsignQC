@@ -1,11 +1,14 @@
 module com.belman.belsignqc {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.swing;
 
     requires org.kordamp.bootstrapfx.core;
     requires bcrypt;
-    requires com.microsoft.sqlserver.jdbc;
+    requires opencv;
+    requires java.desktop;
     requires java.sql;
+    requires com.microsoft.sqlserver.jdbc;
     requires java.naming;
 
     opens com.belman.belsignqc to javafx.fxml;
