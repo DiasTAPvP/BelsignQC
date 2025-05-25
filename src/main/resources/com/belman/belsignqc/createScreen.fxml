@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.CreateUserController">
    <top>
       <BorderPane BorderPane.alignment="CENTER">
          <right>
@@ -22,7 +22,7 @@
                <children>
                   <HBox alignment="TOP_RIGHT">
                      <children>
-                        <Button mnemonicParsing="false" text="Return">
+                        <Button fx:id="createReturnButton" mnemonicParsing="false" onAction="#handleReturn" text="Return">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -91,13 +91,13 @@
          <left>
             <VBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER_RIGHT">
                <children>
-                  <TextField alignment="CENTER" promptText="Username" styleClass="textfields" />
-                  <PasswordField alignment="CENTER" promptText="Password" styleClass="textfields" />
-                  <MenuButton mnemonicParsing="false" text="User Type">
+                  <TextField fx:id="createUsernameField" alignment="CENTER" promptText="Username" styleClass="textfields" />
+                  <PasswordField fx:id="createPasswordField" alignment="CENTER" promptText="Password" styleClass="textfields" />
+                  <MenuButton fx:id="createRoleMenuButton" mnemonicParsing="false" text="User Type">
                     <items>
-                        <CheckMenuItem mnemonicParsing="false" text="Quality Assurance" />
-                        <CheckMenuItem mnemonicParsing="false" text="Operator" />
-                        <CheckMenuItem mnemonicParsing="false" text="Admin" />
+                       <CheckMenuItem fx:id="createQAItem" mnemonicParsing="false" text="Quality Assurance" />
+                       <CheckMenuItem fx:id="createOperatorItem" mnemonicParsing="false" text="Operator" />
+                       <CheckMenuItem fx:id="createAdminItem" mnemonicParsing="false" text="Admin" />
                     </items>
                      <font>
                         <Font size="24.0" />
@@ -109,7 +109,7 @@
          <bottom>
             <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="178.0" styleClass="buttons" text="Create">
+                  <Button fx:id="createUserButton" mnemonicParsing="false" onAction="#createUserAction" prefHeight="37.0" prefWidth="178.0" styleClass="buttons" text="Create">
                      <font>
                         <Font size="28.0" />
                      </font>
@@ -120,7 +120,7 @@
          <center>
             <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@images/avatar_placeholder.PNG" />
+                  <Image url="@images/Avatar_Placeholder.PNG" />
                </image></ImageView>
          </center>
       </BorderPane>

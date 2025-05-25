@@ -25,7 +25,7 @@ public class QAController extends BaseController{
     private void initialize() {
         // Configure the order table column
         qaOrderColumn.setCellValueFactory(new PropertyValueFactory<>("orderNumber"));
-//
+
         // Add mock data to table
         loadMockOrders();
 

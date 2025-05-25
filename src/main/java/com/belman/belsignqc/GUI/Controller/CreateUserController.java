@@ -2,19 +2,22 @@ package com.belman.belsignqc.GUI.Controller;
 
 import com.belman.belsignqc.BE.Users;
 import com.belman.belsignqc.GUI.Model.UserModel;
+import com.belman.belsignqc.BLL.Util.BCryptUtil;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
 public class CreateUserController extends BaseController {
 
-    @FXML private ImageView createReturnButton;
+    @FXML private Button createReturnButton;
     @FXML private TextField createUsernameField;
-    @FXML private TextField createPasswordField;
-    @FXML private TextField createRoleField;
+    @FXML private PasswordField createPasswordField;
+    @FXML private MenuButton createRoleMenuButton;
+    @FXML private CheckMenuItem createAdminItem;
+    @FXML private CheckMenuItem createOperatorItem;
+    @FXML private CheckMenuItem createQAItem;
     @FXML private Button createUserButton;
 
     private UserModel userModel;
@@ -24,45 +27,103 @@ public class CreateUserController extends BaseController {
     }
 
     @FXML
+    private void initialize() {
+        // Add listeners to update the menu button text when items are selected
+        createAdminItem.selectedProperty().addListener((obs, oldVal, newVal) -> updateRoleMenuButtonText());
+        createOperatorItem.selectedProperty().addListener((obs, oldVal, newVal) -> updateRoleMenuButtonText());
+        createQAItem.selectedProperty().addListener((obs, oldVal, newVal) -> updateRoleMenuButtonText());
+    }
+
+    private void updateRoleMenuButtonText() {
+        StringBuilder roles = new StringBuilder("Selected: ");
+        boolean hasRole = false;
+
+        if (createAdminItem.isSelected()) {
+            roles.append("Admin");
+            hasRole = true;
+        }
+
+        if (createOperatorItem.isSelected()) {
+            if (hasRole) roles.append(", ");
+            roles.append("Operator");
+            hasRole = true;
+        }
+
+        if (createQAItem.isSelected()) {
+            if (hasRole) roles.append(", ");
+            roles.append("QA");
+            hasRole = true;
+        }
+
+        if (!hasRole) {
+            createRoleMenuButton.setText("Select Role(s)");
+        } else {
+            createRoleMenuButton.setText(roles.toString());
+        }
+    }
+
+    @FXML
     private void handleReturn() {
-        //Implement wiping the fields after returning
+        clearFields();
         screenManager.setScreen("admin");
     }
 
     @FXML
-    public void createUserAction() throws Exception {
-        String username = createUsernameField.getText();
+    public void createUserAction() {
+        String username = createUsernameField.getText().trim();
         String password = createPasswordField.getText();
-        String roleText = createRoleField.getText().toLowerCase().trim();
 
-        // Initialize all roles as false
-        boolean isAdmin = false;
-        boolean isOperator = false;
-        boolean isQA = false;
-
-        // Set the appropriate role to true based on input
-        if (roleText.contains("admin")) {
-            isAdmin = true;
-        } else if (roleText.contains("operator")) {
-            isOperator = true;
-        } else if (roleText.contains("qa")) {
-            isQA = true;
-        } else {
-            // Handle invalid role input
-            System.out.println("Invalid role. Please enter 'admin', 'operator', or 'qa'.");
+        // Input validation
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Input Error", "Username and password cannot be empty.");
             return;
         }
-        // Create the user with the specified role
-        Users newUser = new Users(0, username, password, isAdmin, isOperator, isQA, null);
-        userModel.createUser(newUser);
 
-        //Wipe the fields
-        createUsernameField.clear();
-        createPasswordField.clear();
-        createRoleField.clear();
-        //Swap scene back to Admin
-        screenManager.setScreen("admin");
+        if (!createAdminItem.isSelected() && !createOperatorItem.isSelected() && !createQAItem.isSelected()) {
+            showAlert(Alert.AlertType.ERROR, "Input Error", "Please select at least one role for the user.");
+            return;
+        }
+
+        try {
+            // Hash the password with BCrypt
+            String hashedPassword = BCryptUtil.hashPassword(password);
+
+            // Create user with the selected roles
+            Users newUser = new Users(
+                    0,  // ID will be set by the database
+                    username,
+                    hashedPassword,
+                    createAdminItem.isSelected(),
+                    createQAItem.isSelected(),
+                    createOperatorItem.isSelected(),
+                    null  // No profile picture for new users by default
+            );
+
+            userModel.createUser(newUser);
+
+            showAlert(Alert.AlertType.INFORMATION, "Success", "User created successfully.");
+            clearFields();
+            screenManager.setScreen("admin");
+
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR, "Error", "Failed to create user: " + e.getMessage());
+        }
     }
 
-//
+    private void clearFields() {
+        createUsernameField.clear();
+        createPasswordField.clear();
+        createAdminItem.setSelected(false);
+        createOperatorItem.setSelected(false);
+        createQAItem.setSelected(false);
+        updateRoleMenuButtonText();
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 }

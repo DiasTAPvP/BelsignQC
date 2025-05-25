@@ -7,7 +7,7 @@ import com.belman.belsignqc.DAL.IOrderDataAccess;
 import java.util.List;
 
 public class OrderDAO implements IOrderDataAccess {
-//
+
     @Override
     public List<OrderNumbers> getAllOrders() throws Exception {
         return null;

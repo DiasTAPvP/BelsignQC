@@ -31,7 +31,7 @@ public class BelsignApplication extends Application {
 
         // Set initial screen to login
         screenManager.setScreen("login");
-//
+
         // Create scene with the screen manager
         Scene scene = new Scene(screenManager, 1200, 700);
         scene.getStylesheets().add(css); //Apply the CSS file to the scene

@@ -48,7 +48,7 @@ public class UserModel {
     public void updateUser(Users user) throws Exception {
         userManager.updateUser(user);
     }
-//
+
     /**
      * Gets a user by username
      * @param username Username to search for

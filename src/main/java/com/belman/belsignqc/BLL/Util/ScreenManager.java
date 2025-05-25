@@ -14,7 +14,7 @@ public class ScreenManager extends StackPane {
     public ScreenManager() {
         super();
     }
-//
+
     /**
      * Adds a screen to the manager.
      *

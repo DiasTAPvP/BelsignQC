@@ -44,7 +44,7 @@ public class UserSession {
     public Users getUser() {
         return loggedInUser;
     }
-//
+
     /**
      * Clears the logged-in user (logout)
      */
