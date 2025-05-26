@@ -36,11 +36,11 @@
                </padding>
             </HBox>
             <HBox alignment="CENTER_RIGHT" maxHeight="64.0" prefHeight="64.0" prefWidth="659.0" spacing="20.0" />
-            <ImageView fx:id="qaReturnButton" onMouseClicked="#handleLogout" styleClass="logo-image">
-               <image>
-                  <Image url="@images/logout_icon.png" />
-               </image>
-            </ImageView>
+            <Button fx:id="qaReturnButton" mnemonicParsing="false" onMouseClicked="#handleLogout" text="Logout">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
          </children>
       </HBox>
    </top>

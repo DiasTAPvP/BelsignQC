@@ -20,7 +20,6 @@ import java.sql.SQLException;
 
 public class QAController extends BaseController{
 
-    @FXML private ImageView qaReturnButton;
     @FXML private TableView<OrderModel> qaOrderTable;
     @FXML private TableColumn<OrderModel, String> qaOrderColumn;
     @FXML private TextField qaSearch;
