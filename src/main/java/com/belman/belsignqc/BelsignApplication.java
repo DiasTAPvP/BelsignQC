@@ -45,10 +45,12 @@ public class BelsignApplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
         Parent loadScreen = loader.load();
 
-        // If controller extends BaseController, set the screen manager
+        // If controller extends BaseController, set the screen manager and register it
         Object controller = loader.getController();
         if (controller instanceof BaseController) {
-            ((BaseController) controller).setScreenManager(screenManager);
+            BaseController baseController = (BaseController) controller;
+            baseController.setScreenManager(screenManager);
+            screenManager.addController(name, baseController);
         }
 
         screenManager.addScreen(name, loadScreen);

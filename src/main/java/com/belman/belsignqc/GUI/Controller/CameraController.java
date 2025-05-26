@@ -57,6 +57,16 @@ public class CameraController extends BaseController implements Initializable {
     @FXML
     public Button btnTakePicture;
 
+    /**
+     * Called when the camera screen is activated.
+     * Reinitializes the camera to ensure it's working properly when returning to this screen.
+     */
+    @Override
+    public void onScreenActivated() {
+        // Reinitialize the camera when returning to this screen
+        initializeCamera();
+    }
+
     private ScheduledExecutorService mainPreviewExecutor;
     private PhotoTaking strategy;
 
@@ -90,17 +100,56 @@ public class CameraController extends BaseController implements Initializable {
         imgPreview1.setOnMouseClicked(e -> openOverlayPreview(0));
         imgPreview2.setOnMouseClicked(e -> openOverlayPreview(1));
 
+        // Add click handler to full preview image to cycle through previews
+        imgFullPreview.setOnMouseClicked(e -> {
+            if (currentPreviewIndex >= 0) {
+                int nextIndex = (currentPreviewIndex + 1) % gallery.size();
+                openOverlayPreview(nextIndex);
+            }
+        });
+
+        // Add tooltip to indicate that clicking cycles through images
+        javafx.scene.control.Tooltip tooltip = new javafx.scene.control.Tooltip("Click to view next image");
+        javafx.scene.control.Tooltip.install(imgFullPreview, tooltip);
+
+        initializeCamera();
+
+        btnConfirmation.setDisable(true);
+    }
+
+    /**
+     * Initializes or reinitializes the camera.
+     * This method can be called when returning to the camera screen to ensure the camera is properly initialized.
+     * Also clears any existing image previews.
+     */
+    private void initializeCamera() {
+        // Shutdown any existing camera resources first
+        shutdownCamera();
+
+        // Clear the gallery and image previews
+        gallery.clear();
+        imagesToSave.clear();
+        imgPreview1.setImage(null);
+        imgPreview2.setImage(null);
+        imgFullPreview.setImage(null);
+        btnConfirmation.setDisable(true);
+
+        // Initialize the camera strategy
         strategy = new OpenCV();
         try {
             strategy.start();
         } catch (CameraNotFound e) {
             System.err.println("Camera not found: " + e.getMessage());
             showAlert.display("Camera Not Found", "No camera was detected. Please connect a camera and try again.");
+            return;
         } catch (Exception e) {
             System.err.println("Error starting camera: " + e.getMessage());
             showAlert.display("Camera Error", "An error occurred while starting the camera: " + e.getMessage());
             // TODO: Display a placeholder image on the imageview indicating no camera was found
+            return;
         }
+
+        // Start the preview executor
         mainPreviewExecutor = Executors.newSingleThreadScheduledExecutor();
         mainPreviewExecutor.scheduleAtFixedRate(() -> {
             try {
@@ -109,14 +158,11 @@ public class CameraController extends BaseController implements Initializable {
                     imgCamera.setImage(frame);
                     adjustImage(imgCamera, cameraStackpane);
                 });
-
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             //30 fps
         }, 0, 33, TimeUnit.MILLISECONDS);
-
-        btnConfirmation.setDisable(true);
     }
 
 
@@ -219,6 +265,44 @@ public class CameraController extends BaseController implements Initializable {
         }
     }
 
+    /**
+     * Restarts only the camera without clearing the previews.
+     * This method is used when closing the preview to return to camera mode.
+     */
+    private void restartCameraOnly() {
+        // Shutdown any existing camera resources first
+        shutdownCamera();
+
+        // Initialize the camera strategy without clearing previews
+        strategy = new OpenCV();
+        try {
+            strategy.start();
+        } catch (CameraNotFound e) {
+            System.err.println("Camera not found: " + e.getMessage());
+            showAlert.display("Camera Not Found", "No camera was detected. Please connect a camera and try again.");
+            return;
+        } catch (Exception e) {
+            System.err.println("Error starting camera: " + e.getMessage());
+            showAlert.display("Camera Error", "An error occurred while starting the camera: " + e.getMessage());
+            return;
+        }
+
+        // Start the preview executor
+        mainPreviewExecutor = Executors.newSingleThreadScheduledExecutor();
+        mainPreviewExecutor.scheduleAtFixedRate(() -> {
+            try {
+                Image frame = strategy.takePhoto();
+                Platform.runLater(() -> {
+                    imgCamera.setImage(frame);
+                    adjustImage(imgCamera, cameraStackpane);
+                });
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            //30 fps
+        }, 0, 33, TimeUnit.MILLISECONDS);
+    }
+
 
     @FXML
     public void handleLogOut(ActionEvent actionEvent) {
@@ -241,16 +325,24 @@ public class CameraController extends BaseController implements Initializable {
     private void openOverlayPreview(int i) {
         Image[] images = gallery.toArray(new Image[0]);
         if (i < images.length) {
-            // Shutdown camera when viewing preview
-            shutdownCamera();
+            // Only shutdown camera if we're not already in preview mode
+            if (currentPreviewIndex < 0) {
+                shutdownCamera();
 
+                // Hide buttons and show preview controls only when first entering preview mode
+                imgFullPreview.setVisible(true);
+                previewControls.setVisible(true);
+                btnConfirmation.setVisible(false);
+                btnPhotoLogout.setVisible(false);
+                btnTakePicture.setVisible(false);
+            }
+
+            // Update the preview image and index
             imgFullPreview.setImage(images[i]);
-            imgFullPreview.setVisible(true);
-            previewControls.setVisible(true);
-            btnConfirmation.setVisible(false);
-            btnPhotoLogout.setVisible(false);
-            btnTakePicture.setVisible(false);
             currentPreviewIndex = i;
+
+            // Ensure the full preview is on top of the camera view
+            imgFullPreview.toFront();
 
             adjustImage(imgFullPreview, rootPane);
         }
@@ -294,34 +386,11 @@ public class CameraController extends BaseController implements Initializable {
         btnTakePicture.setVisible(true);
         currentPreviewIndex = -1;
 
-        // Restart the camera when closing the preview
-        if (strategy != null) {
-            try {
-                strategy.start();
+        // Restart the camera without clearing previews
+        restartCameraOnly();
 
-                // Restart the preview executor
-                if (mainPreviewExecutor == null || mainPreviewExecutor.isShutdown()) {
-                    mainPreviewExecutor = Executors.newSingleThreadScheduledExecutor();
-                    mainPreviewExecutor.scheduleAtFixedRate(() -> {
-                        try {
-                            Image frame = strategy.takePhoto();
-                            Platform.runLater(() -> {
-                                imgCamera.setImage(frame);
-                                adjustImage(imgCamera, cameraStackpane);
-                            });
-                        } catch (Exception e) {
-                            throw new RuntimeException(e);
-                        }
-                    }, 0, 33, TimeUnit.MILLISECONDS);
-                }
-            } catch (CameraNotFound e) {
-                System.err.println("Camera not found: " + e.getMessage());
-                showAlert.display("Camera Not Found", "No camera was detected. Please connect a camera and try again.");
-            } catch (Exception e) {
-                System.err.println("Error restarting camera: " + e.getMessage());
-                showAlert.display("Camera Error", "An error occurred while restarting the camera: " + e.getMessage());
-            }
-        }
+        // Ensure the camera view is on top when returning to camera mode
+        imgCamera.toFront();
     }
 
     @FXML
