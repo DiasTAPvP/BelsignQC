@@ -241,6 +241,9 @@ public class CameraController extends BaseController implements Initializable {
     private void openOverlayPreview(int i) {
         Image[] images = gallery.toArray(new Image[0]);
         if (i < images.length) {
+            // Shutdown camera when viewing preview
+            shutdownCamera();
+
             imgFullPreview.setImage(images[i]);
             imgFullPreview.setVisible(true);
             previewControls.setVisible(true);
@@ -290,6 +293,35 @@ public class CameraController extends BaseController implements Initializable {
         btnPhotoLogout.setVisible(true);
         btnTakePicture.setVisible(true);
         currentPreviewIndex = -1;
+
+        // Restart the camera when closing the preview
+        if (strategy != null) {
+            try {
+                strategy.start();
+
+                // Restart the preview executor
+                if (mainPreviewExecutor == null || mainPreviewExecutor.isShutdown()) {
+                    mainPreviewExecutor = Executors.newSingleThreadScheduledExecutor();
+                    mainPreviewExecutor.scheduleAtFixedRate(() -> {
+                        try {
+                            Image frame = strategy.takePhoto();
+                            Platform.runLater(() -> {
+                                imgCamera.setImage(frame);
+                                adjustImage(imgCamera, cameraStackpane);
+                            });
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                    }, 0, 33, TimeUnit.MILLISECONDS);
+                }
+            } catch (CameraNotFound e) {
+                System.err.println("Camera not found: " + e.getMessage());
+                showAlert.display("Camera Not Found", "No camera was detected. Please connect a camera and try again.");
+            } catch (Exception e) {
+                System.err.println("Error restarting camera: " + e.getMessage());
+                showAlert.display("Camera Error", "An error occurred while restarting the camera: " + e.getMessage());
+            }
+        }
     }
 
     @FXML
