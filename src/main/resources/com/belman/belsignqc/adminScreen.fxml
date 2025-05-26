@@ -58,7 +58,7 @@
             </TableView>
          </center>
          <top>
-            <TextField alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER" />
+            <TextField fx:id="adminUserSearch" alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER" />
          </top>
       </BorderPane>
    </left>
@@ -72,7 +72,7 @@
             </TableView>
          </center>
          <top>
-            <TextField alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER" />
+            <TextField fx:id="adminOrderSearch" alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER" />
          </top>
       </BorderPane>
    </right>

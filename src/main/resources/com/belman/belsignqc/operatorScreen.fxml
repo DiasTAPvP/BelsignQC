@@ -78,7 +78,7 @@
          <center>
             <TableView BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn prefWidth="299.0" text="Order Numbers" />
+                <TableColumn fx:id="operatorOrderColumn" prefWidth="299.0" text="Order Numbers" />
               </columns>
             </TableView>
          </center>
