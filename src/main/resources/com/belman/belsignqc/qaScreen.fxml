@@ -15,40 +15,6 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.belman.belsignqc.GUI.Controller.QAController">
-   <top>
-      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER_LEFT" maxHeight="63.0" prefHeight="63.0" prefWidth="518.0" spacing="15.0">
-               <children>
-                  <ImageView fitHeight="37.0" fitWidth="44.0">
-                     <image>
-                        <Image url="@images/belmanLogo.png" />
-                     </image>
-                  </ImageView>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Belman" textAlignment="CENTER" wrappingWidth="91.98307228088379">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Text>
-               </children>
-               <padding>
-                  <Insets left="10.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" maxHeight="64.0" prefHeight="64.0" prefWidth="659.0" spacing="20.0">
-               <children>
-                  <Button fx:id="qaReturnButton" mnemonicParsing="false" onMouseClicked="#handleLogout" text="Logout">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-               </children>
-               <padding>
-                  <Insets right="10.0" />
-               </padding></HBox>
-         </children>
-      </HBox>
-   </top>
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -73,6 +39,9 @@
                      <image>
                         <Image url="@images/belmanProduct4.png" />
                      </image>
+                     <FlowPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </FlowPane.margin>
                   </ImageView>
                   <ImageView fitHeight="180.0" fitWidth="200.0">
                      <image>
@@ -90,8 +59,17 @@
                      </image>
                   </ImageView>
                </children>
+               <VBox.margin>
+                  <Insets bottom="1.0" right="10.0" top="11.0" />
+               </VBox.margin>
             </FlowPane>
          </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
       </VBox>
    </center>
    <bottom>
@@ -104,27 +82,78 @@
             </HBox>
          </right>
          <left>
-            <HBox BorderPane.alignment="CENTER">
+            <HBox spacing="4.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" styleClass="buttons" text="Contact" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" styleClass="buttons" text="Generate Report" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Contact" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Generate Report" />
                </children>
             </HBox>
          </left>
+         <BorderPane.margin>
+            <Insets left="10.0" right="10.0" />
+         </BorderPane.margin>
       </BorderPane>
    </bottom>
    <left>
       <BorderPane BorderPane.alignment="CENTER">
          <top>
-            <TextField fx:id="qaSearch" alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER" />
+            <TextField fx:id="qaSearch" alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </BorderPane.margin></TextField>
          </top>
          <center>
-            <TableView fx:id="qaOrderTable" minWidth="289.0" styleClass="tables" BorderPane.alignment="CENTER">
+            <TableView fx:id="qaOrderTable" styleClass="tables" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="qaOrderColumn" maxWidth="1.7976931348623157E308" minWidth="289.0" prefWidth="200.0" text="Order Number" />
+                <TableColumn fx:id="qaOrderColumn" maxWidth="1.7976931348623157E308" minWidth="254.0" prefWidth="292.0" text="Order Number" />
               </columns>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
             </TableView>
          </center>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
+         <BorderPane.margin>
+            <Insets left="10.0" />
+         </BorderPane.margin>
       </BorderPane>
    </left>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <top>
+      <BorderPane BorderPane.alignment="CENTER">
+         <center>
+            <HBox spacing="170.0" BorderPane.alignment="CENTER" />
+         </center>
+         <left>
+            <HBox spacing="15.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="37.0" fitWidth="44.0">
+                     <image>
+                        <Image url="@images/belmanLogo.png" />
+                     </image>
+                  </ImageView>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Belman" textAlignment="CENTER" wrappingWidth="91.98307228088379">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Text>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </left>
+         <right>
+            <Button fx:id="adminLogoutButton" mnemonicParsing="false" onMouseClicked="#handleLogout" text="Logout" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+         </right>
+      </BorderPane>
+   </top>
 </BorderPane>
