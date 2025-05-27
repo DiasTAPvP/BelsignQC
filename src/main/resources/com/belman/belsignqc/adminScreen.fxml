@@ -18,7 +18,7 @@
    <top>
       <BorderPane BorderPane.alignment="CENTER">
          <left>
-            <HBox spacing="5.0" BorderPane.alignment="CENTER">
+            <HBox spacing="15.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="37.0" fitWidth="44.0">
                      <image>
@@ -31,6 +31,9 @@
                      </font>
                   </Text>
                </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </HBox>
          </left>
          <right>
@@ -53,13 +56,19 @@
          <center>
             <TableView fx:id="adminUserTable" styleClass="tables">
                <columns>
-                  <TableColumn fx:id="adminUserColumn" prefWidth="292.0" text="Users" />
+                  <TableColumn fx:id="adminUserColumn" maxWidth="1.7976931348623157E308" minWidth="254.0" prefWidth="292.0" text="Users" />
                </columns>
             </TableView>
          </center>
          <top>
-            <TextField fx:id="adminUserSearch" alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER" />
+            <TextField fx:id="adminUserSearch" alignment="CENTER" promptText="Search For A User" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </BorderPane.margin></TextField>
          </top>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
       </BorderPane>
    </left>
    <right>
@@ -72,8 +81,14 @@
             </TableView>
          </center>
          <top>
-            <TextField fx:id="adminOrderSearch" alignment="CENTER" promptText="Search" BorderPane.alignment="CENTER" />
+            <TextField fx:id="adminOrderSearch" alignment="CENTER" promptText="Search For An Order" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="5.0" top="5.0" />
+               </BorderPane.margin></TextField>
          </top>
+         <padding>
+            <Insets bottom="5.0" top="5.0" />
+         </padding>
       </BorderPane>
    </right>
    <center>
@@ -113,7 +128,7 @@
                   </ImageView>
                </children>
                <VBox.margin>
-                  <Insets />
+                  <Insets bottom="1.0" left="150.0" right="10.0" top="11.0" />
                </VBox.margin>
             </FlowPane>
          </children>
@@ -122,18 +137,18 @@
    <bottom>
       <BorderPane BorderPane.alignment="CENTER">
          <left>
-            <HBox BorderPane.alignment="CENTER">
+            <HBox spacing="4.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="createUserButton" mnemonicParsing="false" onMouseClicked="#createButtonPressed" prefHeight="40.0" prefWidth="146.5" styleClass="buttons" text="Create" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.5" styleClass="buttons" text="Edit" />
+                  <Button fx:id="createUserButton" mnemonicParsing="false" onMouseClicked="#createButtonPressed" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Create" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Edit" />
                </children>
             </HBox>
          </left>
          <right>
-            <HBox BorderPane.alignment="CENTER">
+            <HBox spacing="4.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.5" styleClass="buttons" text="Audit LOG" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.5" styleClass="buttons" text="Delete" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.0" styleClass="buttons" text="Audit LOG" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Delete" />
                </children>
             </HBox>
          </right>
