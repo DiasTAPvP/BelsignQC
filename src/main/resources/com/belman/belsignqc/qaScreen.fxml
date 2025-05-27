@@ -85,7 +85,7 @@
             <HBox spacing="4.0" BorderPane.alignment="CENTER">
                <children>
                   <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Contact" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Generate Report" />
+                  <Button fx:id="qaGenerateBtn" mnemonicParsing="false" onAction="#handleGeneratePDF" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Generate Report" />
                </children>
             </HBox>
          </left>

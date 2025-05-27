@@ -2,13 +2,12 @@ package com.belman.belsignqc.BE;
 
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 public class Photos {
     int id;
     OrderNumbers orderNumber;
     String filepath;
-    int uploadedBy;
+    int userId;
     Timestamp uploadTime;
 
     public Photos(){}
@@ -37,12 +36,12 @@ public class Photos {
         this.filepath = filepath;
     }
 
-    public int getUploadedBy() {
-        return uploadedBy;
+    public int getUserID() {
+        return userId;
     }
 
-    public void setUploadedBy(int uploadedBy) {
-        this.uploadedBy = uploadedBy;
+    public void setUserID(int userId) {
+        this.userId = userId;
     }
 
     public Timestamp getUploadTime() {
@@ -57,6 +56,6 @@ public class Photos {
     public String toString()
     {
         String orderNumberStr = orderNumber != null ? orderNumber.getOrderNumber() : "null";
-        return "Photo [id=" + id + ", orderNumber=" + orderNumberStr + ", filepath=" + filepath + ", uploadedBy=" + uploadedBy + ", uploadTime=" + uploadTime + "]";
+        return "Photo [id=" + id + ", orderNumber=" + orderNumberStr + ", filepath=" + filepath + ", uploadedBy=" + userId + ", uploadTime=" + uploadTime + "]";
     }
 }
