@@ -55,7 +55,7 @@
    <center>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <top>
-            <TextField alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="500.0" minWidth="400.0" promptText="Search" styleClass="textfields" BorderPane.alignment="CENTER">
+            <TextField fx:id="operatorSearchField" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="500.0" minWidth="400.0" promptText="Search" styleClass="textfields" BorderPane.alignment="CENTER">
                <font>
                   <Font size="28.0" />
                </font>
@@ -76,7 +76,7 @@
             </Button>
          </right>
          <center>
-            <TableView BorderPane.alignment="CENTER">
+            <TableView fx:id="operatorOrderTable" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="operatorOrderColumn" prefWidth="299.0" text="Order Numbers" />
               </columns>
