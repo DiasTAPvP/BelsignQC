@@ -8,4 +8,12 @@ public abstract class BaseController {
     public void setScreenManager(ScreenManager screenManager) {
         this.screenManager = screenManager;
     }
+
+    /**
+     * Called when this controller's screen is activated.
+     * Override this method in subclasses to perform actions when the screen becomes active.
+     */
+    public void onScreenActivated() {
+        // Default implementation does nothing
+    }
 }
