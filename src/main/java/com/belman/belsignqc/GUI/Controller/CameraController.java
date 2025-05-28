@@ -209,7 +209,7 @@ public class CameraController extends BaseController implements Initializable {
             e.printStackTrace();
             //TODO alert
         }
-
+        //
         shutdownCamera();
 
         // Navigate back to the operator screen after saving images

@@ -60,7 +60,7 @@ public class PhotoDAO implements IPhotoDataAccess {
         }
         Connection connection = null;
         List<Path> persistedPaths = new ArrayList<>();
-
+//
         try {
             connection = dbConnector.getConnection();
             connection.setAutoCommit(false);

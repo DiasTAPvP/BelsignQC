@@ -25,7 +25,7 @@ public class PhotoManager {
         OrderNumbers orderNumber = photoDataAccess.getOrderNumberFromString(orderNumberStr);
         return photoDataAccess.saveImageAndPath(images, fileNames, uploader, orderNumber);
     }
-
+//
     public ObservableList<Photos> getImagesForOrder(String orderNumber) throws SQLException {
         return photoDataAccess.getImagesForOrder(orderNumber);
     }

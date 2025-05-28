@@ -32,7 +32,7 @@ public class PhotoModel {
     public ObservableList<Photos> getImagesForOrderNumber(String orderNumberStr) throws SQLException {
         return photoManager.getImagesForOrderNumber(orderNumberStr);
     }
-
+//
     public void deleteImage(Photos photos) throws SQLException {
         photoManager.deleteImage(photos);
     }
