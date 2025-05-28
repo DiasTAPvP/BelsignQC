@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -21,7 +20,7 @@
    <top>
       <BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
          <left>
-            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
+            <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="37.0" fitWidth="44.0">
                      <image>
@@ -34,15 +33,11 @@
                      </font>
                   </Text>
                </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </HBox>
          </left>
-         <center>
-            <Label text="Welcome!" BorderPane.alignment="CENTER">
-               <font>
-                  <Font size="28.0" />
-               </font>
-            </Label>
-         </center>
          <right>
             <Button fx:id="operatorLogoutButton1" mnemonicParsing="false" onMouseClicked="#handleLogout" text="Logout" BorderPane.alignment="CENTER">
                <font>
@@ -60,28 +55,41 @@
                   <Font size="28.0" />
                </font>
                <BorderPane.margin>
-                  <Insets />
+                  <Insets bottom="5.0" top="5.0" />
                </BorderPane.margin>
             </TextField>
          </top>
-         <right>
-            <Button fx:id="openCamera" maxWidth="1.7976931348623157E308" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleOpenCamera" styleClass="buttons" stylesheets="@style.css" BorderPane.alignment="BOTTOM_CENTER">
-               <effect>
-                  <ImageInput>
-                     <source>
-                        <Image url="@images/camera_icon.png" />
-                     </source>
-                  </ImageInput>
-               </effect>
-            </Button>
-         </right>
          <center>
-            <TableView fx:id="operatorOrderTable" BorderPane.alignment="CENTER">
+            <TableView fx:id="operatorOrderTable" fixedCellSize="1.0" maxWidth="500.0" minWidth="100.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn fx:id="operatorOrderColumn" prefWidth="299.0" text="Order Numbers" />
+                <TableColumn fx:id="operatorOrderColumn" maxWidth="1000.0" minWidth="75.0" prefWidth="-1.0" text="Order Numbers" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <BorderPane.margin>
+                  <Insets left="50.0" right="50.0" />
+               </BorderPane.margin>
             </TableView>
          </center>
+         <bottom>
+            <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="openCamera" contentDisplay="CENTER" minHeight="100.0" minWidth="100.0" mnemonicParsing="false" onAction="#handleOpenCamera" styleClass="buttons" stylesheets="@style.css">
+                     <effect>
+                        <ImageInput>
+                           <source>
+                              <Image url="@images/camera_icon.png" />
+                           </source>
+                        </ImageInput>
+                     </effect>
+                  </Button>
+               </children>
+            </HBox>
+         </bottom>
       </BorderPane>
    </center>
 </BorderPane>
