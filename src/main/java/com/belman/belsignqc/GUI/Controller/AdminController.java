@@ -2,6 +2,7 @@ package com.belman.belsignqc.GUI.Controller;
 
 import com.belman.belsignqc.BE.OrderNumbers;
 import com.belman.belsignqc.BE.Users;
+import com.belman.belsignqc.BLL.Util.UserSession;
 import com.belman.belsignqc.BLL.showAlert;
 import com.belman.belsignqc.DAL.DAO.OrderDAO;
 import com.belman.belsignqc.DAL.DAO.UserDAO;
@@ -71,7 +72,12 @@ public class AdminController extends BaseController {
 
     @FXML
     private void handleLogout() {
+        //Clear UserSession of the logged-in user
+        UserSession.getInstance().clearSession();
+
+        // Navigate to the login screen
         screenManager.setScreen("login");
+
     }
 
     @FXML

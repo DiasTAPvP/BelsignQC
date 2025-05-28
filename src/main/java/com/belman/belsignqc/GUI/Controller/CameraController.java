@@ -119,6 +119,15 @@ public class CameraController extends BaseController implements Initializable {
         btnConfirmation.setDisable(true);
     }
 
+    // This method is called when the CameraController receives data from the OperatorController
+    @Override
+    public void receiveData(Object data) {
+        if (data instanceof String) {
+            this.orderNumber = (String) data;
+            System.out.println("Received order number: " + orderNumber);
+        }
+    }
+
 
     private void bindPreviewToRoot() {
         rootPane.widthProperty().addListener((observable, oldValue, newValue) -> {

@@ -1,5 +1,6 @@
 package com.belman.belsignqc.GUI.Controller;
 
+import com.belman.belsignqc.BLL.Util.UserSession;
 import com.belman.belsignqc.BLL.showAlert;
 import com.belman.belsignqc.DAL.DAO.OrderDAO;
 import com.belman.belsignqc.GUI.Model.OrderModel;
@@ -28,17 +29,25 @@ public class OperatorController extends BaseController {
 
     private ObservableList<OrderModel> allOrders;
     private OrderDAO orderDAO;
+    private OrderModel selectedOrder;
 
     @FXML
     private void handleLogout() {
-        screenManager.setScreen("login");
+        //Clear UserSession of the logged-in user
+        UserSession.getInstance().clearSession();
 
-        //Make it forget who is logged in later too (LoginModel)
+        // Navigate to the login screen
+        screenManager.setScreen("login");
     }
 
     @FXML
     private void handleOpenCamera() {
-        screenManager.setScreen("camera");
+        if (selectedOrder != null) {
+            // Pass the selected order number to the camera screen
+            screenManager.setScreenWithData("camera", selectedOrder.getOrderNumber());
+        } else {
+            showAlert.display("Selection Required", "Please select an order first.");
+        }
     }
 
     @FXML
@@ -52,6 +61,17 @@ public class OperatorController extends BaseController {
 
             // Load orders from database (this will also set up the search functionality)
             loadOrdersFromDatabase();
+
+            // Add selection listener to the table
+            operatorOrderTable.getSelectionModel().selectedItemProperty().addListener(
+                    (obs, oldSelection, newSelection) -> {
+                        selectedOrder = newSelection;
+                        // Enable or disable camera button based on selection
+                        openCamera.setDisable(selectedOrder == null);
+                    });
+
+            // Initially disable the camera button until an order is selected
+            openCamera.setDisable(true);
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -49,7 +49,7 @@ public class UserSession {
      * Clears the logged-in user (logout)
      */
     public void clearSession() {
-        loggedInUser = null;
+        this.loggedInUser = null;
     }
 
     /**

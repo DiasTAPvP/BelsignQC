@@ -1,5 +1,6 @@
 package com.belman.belsignqc.BLL.Util;
 
+import com.belman.belsignqc.GUI.Controller.BaseController;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 public class ScreenManager extends StackPane {
 
     private Map<String, Node> screens = new HashMap<>();
+    private Map<String, BaseController> controllers = new HashMap<>();
     private String currentScreen;
 
     public ScreenManager() {
@@ -24,8 +26,19 @@ public class ScreenManager extends StackPane {
      * @param name
      * @param screen
      */
-    public void addScreen(String name, Node screen) {
+    public void addScreen(String name, Node screen, BaseController controller) {
         screens.put(name, screen);
+        controllers.put(name, controller);
+    }
+
+    /**
+     * Gets the controller associated with a screen.
+     *
+     * @param name The name of the screen.
+     * @return The controller for the screen, or null if not found.
+     */
+    public BaseController getController(String name) {
+        return controllers.get(name);
     }
 
     public boolean removeScreen(String name) {
@@ -53,6 +66,18 @@ public class ScreenManager extends StackPane {
             return true;
         }
         return false;
+    }
+
+    // Method to get the controller of the current screen
+    // This is to help pass along information between screens
+    public void setScreenWithData(String name, Object data) {
+        if (screens.containsKey(name)) {
+            BaseController controller = getController(name);
+            if (controller != null) {
+                controller.receiveData(data);
+            }
+            setScreen(name);
+        }
     }
 
     public String getCurrentScreen() {
