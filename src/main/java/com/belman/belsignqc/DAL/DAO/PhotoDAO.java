@@ -204,14 +204,15 @@ public class PhotoDAO implements IPhotoDataAccess {
                                           Users uploader,
                                           OrderNumbers orderNumber) throws SQLException {
 
-        String sql = "INSERT INTO Photos (order_number_id, file_path, uploaded_by, uploaded_at) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO Pictures (pictureid, filepath, uploadtime, userid, ordernumberid) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Path path : filePaths) {
-                statement.setInt(1, orderNumber.getOrderNumberID());
+                statement.setInt(1, 0);
                 statement.setString(2, path.toString());
-                statement.setInt(3, uploader.getUserID());
-                statement.setTimestamp(4, new java.sql.Timestamp(System.currentTimeMillis()));
+                statement.setTimestamp(3, new java.sql.Timestamp(System.currentTimeMillis()));
+                statement.setInt(4, uploader.getUserID());
+                statement.setInt(5, orderNumber.getOrderNumberID());
                 statement.addBatch();
             }
             statement.executeBatch();
@@ -221,7 +222,7 @@ public class PhotoDAO implements IPhotoDataAccess {
     @Override
     public ObservableList<Photos> getImagesForOrderNumber(OrderNumbers orderNumber) throws SQLException {
         ObservableList<Photos> photos = javafx.collections.FXCollections.observableArrayList();
-        String sql = "SELECT p.* FROM Photos p WHERE p.order_number_id = ?";
+        String sql = "SELECT p.* FROM Pictures p WHERE p.ordernumberid = ?";
 
         try(Connection conn = dbConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, orderNumber.getOrderNumberID());
@@ -234,13 +235,13 @@ public class PhotoDAO implements IPhotoDataAccess {
 
                 // Create OrderNumbers object for this photo
                 OrderNumbers photoOrderNumber = new OrderNumbers();
-                photoOrderNumber.setOrderNumberID(rs.getInt("order_number_id"));
+                photoOrderNumber.setOrderNumberID(rs.getInt("OrderNumberID"));
                 photoOrderNumber.setOrderNumber(orderNumber.getOrderNumber());
                 tempImg.setOrderNumber(photoOrderNumber);
 
-                tempImg.setFilepath(rs.getString("file_path"));
-                tempImg.setUploadedBy(rs.getInt("uploaded_by"));
-                tempImg.setUploadTime(new java.sql.Timestamp(rs.getTimestamp("uploaded_at").getTime()));
+                tempImg.setFilepath(rs.getString("FilePath"));
+                tempImg.setUserID(rs.getInt("UserID"));
+                tempImg.setUploadTime(new java.sql.Timestamp(rs.getTimestamp("UploadTime").getTime()));
                 photos.add(tempImg);
             }
             System.out.println("length:" + photos.size());
@@ -257,17 +258,17 @@ public class PhotoDAO implements IPhotoDataAccess {
     @Override
     public OrderNumbers getOrderNumberFromString(String orderNumberStr) throws SQLException {
         OrderNumbers orderNumber = new OrderNumbers();
-        String sql = "SELECT * FROM OrderNumbers WHERE order_number = ?";
+        String sql = "SELECT * FROM OrderNumbers WHERE ordernumber = ?";
         try(Connection conn = dbConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, orderNumberStr);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                orderNumber.setOrderNumberID(rs.getInt("order_number_id"));
-                orderNumber.setOrderNumber(rs.getString("order_number"));
-                orderNumber.setCreatedAt(rs.getTimestamp("created_at"));
+                orderNumber.setOrderNumberID(rs.getInt("OrderNumberID"));
+                orderNumber.setOrderNumber(rs.getString("OrderNumber"));
+                orderNumber.setCreatedAt(rs.getTimestamp("CreatedAt"));
             } else {
                 // If order number doesn't exist, create it
-                sql = "INSERT INTO OrderNumbers (order_number, user_id, created_at) VALUES (?, ?, ?)";
+                sql = "INSERT INTO OrderNumbers (ordernumber, userid, createdat) VALUES (?, ?, ?)";
                 try (PreparedStatement insertPs = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
                     insertPs.setString(1, orderNumberStr);
                     insertPs.setInt(2, 1); // Default user ID, should be replaced with actual user
@@ -288,7 +289,7 @@ public class PhotoDAO implements IPhotoDataAccess {
 
     @Override
     public void deleteImageFromDatabase(Photos photo) throws SQLException {
-        String sql = "DELETE FROM Photos WHERE id = ?";
+        String sql = "DELETE FROM Pictures WHERE id = ?";
         try(Connection conn = dbConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, photo.getId());
             ps.executeUpdate();

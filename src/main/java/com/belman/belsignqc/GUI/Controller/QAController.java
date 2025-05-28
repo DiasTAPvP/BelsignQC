@@ -3,6 +3,7 @@ package com.belman.belsignqc.GUI.Controller;
 import com.belman.belsignqc.BLL.Util.UserSession;
 import com.belman.belsignqc.BLL.showAlert;
 import com.belman.belsignqc.DAL.DAO.OrderDAO;
+import com.belman.belsignqc.DAL.DBConnector;
 import com.belman.belsignqc.GUI.Model.OrderModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,7 +17,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
+
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class QAController extends BaseController{
@@ -27,10 +32,14 @@ public class QAController extends BaseController{
 
     private ObservableList<OrderModel> allOrders;
     private OrderDAO orderDAO;
+    private DBConnector dbConnector;
 
     @FXML
     private void initialize() {
         try {
+                // Initialize DBConnector
+                dbConnector = new DBConnector();
+
             // Initialize OrderDAO
             orderDAO = new OrderDAO();
 
@@ -105,6 +114,75 @@ public class QAController extends BaseController{
 
         // Add sorted (and filtered) data to the table
         qaOrderTable.setItems(sortedOrders);
+    }
+
+    private int fetchUserIDByOrderNumber(String orderNumber) throws SQLException {
+        String sql = "SELECT userID FROM OrderNumbers WHERE OrderNumber = ?";
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, orderNumber);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("userID");
+            }
+        }
+        throw new SQLException("User ID not found for order number: " + orderNumber);
+    }
+
+    private String fetchFilePathByOrderNumber(String orderNumber) throws SQLException {
+        String sql = "SELECT filepath FROM Photos WHERE orderNumberID = (SELECT orderNumberID FROM OrderNumbers WHERE OrderNumber = ?)";
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, orderNumber);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("filepath");
+            }
+        }
+        throw new SQLException("File path not found for order number: " + orderNumber);
+    }
+
+    @FXML
+    private void handleGeneratePDF() {
+        try {
+            // Get the selected order from the table
+            OrderModel selectedOrder = qaOrderTable.getSelectionModel().getSelectedItem();
+            if (selectedOrder == null) {
+                showAlert.display("Error", "No order selected!");
+                return;
+            }
+
+            // Fetch order details (orderNumber, userID, filePath)
+            String orderNumber = selectedOrder.getOrderNumber();
+            int userID = fetchUserIDByOrderNumber(orderNumber); // Implement this method
+            String filePath = fetchFilePathByOrderNumber(orderNumber); // Implement this method
+
+            // Generate the PDF
+            String pdfPath = "OrderReport_" + orderNumber + ".pdf";
+            createPDFReport(pdfPath, orderNumber, userID, filePath);
+
+            // Notify the user
+            showAlert.display("Success", "PDF report generated: " + pdfPath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert.display("Error", "Failed to generate PDF: " + e.getMessage());
+        }
+    }
+
+    private void createPDFReport(String pdfPath, String orderNumber, int userID, String filePath) throws Exception {
+        // Initialize PDF writer
+        com.itextpdf.kernel.pdf.PdfWriter writer = new com.itextpdf.kernel.pdf.PdfWriter(pdfPath);
+        com.itextpdf.kernel.pdf.PdfDocument pdf = new com.itextpdf.kernel.pdf.PdfDocument(writer);
+        com.itextpdf.layout.Document document = new com.itextpdf.layout.Document(pdf);
+
+        // Add content to the PDF
+        document.add(new com.itextpdf.layout.element.Paragraph("Order Report"));
+        document.add(new com.itextpdf.layout.element.Paragraph("Order Number: " + orderNumber));
+        document.add(new com.itextpdf.layout.element.Paragraph("User ID: " + userID));
+        document.add(new com.itextpdf.layout.element.Paragraph("File Path: " + filePath));
+
+        // Close the document
+        document.close();
     }
 
 

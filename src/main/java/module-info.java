@@ -10,6 +10,8 @@ module com.belman.belsignqc {
     requires java.sql;
     requires com.microsoft.sqlserver.jdbc;
     requires java.naming;
+    requires kernel;
+    requires layout;
 
     opens com.belman.belsignqc to javafx.fxml;
     exports com.belman.belsignqc;
