@@ -9,6 +9,9 @@ public abstract class BaseController {
         this.screenManager = screenManager;
     }
 
+    public void onScreenActivated() {
+    }
+
     public void receiveData(Object data) {
         // This method can be overridden by subclasses to handle data passed from other controllers
         // Default implementation does nothing
