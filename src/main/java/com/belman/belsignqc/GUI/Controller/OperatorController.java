@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
@@ -58,8 +55,21 @@ public class OperatorController extends BaseController {
 
             // Configure the order table column
             operatorOrderColumn.setCellValueFactory(new PropertyValueFactory<>("orderNumber"));
+            operatorOrderColumn.setCellFactory(column -> new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? "" : item);
+                }
+            });
 
-            // Load orders from database (this will also set up the search functionality)
+            operatorOrderTable.setVisible(true);
+            operatorOrderColumn.setPrefWidth(200);
+
+            // Initialize allOrders first to avoid NullPointerException
+            allOrders = FXCollections.observableArrayList();
+
+            // Load orders from database (this will populate allOrders)
             loadOrdersFromDatabase();
 
             // Add selection listener to the table
@@ -86,22 +96,40 @@ public class OperatorController extends BaseController {
             orderDAO = new OrderDAO();
             ObservableList<String> orderNumbers = orderDAO.getAllOrderNumbers();
 
+            // Debug output
+            System.out.println("Order numbers retrieved: " + orderNumbers.size());
+            if (orderNumbers.isEmpty()) {
+                System.out.println("No order numbers returned from database");
+            } else {
+                System.out.println("First order number: " + orderNumbers.get(0));
+            }
+
             // Convert to OrderModel objects
             allOrders = FXCollections.observableArrayList();
             for (String orderNumber : orderNumbers) {
                 allOrders.add(new OrderModel(orderNumber));
             }
 
+            // Debug output
+            System.out.println("OrderModels created: " + allOrders.size());
+
             // Set up the search functionality
             setupOrderSearch();
+
+            // Verify the table has items
+            System.out.println("Table items after setup: " +
+                    (operatorOrderTable.getItems() != null ?
+                            operatorOrderTable.getItems().size() : "null"));
+
         } catch (SQLException e) {
             e.printStackTrace();
-            // Show error message to user
             showAlert.display("Database Error", "Failed to load orders: " + e.getMessage());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace(); // Add stack trace output
+            showAlert.display("I/O Error", "Failed to load orders: " + e.getMessage());
         }
     }
+
     private void setupOrderSearch() {
         // Create a filtered list wrapping the observable list
         FilteredList<OrderModel> filteredOrders = new FilteredList<>(allOrders, p -> true);
@@ -122,6 +150,7 @@ public class OperatorController extends BaseController {
                 }
                 return false; // Does not match
             });
+
         });
 
         // Wrap the filtered list in a sorted list
@@ -132,6 +161,7 @@ public class OperatorController extends BaseController {
 
         // Add sorted (and filtered) data to the table
         operatorOrderTable.setItems(sortedOrders);
+        operatorOrderTable.refresh();
     }
 
 }

@@ -45,6 +45,22 @@
     -fx-effect: null;
 }
 
+.order-table .table-cell {
+    -fx-font-size: 32px;
+    -fx-padding: 5 10 5 10;
+}
+
+/*.order-table .column-header .label {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}*/
+
+
+/*.order-table .table-row-cell:selected {
+    -fx-background-color: -fx-company-belmanblue;
+    -fx-text-fill: white;
+}*/
+
 .logo-image:hover {
     -fx-effect: dropshadow(three-pass-box, -fx-company-belmanblue, 15, 0.3, 0, 0);
     -fx-opacity: 1.0;
