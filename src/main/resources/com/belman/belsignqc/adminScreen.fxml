@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -94,43 +95,11 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <FlowPane hgap="10.0" styleClass="mockborders" vgap="10.0">
-               <children>
-                  <ImageView fitHeight="180.0" fitWidth="200.0">
-                     <image>
-                        <Image url="@images/belmanProduct1.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="181.0" fitWidth="200.0">
-                     <image>
-                        <Image url="@images/belmanProduct2.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="180.0" fitWidth="200.0">
-                     <image>
-                        <Image url="@images/belmanProduct3.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="180.0" fitWidth="200.0">
-                     <image>
-                        <Image url="@images/belmanProduct4.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="180.0" fitWidth="200.0">
-                     <image>
-                        <Image url="@images/belmanProduct5.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="104.0" fitWidth="200.0">
-                     <image>
-                        <Image url="@images/belmanProduct6.png" />
-                     </image>
-                  </ImageView>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="1.0" left="150.0" right="10.0" top="11.0" />
-               </VBox.margin>
-            </FlowPane>
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+               <content>
+                  <FlowPane />
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
    </center>
