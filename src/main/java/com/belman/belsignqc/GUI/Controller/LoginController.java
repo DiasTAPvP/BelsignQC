@@ -18,6 +18,10 @@ public class LoginController extends BaseController {
 
     private UserManager userManager;
 
+    /**
+     * Initializes the LoginController by creating an instance of UserManager.
+     * This method is called when the controller is loaded.
+     */
     public void initialize() {
         try {
             userManager = new UserManager();
@@ -121,6 +125,14 @@ public class LoginController extends BaseController {
         }
     }*/
 
+
+    /**
+     * Displays an alert dialog with the specified title, header, and content.
+     *
+     * @param title   The title of the alert dialog.
+     * @param header  The header text of the alert dialog.
+     * @param content The content text of the alert dialog.
+     */
     private void showAlert(String title, String header, String content) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

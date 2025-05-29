@@ -33,7 +33,11 @@ public class QAController extends BaseController{
     private ObservableList<OrderModel> allOrders;
     private OrderDAO orderDAO;
     private DBConnector dbConnector;
-
+    
+    /**
+     * Initializes the QAController by setting up the order table,
+     * loading orders from the database, and configuring search functionality.
+     */
     @FXML
     private void initialize() {
         try {
@@ -55,6 +59,11 @@ public class QAController extends BaseController{
         }
     }
 
+    /**
+     * Loads all orders from the database and sets up the search functionality.
+     * This method retrieves order numbers, converts them to OrderModel objects,
+     * and populates the TableView with the data.
+     */
     private void loadOrdersFromDatabase() {
         try {
             // Get order numbers from database
@@ -75,6 +84,10 @@ public class QAController extends BaseController{
         }
     }
 
+    /**
+     * Handles the logout action for the QA user.
+     * Clears the user session and navigates to the login screen.
+     */
     @FXML
     private void handleLogout() {
         //Clear UserSession of the logged-in user
@@ -84,6 +97,10 @@ public class QAController extends BaseController{
         screenManager.setScreen("login");
     }
 
+    /**
+     * Sets up the search functionality for the order table.
+     * Filters orders based on the text entered in the search field.
+     */
     private void setupOrderSearch() {
         // Create a filtered list wrapping the observable list
         FilteredList<OrderModel> filteredOrders = new FilteredList<>(allOrders, p -> true);
@@ -116,6 +133,13 @@ public class QAController extends BaseController{
         qaOrderTable.setItems(sortedOrders);
     }
 
+    /**
+     * Fetches the user ID associated with a given order number.
+     *
+     * @param orderNumber The order number to search for.
+     * @return The user ID associated with the order number.
+     * @throws SQLException If there is an error accessing the database.
+     */
     private int fetchUserIDByOrderNumber(String orderNumber) throws SQLException {
         String sql = "SELECT userID FROM OrderNumbers WHERE OrderNumber = ?";
         try (Connection conn = dbConnector.getConnection();
@@ -129,6 +153,13 @@ public class QAController extends BaseController{
         throw new SQLException("User ID not found for order number: " + orderNumber);
     }
 
+    /**
+     * Fetches the file path associated with a given order number.
+     *
+     * @param orderNumber The order number to search for.
+     * @return The file path associated with the order number.
+     * @throws SQLException If there is an error accessing the database.
+     */
     private String fetchFilePathByOrderNumber(String orderNumber) throws SQLException {
         String sql = "SELECT filepath FROM Photos WHERE orderNumberID = (SELECT orderNumberID FROM OrderNumbers WHERE OrderNumber = ?)";
         try (Connection conn = dbConnector.getConnection();
@@ -142,6 +173,10 @@ public class QAController extends BaseController{
         throw new SQLException("File path not found for order number: " + orderNumber);
     }
 
+    /**
+     * Handles the PDF generation for the selected order.
+     * Fetches order details and generates a PDF report.
+     */
     @FXML
     private void handleGeneratePDF() {
         try {
@@ -169,6 +204,15 @@ public class QAController extends BaseController{
         }
     }
 
+    /**
+     * Creates a PDF report for the given order details.
+     *
+     * @param pdfPath      The path where the PDF will be saved.
+     * @param orderNumber  The order number to include in the report.
+     * @param userID       The user ID associated with the order.
+     * @param filePath     The file path associated with the order.
+     * @throws Exception If there is an error creating the PDF.
+     */
     private void createPDFReport(String pdfPath, String orderNumber, int userID, String filePath) throws Exception {
         // Initialize PDF writer
         com.itextpdf.kernel.pdf.PdfWriter writer = new com.itextpdf.kernel.pdf.PdfWriter(pdfPath);

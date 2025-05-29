@@ -26,6 +26,10 @@ public class CreateUserController extends BaseController {
         userModel = new UserModel();
     }
 
+    /**
+     * Initializes the CreateUserController by setting up the user model.
+     * This method is called when the controller is loaded.
+     */
     @FXML
     private void initialize() {
         // Add listeners to update the menu button text when items are selected
@@ -40,6 +44,11 @@ public class CreateUserController extends BaseController {
         }
     }
 
+    /**
+     * Updates the text of the role menu button based on selected roles.
+     * If no roles are selected, it sets the text to "Select Role(s)".
+     * If roles are selected, it lists them in the button text.
+     */
     private void updateRoleMenuButtonText() {
         StringBuilder roles = new StringBuilder("Selected: ");
         boolean hasRole = false;
@@ -68,12 +77,21 @@ public class CreateUserController extends BaseController {
         }
     }
 
+
+    /**
+     * Handles the action of returning to the admin screen.
+     * Clears the input fields and navigates back to the admin screen.
+     */
     @FXML
     private void handleReturn() {
         clearFields();
         screenManager.setScreen("admin");
     }
 
+    /**
+     * Handles the action of creating a new user.
+     * Validates input, hashes the password, and creates a new user in the database.
+     */
     @FXML
     public void createUserAction() {
         String username = createUsernameField.getText().trim();
@@ -116,6 +134,10 @@ public class CreateUserController extends BaseController {
         }
     }
 
+
+    /**
+     * Clears the input fields and resets the role selection.
+     */
     private void clearFields() {
         createUsernameField.clear();
         createPasswordField.clear();
@@ -125,6 +147,14 @@ public class CreateUserController extends BaseController {
         updateRoleMenuButtonText();
     }
 
+
+    /**
+     * Displays an alert dialog with the specified type, title, and content.
+     *
+     * @param alertType The type of alert (e.g., ERROR, INFORMATION).
+     * @param title The title of the alert dialog.
+     * @param content The content text of the alert dialog.
+     */
     private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

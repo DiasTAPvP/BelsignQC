@@ -28,6 +28,11 @@ public class OperatorController extends BaseController {
     private OrderDAO orderDAO;
     private OrderModel selectedOrder;
 
+
+    /**
+     * Handles the action when the logout button is clicked.
+     * Clears the user session and navigates to the login screen.
+     */
     @FXML
     private void handleLogout() {
         //Clear UserSession of the logged-in user
@@ -37,6 +42,11 @@ public class OperatorController extends BaseController {
         screenManager.setScreen("login");
     }
 
+    /**
+     * Handles the action when the camera button is clicked.
+     * If an order is selected, it navigates to the camera screen with the order number.
+     * If no order is selected, it shows an alert to the user.
+     */
     @FXML
     private void handleOpenCamera() {
         if (selectedOrder != null) {
@@ -47,6 +57,10 @@ public class OperatorController extends BaseController {
         }
     }
 
+    /**
+     * Initializes the OperatorController.
+     * Sets up the order table, search functionality, and selection listener.
+     */
     @FXML
     private void initialize() {
         try {
@@ -90,6 +104,11 @@ public class OperatorController extends BaseController {
         }
     }
 
+
+    /**
+     * Loads all orders from the database and sets up the search functionality.
+     * This method is called during initialization to populate the order table.
+     */
     private void loadOrdersFromDatabase() {
         try {
             // Get order numbers from database
@@ -130,6 +149,11 @@ public class OperatorController extends BaseController {
         }
     }
 
+
+    /**
+     * Sets up the search functionality for the order table.
+     * Filters orders based on the text entered in the search field.
+     */
     private void setupOrderSearch() {
         // Create a filtered list wrapping the observable list
         FilteredList<OrderModel> filteredOrders = new FilteredList<>(allOrders, p -> true);
