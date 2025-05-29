@@ -82,7 +82,6 @@ public class CameraController extends BaseController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // Initialize currentUser from UserSession
         currentUser = UserSession.getInstance().getUser();
-        System.out.println("Current user on init: " + (currentUser != null ? currentUser.getUserID() : "null"));
 
 
         Rectangle clip = new Rectangle();
@@ -239,19 +238,18 @@ public class CameraController extends BaseController implements Initializable {
     @FXML
     public void handleFinishCamera(ActionEvent actionEvent) {
         if (imagesToSave.isEmpty()) {
+            showAlert.display("No Images", "No images to save. Please capture at least one image.");
             return;
         }
 
-        // Get current user from session as fallback
-        if (currentUser == null) {
-            currentUser = UserSession.getInstance().getUser();
-            System.out.println("Retrieved user from session: " +
-                    (currentUser != null ? currentUser.getUserID() : "still null"));
+        // Get current user from session
+        currentUser = UserSession.getInstance().getUser();
+        System.out.println("Attempting to save images - User in session: " +
+                (currentUser != null ? "ID: " + currentUser.getUserID() : "null"));
 
-            if (currentUser == null) {
-                showAlert.display("Error", "No user is logged in. Unable to save images.");
-                return;
-            }
+        if (currentUser == null) {
+            showAlert.display("Error", "No user is logged in. Unable to save images.");
+            return;
         }
 
         List<String> fileNames = new ArrayList<>();
@@ -260,8 +258,10 @@ public class CameraController extends BaseController implements Initializable {
         }
 
         try {
-            System.out.println("Saving with user ID: " + currentUser.getUserID());
+            System.out.println("Saving images with user ID: " + currentUser.getUserID() +
+                    " for order: " + orderNumber);
             photoModel.saveImageAndPath(imagesToSave, fileNames, currentUser, orderNumber);
+            System.out.println("Images saved successfully");
         } catch (Exception e) {
             e.printStackTrace();
             showAlert.display("Error", "Failed to save images: " + e.getMessage());
