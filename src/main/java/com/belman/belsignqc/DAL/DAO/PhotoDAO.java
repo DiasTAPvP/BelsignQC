@@ -204,15 +204,14 @@ public class PhotoDAO implements IPhotoDataAccess {
                                           Users uploader,
                                           OrderNumbers orderNumber) throws SQLException {
 
-        String sql = "INSERT INTO Pictures (pictureid, filepath, uploadtime, userid, ordernumberid) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Pictures (filepath, uploadtime, userid, ordernumberid) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             for (Path path : filePaths) {
-                statement.setInt(1, 0);
-                statement.setString(2, path.toString());
-                statement.setTimestamp(3, new java.sql.Timestamp(System.currentTimeMillis()));
-                statement.setInt(4, uploader.getUserID());
-                statement.setInt(5, orderNumber.getOrderNumberID());
+                statement.setString(1, path.toString());
+                statement.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
+                statement.setInt(3, uploader.getUserID());
+                statement.setInt(4, orderNumber.getOrderNumberID());
                 statement.addBatch();
             }
             statement.executeBatch();
