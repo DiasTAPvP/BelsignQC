@@ -1,5 +1,6 @@
 package com.belman.belsignqc.BLL.Util;
 
+import com.belman.belsignqc.BE.Users;
 import com.belman.belsignqc.GUI.Controller.BaseController;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
@@ -50,8 +51,23 @@ public class ScreenManager extends StackPane {
         return false;
     }
 
-    public boolean setScreen(String name) {
+    public void setScreen(String name) {
+        // Get current user from session
+        Users currentUser = UserSession.getInstance().getUser();
+        System.out.println("User in ScreenManager when switching to " + name + ": " +
+                (currentUser != null ? currentUser.getUserID() : "null"));
+
         if (screens.get(name) != null) {
+            // Load the new controller
+            BaseController controller = controllers.get(name);
+            if (controller != null) {
+                // Pass the user to the new controller
+                controller.receiveUserData(currentUser);
+
+                // Notify controller its screen is being activated
+                controller.onScreenActivated();
+            }
+
             // If there's a screen already being displayed, remove it
             if (currentScreen != null && !currentScreen.equals(name)) {
                 getChildren().remove(screens.get(currentScreen));
@@ -63,10 +79,9 @@ public class ScreenManager extends StackPane {
             }
 
             currentScreen = name;
-            return true;
         }
-        return false;
     }
+
 
     // Method to get the controller of the current screen
     // This is to help pass along information between screens
