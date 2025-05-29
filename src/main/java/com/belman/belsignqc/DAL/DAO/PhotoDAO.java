@@ -230,7 +230,7 @@ public class PhotoDAO implements IPhotoDataAccess {
             while(rs.next())
             {
                 Photos tempImg = new Photos();
-                tempImg.setId(rs.getInt("id"));
+                tempImg.setId(rs.getInt("PictureID"));
 
                 // Create OrderNumbers object for this photo
                 OrderNumbers photoOrderNumber = new OrderNumbers();

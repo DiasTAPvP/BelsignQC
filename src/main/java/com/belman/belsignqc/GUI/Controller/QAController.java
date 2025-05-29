@@ -5,17 +5,18 @@ import com.belman.belsignqc.BLL.showAlert;
 import com.belman.belsignqc.DAL.DAO.OrderDAO;
 import com.belman.belsignqc.DAL.DBConnector;
 import com.belman.belsignqc.GUI.Model.OrderModel;
+import com.itextpdf.io.image.ImageDataFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.kernel.colors.ColorConstants;
+
 
 
 import java.io.IOException;
@@ -187,17 +188,19 @@ public class QAController extends BaseController{
                 return;
             }
 
-            // Fetch order details (orderNumber, userID, filePath)
+            // Get order number
             String orderNumber = selectedOrder.getOrderNumber();
-            int userID = fetchUserIDByOrderNumber(orderNumber); // Implement this method
-            String filePath = fetchFilePathByOrderNumber(orderNumber); // Implement this method
 
-            // Generate the PDF
-            String pdfPath = "OrderReport_" + orderNumber + ".pdf";
-            createPDFReport(pdfPath, orderNumber, userID, filePath);
+            // Prompt for comments
+            String comments = promptForComments();
 
-            // Notify the user
-            showAlert.display("Success", "PDF report generated: " + pdfPath);
+            // Generate the PDF with comments
+            String pdfFilename = "OrderReport_" + orderNumber + ".pdf";
+            createPDFReport(pdfFilename, orderNumber, comments);
+
+            // Show full path in notification
+            java.nio.file.Path pdfPath = java.nio.file.Paths.get("QC_Reports", orderNumber + "_Reports", pdfFilename);
+            showAlert.display("Success", "PDF report generated: " + pdfPath.toString());
         } catch (Exception e) {
             e.printStackTrace();
             showAlert.display("Error", "Failed to generate PDF: " + e.getMessage());
@@ -205,28 +208,167 @@ public class QAController extends BaseController{
     }
 
     /**
-     * Creates a PDF report for the given order details.
+     * Shows a dialog to prompt for optional comments.
      *
-     * @param pdfPath      The path where the PDF will be saved.
-     * @param orderNumber  The order number to include in the report.
-     * @param userID       The user ID associated with the order.
-     * @param filePath     The file path associated with the order.
-     * @throws Exception If there is an error creating the PDF.
+     * @return The comments entered by the user, or "No Comment" if left blank.
      */
-    private void createPDFReport(String pdfPath, String orderNumber, int userID, String filePath) throws Exception {
+    private String promptForComments() {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("QC Report Comments");
+        dialog.setHeaderText("Enter optional comments for this QC report:");
+        dialog.setContentText("Comments:");
+
+        // Set the dialog window to be centered on the screen
+        dialog.initOwner(qaOrderTable.getScene().getWindow());
+
+        // Show the dialog and get the result
+        java.util.Optional<String> result = dialog.showAndWait();
+
+        // Return the entered text, or "No Comment" if canceled or left blank
+        return result.map(comment -> comment.trim().isEmpty() ? "No Comment" : comment).orElse("No Comment");
+    }
+
+    /**
+     * Creates a PDF report for the given order details with all associated images.
+     *
+     * @param pdfFilename   The path where the PDF will be saved.
+     * @param orderNumber   The order number to include in the report.
+     * @param comments      Comments to include in the QC approval section.
+     * @throws Exception    If there is an error creating the PDF.
+     */
+    private void createPDFReport(String pdfFilename, String orderNumber, String comments) throws Exception {
+        // Create QC_Reports base directory if it doesn't exist
+        java.nio.file.Path reportsDir = java.nio.file.Paths.get("QC_Reports");
+        try {
+            if (!java.nio.file.Files.exists(reportsDir)) {
+                java.nio.file.Files.createDirectories(reportsDir);
+            }
+        } catch (IOException e) {
+            throw new Exception("Failed to create QC_Reports directory: " + e.getMessage(), e);
+        }
+
+        // Create order-specific directory
+        java.nio.file.Path orderDir = reportsDir.resolve(orderNumber + "_Reports");
+        try {
+            if (!java.nio.file.Files.exists(orderDir)) {
+                java.nio.file.Files.createDirectories(orderDir);
+            }
+        } catch (IOException e) {
+            throw new Exception("Failed to create order-specific directory: " + e.getMessage(), e);
+        }
+
+        // Create full path for the PDF file
+        java.nio.file.Path fullPdfPath = orderDir.resolve(pdfFilename);
+
         // Initialize PDF writer
-        com.itextpdf.kernel.pdf.PdfWriter writer = new com.itextpdf.kernel.pdf.PdfWriter(pdfPath);
-        com.itextpdf.kernel.pdf.PdfDocument pdf = new com.itextpdf.kernel.pdf.PdfDocument(writer);
-        com.itextpdf.layout.Document document = new com.itextpdf.layout.Document(pdf);
+        com.itextpdf.kernel.pdf.PdfWriter writer;
+        com.itextpdf.kernel.pdf.PdfDocument pdf;
+        com.itextpdf.layout.Document document;
+        try {
+            writer = new com.itextpdf.kernel.pdf.PdfWriter(fullPdfPath.toString());
+            pdf = new com.itextpdf.kernel.pdf.PdfDocument(writer);
+            document = new com.itextpdf.layout.Document(pdf);
+        } catch (Exception e) {
+            throw new Exception("Failed to initialize PDF writer: " + e.getMessage(), e);
+        }
 
-        // Add content to the PDF
-        document.add(new com.itextpdf.layout.element.Paragraph("Order Report"));
-        document.add(new com.itextpdf.layout.element.Paragraph("Order Number: " + orderNumber));
-        document.add(new com.itextpdf.layout.element.Paragraph("User ID: " + userID));
-        document.add(new com.itextpdf.layout.element.Paragraph("File Path: " + filePath));
+        try {
+            // Add header to the PDF
+            document.add(new com.itextpdf.layout.element.Paragraph("Belman™ Quality Control Report")
+                    .setFontSize(24)
+                    .setBold()
+                    .setTextAlignment(TextAlignment.CENTER));
+            document.add(new com.itextpdf.layout.element.Paragraph("Order Number: " + orderNumber)
+                    .setFontSize(16)
+                    .setTextAlignment(TextAlignment.CENTER));
+            document.add(new com.itextpdf.layout.element.Paragraph("Generated: " +
+                    java.time.LocalDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                    .setTextAlignment(TextAlignment.CENTER));
 
-        // Close the document
-        document.close();
+            // Get the order information
+            com.belman.belsignqc.DAL.DAO.PhotoDAO photoDAO = new com.belman.belsignqc.DAL.DAO.PhotoDAO();
+            ObservableList<com.belman.belsignqc.BE.Photos> photos;
+            try {
+                photos = photoDAO.getImagesForOrder(orderNumber);
+            } catch (Exception e) {
+                throw new Exception("Failed to fetch images for order: " + e.getMessage(), e);
+            }
+
+            // Add a section for the images
+            document.add(new com.itextpdf.layout.element.Paragraph("Order Images")
+                    .setFontSize(18)
+                    .setMarginTop(20)
+                    .setMarginBottom(10));
+
+            // Add each image to the document
+            for (com.belman.belsignqc.BE.Photos photo : photos) {
+                try {
+                    document.add(new com.itextpdf.layout.element.Paragraph("_________________________________")
+                            .setMarginTop(20));
+                    document.add(new com.itextpdf.layout.element.Paragraph("Taken by User ID: " + photo.getUserID())
+                            .setFontSize(10)
+                            .setMarginTop(10));
+                    document.add(new com.itextpdf.layout.element.Paragraph("Upload time: " +
+                            photo.getUploadTime().toLocalDateTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
+                            .setFontSize(10));
+
+                    java.nio.file.Path imagePath = java.nio.file.Paths.get(photo.getFilepath());
+                    if (java.nio.file.Files.exists(imagePath)) {
+                        com.itextpdf.layout.element.Image img = new com.itextpdf.layout.element.Image(
+                                ImageDataFactory.create(imagePath.toString()));
+
+                        float pageWidth = pdf.getDefaultPageSize().getWidth() - 100;
+                        if (img.getImageScaledWidth() > pageWidth) {
+                            img.setWidth(pageWidth);
+                        }
+                        document.add(img);
+                    } else {
+                        document.add(new com.itextpdf.layout.element.Paragraph("Image not found: " + imagePath)
+                                .setFontColor(ColorConstants.RED));
+                    }
+                } catch (Exception e) {
+                    document.add(new com.itextpdf.layout.element.Paragraph("Error loading image: " + e.getMessage())
+                            .setFontColor(ColorConstants.RED));
+                }
+            }
+
+            // Add QC approval section
+            document.add(new com.itextpdf.layout.element.Paragraph("Belsign™ Quality Control Approval by: " + UserSession.getInstance().getUser().getUsername())
+                    .setFontSize(18)
+                    .setMarginTop(20));
+            document.add(new com.itextpdf.layout.element.Paragraph("Comments: " + comments)
+                    .setMarginTop(10));
+
+            document.add(new com.itextpdf.layout.element.Paragraph("_________________________________________")
+                    .setMarginTop(20));
+        } catch (Exception e) {
+            throw new Exception("Failed to generate PDF content: " + e.getMessage(), e);
+        } finally {
+            // Ensure the document is closed
+            if (document != null) {
+                document.close();
+            }
+        }
+    }
+
+    /**
+     * Fetches the username for a given user ID.
+     *
+     * @param userID The user ID to lookup.
+     * @return The username associated with the user ID.
+     * @throws SQLException If there is an error accessing the database.
+     */
+    private String fetchUsernameByID(int userID) throws SQLException {
+        String sql = "SELECT username FROM Users WHERE userID = ?";
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("username");
+            }
+            return "Unknown User";
+        }
     }
 
 

@@ -12,6 +12,7 @@ module com.belman.belsignqc {
     requires java.naming;
     requires kernel;
     requires layout;
+    requires io;
 
     opens com.belman.belsignqc to javafx.fxml;
     exports com.belman.belsignqc;
