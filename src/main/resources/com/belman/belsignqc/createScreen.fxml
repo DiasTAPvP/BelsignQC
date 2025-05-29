@@ -72,65 +72,78 @@
    </padding>
    <center>
       <BorderPane BorderPane.alignment="CENTER">
-         <top>
-            <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Profile Picture">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <ImageView fitHeight="25.0" fitWidth="24.0" styleClass="logo-image">
-                     <image>
-                        <Image url="@images/filepicker_icon.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
-         </top>
-         <left>
-            <VBox alignment="CENTER_RIGHT" BorderPane.alignment="CENTER_RIGHT">
-               <children>
-                  <TextField fx:id="createUsernameField" alignment="CENTER" promptText="Username" styleClass="textfields">
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin></TextField>
-                  <PasswordField fx:id="createPasswordField" alignment="CENTER" promptText="Password" styleClass="textfields">
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin></PasswordField>
-                  <MenuButton fx:id="createRoleMenuButton" mnemonicParsing="false" text="User Type">
-                    <items>
-                       <CheckMenuItem fx:id="createQAItem" mnemonicParsing="false" text="Quality Assurance" />
-                       <CheckMenuItem fx:id="createOperatorItem" mnemonicParsing="false" text="Operator" />
-                       <CheckMenuItem fx:id="createAdminItem" mnemonicParsing="false" text="Admin" />
-                    </items>
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </VBox.margin>
-                  </MenuButton>
-               </children>
-            </VBox>
-         </left>
-         <bottom>
-            <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="createUserButton" mnemonicParsing="false" onAction="#createUserAction" prefHeight="37.0" prefWidth="178.0" styleClass="buttons" text="Create">
-                     <font>
-                        <Font size="28.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-         </bottom>
+         <BorderPane.margin>
+            <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+         </BorderPane.margin>
          <center>
-            <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-               <image>
-                  <Image url="@images/Avatar_Placeholder.PNG" />
-               </image></ImageView>
+            <HBox alignment="CENTER" fillHeight="false" spacing="25.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="CENTER_RIGHT" minWidth="250.0" spacing="5.0">
+                     <children>
+                        <TextField fx:id="createUsernameField" alignment="CENTER" promptText="Username" styleClass="textfields">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextField>
+                        <PasswordField fx:id="createPasswordField" alignment="CENTER" promptText="Password" styleClass="textfields">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </PasswordField>
+                        <MenuButton fx:id="createRoleMenuButton" alignment="CENTER" contentDisplay="CENTER" minWidth="250.0" mnemonicParsing="false" stylesheets="@style.css" text="User Type">
+                           <items>
+                              <CheckMenuItem fx:id="createQAItem" mnemonicParsing="false" text="Quality Assurance" />
+                              <CheckMenuItem fx:id="createOperatorItem" mnemonicParsing="false" text="Operator" />
+                              <CheckMenuItem fx:id="createAdminItem" mnemonicParsing="false" text="Admin" />
+                           </items>
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </MenuButton>
+                        <Button fx:id="createUserButton" minWidth="250.0" mnemonicParsing="false" onAction="#createUserAction" styleClass="buttons" text="Create">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
+                  <VBox spacing="5.0">
+                     <children>
+                        <HBox alignment="TOP_CENTER">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Profile Picture">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Text>
+                              <ImageView fitHeight="25.0" fitWidth="24.0" styleClass="logo-image">
+                                 <image>
+                                    <Image url="@images/filepicker_icon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <ImageView pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/Avatar_Placeholder.PNG" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
          </center>
       </BorderPane>
    </center>
