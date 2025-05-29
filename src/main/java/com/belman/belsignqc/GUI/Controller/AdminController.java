@@ -39,7 +39,11 @@ public class AdminController extends BaseController {
    private ObservableList<UserModel> allUsers;
    private OrderDAO orderDAO;
    private UserDAO userDAO;
-//
+
+    /**
+     * Initializes the AdminController, setting up the order and user tables,
+     * loading data from the database, and configuring search functionality.
+     */
     @FXML
     private void initialize() {
         try {
@@ -70,6 +74,10 @@ public class AdminController extends BaseController {
         }
     }
 
+    /**
+     * Handles the action when the logout button is clicked.
+     * Clears the user session and navigates to the login screen.
+     */
     @FXML
     private void handleLogout() {
         //Clear UserSession of the logged-in user
@@ -80,12 +88,20 @@ public class AdminController extends BaseController {
 
     }
 
+    /**
+     * Handles the action when the create user button is clicked.
+     * Navigates to the create user screen.
+     */
     @FXML
     private void createButtonPressed() {
         //Implement a way to wipe the fields when the button is pressed
         screenManager.setScreen("createuser");
     }
 
+    /**
+     * Handles the action when the logout button is clicked.
+     * Clears the user session and navigates to the login screen.
+     */
     private void loadUsers() throws Exception {
         // Get all users from the database
         List<Users> users = userDAO.getAllUsers();
@@ -100,6 +116,10 @@ public class AdminController extends BaseController {
         adminUserTable.setItems(allUsers);
     }
 
+    /**
+     * Loads all orders from the database and populates the order table.
+     * Also sets up the search functionality for orders.
+     */
     private void loadOrders() throws SQLException {
         // Get all order numbers from the database
         ObservableList<String> orderNumbers = orderDAO.getAllOrderNumbers();
@@ -114,6 +134,10 @@ public class AdminController extends BaseController {
         adminOrderTable.setItems(allOrders);
     }
 
+    /**
+     * Handles the action when the logout button is clicked.
+     * Clears the user session and navigates to the login screen.
+     */
     private void setupOrderSearch() {
         // Create a filtered list wrapping the observable list
         FilteredList<OrderModel> filteredOrders = new FilteredList<>(allOrders, p -> true);
@@ -146,6 +170,10 @@ public class AdminController extends BaseController {
         adminOrderTable.setItems(sortedOrders);
     }
 
+    /**
+     * Sets up the search functionality for the user table.
+     * Filters users based on the text entered in the search field.
+     */
     private void setupUserSearch() {
         // Create a filtered list wrapping the observable list
         FilteredList<UserModel> filteredUsers = new FilteredList<>(allUsers, p -> true);
