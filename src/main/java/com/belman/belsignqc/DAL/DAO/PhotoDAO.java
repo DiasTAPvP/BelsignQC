@@ -218,6 +218,13 @@ public class PhotoDAO implements IPhotoDataAccess {
         }
     }
 
+    /**
+     * Retrieves all images associated with a specific order number from the database.
+     *
+     * @param orderNumber The OrderNumbers object containing the order number ID.
+     * @return An ObservableList of Photos objects representing the images for the specified order number.
+     * @throws SQLException if an error occurs during the database operation.
+     */
     @Override
     public ObservableList<Photos> getImagesForOrderNumber(OrderNumbers orderNumber) throws SQLException {
         ObservableList<Photos> photos = javafx.collections.FXCollections.observableArrayList();
@@ -255,6 +262,14 @@ public class PhotoDAO implements IPhotoDataAccess {
     }
 
 
+    /**
+     * Retrieves an OrderNumbers object from the database based on the provided order number string.
+     * If the order number does not exist, it creates a new entry in the database.
+     *
+     * @param orderNumberStr The order number string to search for.
+     * @return An OrderNumbers object containing the order number details.
+     * @throws SQLException if an error occurs during the database operation.
+     */
     @Override
     public OrderNumbers getOrderNumberFromString(String orderNumberStr) throws SQLException {
         OrderNumbers orderNumber = new OrderNumbers();
@@ -287,23 +302,40 @@ public class PhotoDAO implements IPhotoDataAccess {
         }
     }
 
+    /**
+     * Deletes an image from the database and the file system.
+     *
+     * @param photo Photos object representing the image to be deleted.
+     * @return true if deletion was successful, false otherwise.
+     * @throws SQLException if an error occurs during the deletion process.
+     */
     @Override
-    public void deleteImageFromDatabase(Photos photo) throws SQLException {
-        String sql = "DELETE FROM Pictures WHERE id = ?";
+    public boolean deleteImageFromDatabase(Photos photo) throws SQLException {
+        // First get the file path before we delete the database record
+        String filePath = photo.getFilepath();
+        boolean success = false;
+
+        String sql = "DELETE FROM Pictures WHERE PictureID = ?";  // Using PictureID based on your schema
         try(Connection conn = dbConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, photo.getId());
-            ps.executeUpdate();
-            System.out.println("photo with id " + photo.getId() + " deleted from database.");
-        }
-        catch(SQLServerException e){
-            throw new SQLException(e);
+            int rowsAffected = ps.executeUpdate();
+            success = rowsAffected > 0;
+
+            if (success) {
+                System.out.println("Photo with id " + photo.getId() + " deleted from database.");
+
+                // Delete the file if database deletion was successful
+                try {
+                    Path path = Paths.get(filePath);
+                    if (Files.exists(path)) {
+                        Files.delete(path);
+                    }
+                } catch (IOException e) {
+                    System.err.println("Could not delete file: " + filePath);
+                }
+            }
         }
 
-        try{
-            Files.deleteIfExists(Paths.get(photo.getFilepath()));
-        } catch (IOException e) {
-            //TODO Burde nok smide et eller andet.. kører bare runtime for nu.
-            throw new RuntimeException(e);
-        }
+        return success;
     }
 }

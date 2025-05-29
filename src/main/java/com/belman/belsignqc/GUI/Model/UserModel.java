@@ -58,6 +58,7 @@ public class UserModel {
         return userManager.getByUsername(username);
     }
 
+
     //Mock data versions for initial testing
     private String username;
 

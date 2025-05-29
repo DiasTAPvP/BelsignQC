@@ -153,5 +153,29 @@ public class UserDAO implements IUserDataAccess {
             e.printStackTrace();
         }
         return null;
+
+    }
+
+    /**
+     * Gets a username by user ID
+     *
+     * @param userID The ID of the user
+     * @return The username associated with the ID
+     * @throws SQLException If a database error occurs
+     */
+    public String getUsernameById(int userID) throws SQLException {
+        String sql = "SELECT username FROM Users WHERE userID = ?";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getString("username");
+            }
+            return "Unknown User";
+        }
     }
 }

@@ -15,7 +15,7 @@ public interface IPhotoDataAccess {
 
     void insertImagePathToDatabase(Connection connection, List<Path> filePath, Users uploader, OrderNumbers orderNumber) throws SQLException;
 
-    void deleteImageFromDatabase(Photos photos) throws SQLException;
+    boolean deleteImageFromDatabase(Photos photo) throws SQLException;
 
     boolean saveImageAndPath(List<BufferedImage> photos, List<String> fileNames, Users uploader, OrderNumbers orderNumber) throws Exception;
 

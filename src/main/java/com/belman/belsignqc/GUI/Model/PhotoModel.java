@@ -32,8 +32,8 @@ public class PhotoModel {
     public ObservableList<Photos> getImagesForOrderNumber(String orderNumberStr) throws SQLException {
         return photoManager.getImagesForOrderNumber(orderNumberStr);
     }
-//
-    public void deleteImage(Photos photos) throws SQLException {
-        photoManager.deleteImage(photos);
+
+    public boolean deleteImage(Photos photos) throws SQLException {
+        return photoManager.deleteImage(photos);
     }
 }

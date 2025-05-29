@@ -25,9 +25,9 @@
             <Insets left="10.0" />
          </padding>
          <children>
-            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="qaImageScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
                <content>
-                  <FlowPane />
+                  <FlowPane fx:id="qaImageFlowPane" />
                </content>
             </ScrollPane>
          </children>
@@ -38,7 +38,7 @@
          <right>
             <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" styleClass="buttons" text="Delete" />
+                  <Button fx:id="qaDeleteButton" mnemonicParsing="false" onAction="#deleteSelectedPhotos" prefHeight="40.0" prefWidth="146.0" styleClass="buttons" text="Delete" />
                </children>
             </HBox>
          </right>

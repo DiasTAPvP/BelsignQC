@@ -1,24 +1,25 @@
 package com.belman.belsignqc.GUI.Controller;
 
 import com.belman.belsignqc.BE.OrderNumbers;
+import com.belman.belsignqc.BE.Photos;
 import com.belman.belsignqc.BE.Users;
 import com.belman.belsignqc.BLL.Util.UserSession;
 import com.belman.belsignqc.BLL.showAlert;
 import com.belman.belsignqc.DAL.DAO.OrderDAO;
+import com.belman.belsignqc.DAL.DAO.PhotoDAO;
 import com.belman.belsignqc.DAL.DAO.UserDAO;
 import com.belman.belsignqc.GUI.Model.OrderModel;
+import com.belman.belsignqc.GUI.Model.PhotoModel;
 import com.belman.belsignqc.GUI.Model.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -34,9 +35,13 @@ public class AdminController extends BaseController {
    @FXML private TableColumn<UserModel, String> adminUserColumn;
    @FXML private TextField adminOrderSearch;
    @FXML private TextField adminUserSearch;
+   @FXML private ScrollPane adminImageScrollPane;
+   @FXML private FlowPane adminImageFlowPane;
+   @FXML private Button adminDeleteButton;
 
    private ObservableList<OrderModel> allOrders;
    private ObservableList<UserModel> allUsers;
+   private ObservableList<Photos> selectedPhotos = FXCollections.observableArrayList();
    private OrderDAO orderDAO;
    private UserDAO userDAO;
 
@@ -64,14 +69,283 @@ public class AdminController extends BaseController {
             // Setup search functionality
             setupOrderSearch();
             setupUserSearch();
-        } catch (IOException e) {
+
+            // Set up order selection listener to display images
+            adminOrderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                if (newSelection != null) {
+                    try {
+                        displayImagesForOrder(newSelection.getOrderNumber());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showAlert.display("Error", "Failed to load images: " + e.getMessage());
+                    }
+                }
+            });
+        } catch (IOException | SQLException e) {
             e.printStackTrace();
-            // Show error message to user
             showAlert.display("Error", "Failed to initialize data: " + e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
-            showAlert.display("Error", "An error occurred: " + e.getMessage());
+            throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Displays all images associated with the selected order number.
+     * Loads the images from the file system and adds them to the FlowPane.
+     *
+     * @param orderNumber The order number to display images for
+     */
+    private void displayImagesForOrder(String orderNumber) throws Exception {
+        // Clear existing images and selection
+        adminImageFlowPane.getChildren().clear();
+        selectedPhotos.clear();
+
+        // Get photos from database for the selected order
+        PhotoDAO photoDAO = new PhotoDAO();
+        ObservableList<Photos> photos = photoDAO.getImagesForOrder(orderNumber);
+
+        if (photos.isEmpty()) {
+            // Show a message if no images found
+            Label noImagesLabel = new Label("No images found for this order");
+            noImagesLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #777777;");
+            adminImageFlowPane.getChildren().add(noImagesLabel);
+            return;
+        }
+
+        // Loop through each photo and add to the flow pane
+        for (Photos photo : photos) {
+            try {
+                // Load image from file
+                java.nio.file.Path imagePath = java.nio.file.Paths.get(photo.getFilepath());
+                if (!java.nio.file.Files.exists(imagePath)) {
+                    continue; // Skip if file doesn't exist
+                }
+
+                javafx.scene.image.Image image = new javafx.scene.image.Image(
+                        imagePath.toUri().toString(),
+                        200, // Width
+                        200, // Height
+                        true, // Preserve ratio
+                        true  // Smooth
+                );
+
+                ImageView imageView = new ImageView(image);
+                imageView.setFitWidth(200);
+                imageView.setFitHeight(200);
+                imageView.setPreserveRatio(true);
+
+                // Create a VBox to hold the image and metadata
+                javafx.scene.layout.VBox imageBox = new javafx.scene.layout.VBox(5); // 5px spacing
+                imageBox.setAlignment(javafx.geometry.Pos.CENTER);
+                imageBox.setPadding(new javafx.geometry.Insets(10));
+                imageBox.setStyle("-fx-border-color: #cccccc; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-background-color: #f9f9f9;");
+
+                // Store the photo object with the VBox for later reference
+                imageBox.setUserData(photo);
+
+                // Create Labels for metadata
+                Label uploaderLabel = new Label("Uploaded by: " + fetchUsernameByID(photo.getUserID()));
+                uploaderLabel.setStyle("-fx-font-size: 10px;");
+
+                Label timeLabel = new Label("Time: " +
+                        photo.getUploadTime().toLocalDateTime().format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+                timeLabel.setStyle("-fx-font-size: 10px;");
+
+                // Add image and labels to the VBox
+                imageBox.getChildren().addAll(imageView, uploaderLabel, timeLabel);
+
+                // Add click handlers for selection and preview
+                imageBox.setOnMouseClicked(e -> {
+                    if (e.isControlDown()) {
+                        // CTRL + Click for selection
+                        togglePhotoSelection(imageBox, photo);
+                    } else if (e.getClickCount() == 2) {
+                        // Double click for preview
+                        showLargeImage(photo);
+                    } else {
+                        // Single click for selection (clearing other selections)
+                        selectSinglePhoto(imageBox, photo);
+                    }
+                });
+
+                // Add the VBox to the FlowPane
+                adminImageFlowPane.getChildren().add(imageBox);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                // Create an error placeholder instead
+                Label errorLabel = new Label("Error loading image");
+                errorLabel.setStyle("-fx-text-fill: red; -fx-font-size: 12px;");
+                adminImageFlowPane.getChildren().add(errorLabel);
+            }
+        }
+    }
+
+    /**
+     * Shows a larger version of the selected image in a popup dialog
+     *
+     * @param photo The photo to display in larger size
+     */
+    private void showLargeImage(Photos photo) {
+        try {
+            // Create a dialog
+            Dialog<Void> dialog = new Dialog<>();
+            dialog.setTitle("Image Preview");
+            dialog.setHeaderText("Uploaded by: " + fetchUsernameByID(photo.getUserID()) +
+                    " on " + photo.getUploadTime().toLocalDateTime().format(
+                    java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
+
+            // Create image view with full-size image
+            java.nio.file.Path imagePath = java.nio.file.Paths.get(photo.getFilepath());
+            javafx.scene.image.Image fullImage = new javafx.scene.image.Image(
+                    imagePath.toUri().toString(),
+                    800, // Max width
+                    600, // Max height
+                    true, // Preserve ratio
+                    true  // Smooth
+            );
+
+            ImageView largeImageView = new ImageView(fullImage);
+            largeImageView.setPreserveRatio(true);
+
+            // Create a scroll pane to handle large images
+            ScrollPane scrollPane = new ScrollPane(largeImageView);
+            scrollPane.setPrefSize(800, 600);
+            scrollPane.setPannable(true);
+
+            // Set the dialog content
+            dialog.getDialogPane().setContent(scrollPane);
+
+            // Add a close button
+            ButtonType closeButton = new ButtonType("Close", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().add(closeButton);
+
+            // Show the dialog
+            dialog.showAndWait();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert.display("Error", "Failed to display large image: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Fetches the username for a given user ID.
+     *
+     * @param userID The user ID to lookup.
+     * @return The username associated with the user ID.
+     */
+    private String fetchUsernameByID(int userID) {
+        try {
+            // Query the database directly
+            return userDAO.getUsernameById(userID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Unknown User";
+        }
+    }
+
+    /**
+     * Toggles the selection state of a photo
+     *
+     * @param imageBox The VBox containing the photo
+     * @param photo The photo object
+     */
+    private void togglePhotoSelection(javafx.scene.layout.VBox imageBox, Photos photo) {
+        if (selectedPhotos.contains(photo)) {
+            // Deselect
+            selectedPhotos.remove(photo);
+            imageBox.setStyle("-fx-border-color: #cccccc; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-background-color: #f9f9f9;");
+        } else {
+            // Select
+            selectedPhotos.add(photo);
+            imageBox.setStyle("-fx-border-color: #3498db; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: #eaf5fe;");
+        }
+    }
+
+    /**
+     * Selects a single photo, deselecting all others
+     *
+     * @param selectedBox The VBox to select
+     * @param photo The photo object
+     */
+    private void selectSinglePhoto(javafx.scene.layout.VBox selectedBox, Photos photo) {
+        // Clear current selections
+        selectedPhotos.clear();
+
+        // Reset style of all boxes
+        for (javafx.scene.Node node : adminImageFlowPane.getChildren()) {
+            if (node instanceof javafx.scene.layout.VBox) {
+                javafx.scene.layout.VBox box = (javafx.scene.layout.VBox) node;
+                box.setStyle("-fx-border-color: #cccccc; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-background-color: #f9f9f9;");
+            }
+        }
+
+        // Select the clicked photo
+        selectedPhotos.add(photo);
+        selectedBox.setStyle("-fx-border-color: #3498db; -fx-border-width: 2px; -fx-border-radius: 5px; -fx-background-color: #eaf5fe;");
+
+    }
+
+    /**
+     * Deletes the selected photos
+     */
+    @FXML
+    private void deleteSelectedPhotos() {
+        if (selectedPhotos.isEmpty()) {
+            return;
+        }
+
+        // Confirmation dialog
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION,
+                "Are you sure you want to delete " + selectedPhotos.size() +
+                        (selectedPhotos.size() == 1 ? " photo?" : " photos?"),
+                ButtonType.YES, ButtonType.NO);
+        confirmation.setTitle("Confirm Deletion");
+        confirmation.setHeaderText("Delete Photos");
+
+        confirmation.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.YES) {
+                try {
+                    PhotoModel photoModel = new PhotoModel();
+                    int deletedCount = 0;
+
+                    for (Photos photo : selectedPhotos) {
+                        // Delete from database
+                        boolean dbDeleteSuccess = photoModel.deleteImage(photo);
+
+                        // Delete from file system if database deletion was successful
+                        if (dbDeleteSuccess) {
+                            try {
+                                java.nio.file.Path imagePath = java.nio.file.Paths.get(photo.getFilepath());
+                                java.nio.file.Files.deleteIfExists(imagePath);
+                                deletedCount++;
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                // Continue with other deletions even if file delete fails
+                            }
+                        }
+                    }
+
+                    // Refresh the view
+                    if (deletedCount > 0) {
+                        showAlert.display("Success", deletedCount +
+                                (deletedCount == 1 ? " photo" : " photos") +
+                                " deleted successfully.");
+
+                        // Refresh the current order view
+                        OrderModel currentOrder = adminOrderTable.getSelectionModel().getSelectedItem();
+                        if (currentOrder != null) {
+                            displayImagesForOrder(currentOrder.getOrderNumber());
+                        }
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert.display("Error", "Failed to delete photos: " + e.getMessage());
+                }
+            }
+        });
     }
 
     /**

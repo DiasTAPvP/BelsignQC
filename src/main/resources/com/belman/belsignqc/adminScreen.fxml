@@ -95,9 +95,9 @@
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="adminImageScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS">
                <content>
-                  <FlowPane />
+                  <FlowPane fx:id="adminImageFlowPane" />
                </content>
             </ScrollPane>
          </children>
@@ -117,7 +117,7 @@
             <HBox spacing="4.0" BorderPane.alignment="CENTER">
                <children>
                   <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.0" styleClass="buttons" text="Audit LOG" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Delete" />
+                  <Button fx:id="adminDeleteButton" mnemonicParsing="false" onAction="#deleteSelectedPhotos" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Delete" />
                </children>
             </HBox>
          </right>
