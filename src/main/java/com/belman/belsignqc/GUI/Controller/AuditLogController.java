@@ -21,6 +21,10 @@ public class AuditLogController extends BaseController {
 
     private UserDAO userDAO;
 
+    /**
+     * This method receives the data passed from the previous screen.
+     * In this case, it expects a String representing the order ID.
+     */
     @Override
     public void receiveData(Object data) {
         if (data instanceof String orderId) {
@@ -29,6 +33,12 @@ public class AuditLogController extends BaseController {
     }
 }
 
+/**
+ * Loads the audit log for a specific order ID.
+ * Retrieves photos uploaded for the order and displays them in the AuditTextArea.
+ *
+ * @param orderId The ID of the order to load the audit log for.
+ */
 private void loadLog(String orderId) {
         try {
             PhotoDAO photoDAO = new PhotoDAO();
@@ -58,6 +68,10 @@ private void loadLog(String orderId) {
         }
 }
 
+    /**
+     * Handles the return button click event.
+     * Navigates back to the admin screen.
+     */
     @FXML
     private void onAuditReturnButton() {
     screenManager.setScreen("admin");

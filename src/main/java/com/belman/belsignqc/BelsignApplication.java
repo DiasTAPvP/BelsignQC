@@ -73,8 +73,8 @@ public class BelsignApplication extends Application {
      */
     private void loadRemainingScreens() {
         // List of screens and their corresponding FXML resources
-        String[] screens = {"operator", "admin", "qa", "createuser", "camera"};
-        String[] resources = {"operatorScreen.fxml", "adminScreen.fxml", "qaScreen.fxml", "createScreen.fxml", "cameraScreen.fxml"};
+        String[] screens = {"operator", "admin", "qa", "createuser", "camera", "auditLog"};
+        String[] resources = {"operatorScreen.fxml", "adminScreen.fxml", "qaScreen.fxml", "createScreen.fxml", "cameraScreen.fxml", "auditScreen.fxml"};
 
         for (int i = 0; i < screens.length; i++) {
             try {
