@@ -22,7 +22,7 @@
                <children>
                   <HBox alignment="TOP_RIGHT">
                      <children>
-                        <Button fx:id="createReturnButton" mnemonicParsing="false" onAction="#handleReturn" text="Return">
+                        <Button fx:id="createReturnButton" mnemonicParsing="false" onMouseClicked="#handleReturn" text="Return">
                            <font>
                               <Font size="24.0" />
                            </font>

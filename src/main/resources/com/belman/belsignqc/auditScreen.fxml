@@ -40,7 +40,7 @@
          <right>
             <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="AuditReturnButton" mnemonicParsing="false" onAction="#onAuditReturnButton" text="Return">
+                  <Button fx:id="AuditReturnButton" mnemonicParsing="false" onMouseClicked="#onAuditReturnButton" text="Return">
                      <font>
                         <Font size="24.0" />
                      </font>
