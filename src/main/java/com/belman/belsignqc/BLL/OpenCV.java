@@ -15,7 +15,7 @@ public class OpenCV implements PhotoTaking {
     private VideoCapture camera;
 
     @Override
-    /* Starts the camera and sets the resolution to 1280x720.
+    /** Starts the camera and sets the resolution to 1280x720.
      * @throws CameraNotFound if the camera is not found.
      */
     public void start() {
@@ -38,7 +38,7 @@ public class OpenCV implements PhotoTaking {
 
 
     @Override
-    /* Stops the camera and releases the resources.
+    /** Stops the camera and releases the resources.
      */
     public void stop() {
         if (camera != null) {
@@ -47,7 +47,7 @@ public class OpenCV implements PhotoTaking {
     }
 
     @Override
-    /* Takes a photo using the camera and returns it as an Image.
+    /** Takes a photo using the camera and returns it as an Image.
      * @throws Exception if the frame is empty.
      */
         public Image takePhoto () {

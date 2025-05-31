@@ -85,23 +85,4 @@ public class LoginController extends BaseController {
         alert.setContentText(content);
         alert.showAndWait();
     }
-
-    //Old login method commented out just in case we need it later
-    /*@FXML
-    private void handleLogin() {
-        //screenManager.setScreen("operator");
-
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-
-        // Simple login logic for demonstration
-        if (username.equals("admin") && password.equals("admin")) {
-            screenManager.setScreen("admin");
-        } else if (username.equals("qa") && password.equals("qa")) {
-            screenManager.setScreen("qa");
-        } else {
-            // Default to operator screen for any other login
-            screenManager.setScreen("operator");
-        }
-    }*/
 }

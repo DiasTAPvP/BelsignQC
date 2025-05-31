@@ -53,6 +53,7 @@ public class CreateUserController extends BaseController {
         StringBuilder roles = new StringBuilder("Selected: ");
         boolean hasRole = false;
 
+        // Check which roles are selected and append them to the roles string
         if (createAdminItem.isSelected()) {
             roles.append("Admin");
             hasRole = true;

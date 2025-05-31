@@ -593,7 +593,8 @@ public class QAController extends BaseController{
             }
 
             // Add QC approval section
-            document.add(new com.itextpdf.layout.element.Paragraph("Belsign™ Quality Control Approval by: " + UserSession.getInstance().getUser().getUsername())
+            document.add(new com.itextpdf.layout.element.Paragraph("Belsign™ Quality Control Approval by: "
+                    + UserSession.getInstance().getUser().getUsername()) // Fetches the username of the QA employee approving the order
                     .setFontSize(18)
                     .setMarginTop(20));
             document.add(new com.itextpdf.layout.element.Paragraph("Comments: " + comments)

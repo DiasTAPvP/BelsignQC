@@ -17,32 +17,12 @@ public class OrderDAO implements IOrderDataAccess {
     public OrderDAO() throws IOException {
         dbConnector = new DBConnector();
     }
-    /* @Override
-    public List<OrderNumbers> getAllOrders() throws Exception {
-        List<OrderNumbers> orders = new ArrayList<>();
-        String sql = "SELECT * FROM OrderNumbers";
 
-        try (Connection conn = dbConnector.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            while (rs.next()) {
-                int ordernumberid = rs.getInt("OrderNumberID");
-                String ordernumber = rs.getString("OrderNumber");
-                int userid = rs.getInt("UserID");
-                Timestamp createdAt = rs.getTimestamp("CreatedAt");
-
-                OrderNumbers order = new OrderNumbers(ordernumberid, ordernumber, userid, createdAt);
-                orders.add(order);
-            }
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-            throw new Exception("Error retrieving orders: " + e.getMessage());
-        }
-        return orders;
-    }*/
-
+    /**
+     * Gets all order numbers from the database
+     * @return List of all order numbers
+     * @throws SQLException if retrieval fails
+     */
     @Override
     public ObservableList<String> getAllOrderNumbers() throws SQLException {
         ObservableList<String> orderNumbers = FXCollections.observableArrayList();

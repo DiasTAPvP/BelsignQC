@@ -25,6 +25,8 @@ public class BelsignApplication extends Application {
         screenManager.setScreen("login");
 
         // Load other screens in background
+        // This ensures that the UI for logging in is responsive while loading other screens
+        // Also helps start the application more quickly
         Platform.runLater(() -> {
             loadRemainingScreens();
         });
@@ -36,6 +38,14 @@ public class BelsignApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Loads a screen from the specified FXML resource file.
+     * The screen is added to the ScreenManager with the given name.
+     *
+     * @param name     The name of the screen to be added.
+     * @param resource The FXML resource file for the screen.
+     * @throws IOException If there is an error loading the FXML file.
+     */
     private void loadScreen(String name, String resource) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(resource));
         Parent loadScreen = loader.load();
@@ -56,7 +66,13 @@ public class BelsignApplication extends Application {
         }
     }
 
+    /**
+     * Loads the remaining screens in the application.
+     * This method is called after the initial login screen is loaded.
+     * It loads screens for operator, admin, QA, create user, and camera functionalities.
+     */
     private void loadRemainingScreens() {
+        // List of screens and their corresponding FXML resources
         String[] screens = {"operator", "admin", "qa", "createuser", "camera"};
         String[] resources = {"operatorScreen.fxml", "adminScreen.fxml", "qaScreen.fxml", "createScreen.fxml", "cameraScreen.fxml"};
 

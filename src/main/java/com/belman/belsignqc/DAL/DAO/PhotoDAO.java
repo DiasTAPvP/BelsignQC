@@ -197,7 +197,6 @@ public class PhotoDAO implements IPhotoDataAccess {
      * @param orderNumber OrderNumbers object associated with the images.
      * @throws SQLException if an error occurs during the insertion process.
      */
-
     @Override
     public void insertImagePathToDatabase(Connection connection,
                                           List<Path> filePaths,
@@ -255,6 +254,13 @@ public class PhotoDAO implements IPhotoDataAccess {
         }
     }
 
+    /**
+     * Retrieves all images associated with a specific order number string from the database.
+     *
+     * @param orderNumber The order number string to search for.
+     * @return An ObservableList of Photos objects representing the images for the specified order number.
+     * @throws SQLException if an error occurs during the database operation.
+     */
     @Override
     public ObservableList<Photos> getImagesForOrder(String orderNumber) throws SQLException {
         OrderNumbers orderNum = getOrderNumberFromString(orderNumber);
@@ -311,11 +317,11 @@ public class PhotoDAO implements IPhotoDataAccess {
      */
     @Override
     public boolean deleteImageFromDatabase(Photos photo) throws SQLException {
-        // First get the file path before we delete the database record
+        // First get the file path before deleting the database record
         String filePath = photo.getFilepath();
         boolean success = false;
 
-        String sql = "DELETE FROM Pictures WHERE PictureID = ?";  // Using PictureID based on your schema
+        String sql = "DELETE FROM Pictures WHERE PictureID = ?";
         try(Connection conn = dbConnector.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)){
             ps.setInt(1, photo.getId());
             int rowsAffected = ps.executeUpdate();

@@ -14,7 +14,7 @@ public class UserSession {
     // The logged-in user
     private Users loggedInUser;
 
-    // Private constructor prevents instantiation from outside
+    // Private constructor to prevent instantiation from outside
     private UserSession() {
     }
 

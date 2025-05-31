@@ -171,7 +171,10 @@ public class CameraController extends BaseController implements Initializable {
         }, 0, 33, TimeUnit.MILLISECONDS);
     }
 
-
+    /**
+     * Binds the preview image to the root pane dimensions.
+     * This ensures that the preview image scales correctly with the root pane size.
+     */
     private void bindPreviewToRoot() {
         rootPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             adjustImage(imgFullPreview, rootPane);
@@ -181,6 +184,10 @@ public class CameraController extends BaseController implements Initializable {
         });
     }
 
+    /**
+     * Binds the camera view to the cameraStackpane dimensions.
+     * This ensures that the camera view scales correctly with the cameraStackpane size.
+     */
     private void bindCameraViewToRoot() {
         cameraStackpane.widthProperty().addListener((observable, oldValue, newValue) -> {
             adjustImage(imgCamera, cameraStackpane);
@@ -190,6 +197,13 @@ public class CameraController extends BaseController implements Initializable {
         });
     }
 
+    /**
+     * Adjusts the size of the image view to fit within the specified container.
+     * This method maintains the aspect ratio of the image while scaling it to fit the container dimensions.
+     *
+     * @param imageView  The ImageView containing the image to adjust.
+     * @param container  The StackPane or any other container that holds the ImageView.
+     */
     private void adjustImage(ImageView imageView, StackPane container) {
         Image frame = imageView.getImage();
         double paneHeight = container.getHeight();
@@ -204,6 +218,10 @@ public class CameraController extends BaseController implements Initializable {
         imageView.setFitHeight(frame.getHeight() * scale);
     }
 
+    /**
+     * Captures an image from the camera and adds it to the gallery.
+     * This method is called when the user clicks the "Take Picture" button.
+     */
     private void captureImage() {
         try {
             Image image = strategy.takePhoto();
@@ -224,6 +242,12 @@ public class CameraController extends BaseController implements Initializable {
         }
     }
 
+    /**
+     * Sends the captured image to the gallery for preview.
+     * This method maintains a maximum of two images in the gallery.
+     *
+     * @param image The captured image to be added to the gallery.
+     */
     private void sendToGallery(Image image) {
         if (gallery.size() == 2) {
             gallery.removeLast();
@@ -235,6 +259,12 @@ public class CameraController extends BaseController implements Initializable {
     }
 
 
+    /**
+     * Handles the action when the user clicks the "Finish Camera" button.
+     * This method saves the captured images and navigates back to the operator screen.
+     *
+     * @param actionEvent The action event triggered by the button click.
+     */
     @FXML
     public void handleFinishCamera(ActionEvent actionEvent) {
         if (imagesToSave.isEmpty()) {
@@ -271,6 +301,10 @@ public class CameraController extends BaseController implements Initializable {
         screenManager.setScreen("operator");
     }
 
+    /**
+     * Shuts down the camera and any associated resources.
+     * This method is called when the user logs out or when the camera is no longer needed.
+     */
     private void shutdownCamera() {
         if (mainPreviewExecutor != null && !mainPreviewExecutor.isShutdown()) {
             mainPreviewExecutor.shutdownNow();
@@ -322,6 +356,12 @@ public class CameraController extends BaseController implements Initializable {
     }
 
 
+    /**
+     * Handles the action when the user clicks the "Log Out" button.
+     * This method shuts down the camera and navigates back to the operator screen.
+     *
+     * @param actionEvent The action event triggered by the button click.
+     */
     @FXML
     public void handleLogOut(ActionEvent actionEvent) {
         //shut down the ExecutorService and stop the use of camera
@@ -340,6 +380,12 @@ public class CameraController extends BaseController implements Initializable {
         screenManager.setScreen("operator");
     }
 
+    /**
+     * Opens the full preview overlay for the selected image.
+     * This method is called when the user clicks on a preview image.
+     *
+     * @param i The index of the image to preview (0 or 1).
+     */
     private void openOverlayPreview(int i) {
         Image[] images = gallery.toArray(new Image[0]);
         if (i < images.length) {
@@ -365,6 +411,13 @@ public class CameraController extends BaseController implements Initializable {
             adjustImage(imgFullPreview, rootPane);
         }
     }
+
+    /**
+     * Handles the action when the user clicks the "Delete Preview" button.
+     * This method deletes the currently selected preview image.
+     *
+     * @param actionEvent The action event triggered by the button click.
+     */
     @FXML
     public void handleDeletePreview(ActionEvent actionEvent) {
         deletePreview();
@@ -376,6 +429,10 @@ public class CameraController extends BaseController implements Initializable {
         imgPreview2.setImage((images.length > 1 ? images[1] : null));
     }
 
+    /**
+     * Deletes the currently selected preview image from the gallery.
+     * This method updates the gallery and resets the preview controls.
+     */
     public void deletePreview() {
         if (currentPreviewIndex < 0) {
             return;
@@ -391,6 +448,12 @@ public class CameraController extends BaseController implements Initializable {
         closePreview();
     }
 
+    /**
+     * Handles the action when the user clicks the "Close Preview" button.
+     * This method closes the full preview and returns to camera mode.
+     *
+     * @param actionEvent The action event triggered by the button click.
+     */
     @FXML
     public void handleClosePreview(ActionEvent actionEvent) {
         closePreview();
@@ -411,6 +474,12 @@ public class CameraController extends BaseController implements Initializable {
         imgCamera.toFront();
     }
 
+    /**
+     * Handles the action when the user clicks the "Capture Image" button.
+     * This method captures an image from the camera and adds it to the gallery.
+     *
+     * @param actionEvent The action event triggered by the button click.
+     */
     @FXML
     public void handleCaptureImage(ActionEvent actionEvent) {
         captureImage();

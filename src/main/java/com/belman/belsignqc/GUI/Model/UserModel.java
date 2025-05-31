@@ -60,6 +60,7 @@ public class UserModel {
 
 
     //Mock data versions for initial testing
+    //Deprecated methods, use the above methods instead
     private String username;
 
     public UserModel(String username) {

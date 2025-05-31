@@ -10,6 +10,7 @@ import java.util.Map;
 //Singleton style class to manage screens
 public class ScreenManager extends StackPane {
 
+    // Maps to hold screens and their associated controllers
     private Map<String, Node> screens = new HashMap<>();
     private Map<String, BaseController> controllers = new HashMap<>();
     private String currentScreen;
@@ -51,6 +52,12 @@ public class ScreenManager extends StackPane {
         return false;
     }
 
+    /**
+     * Sets the current screen to the specified screen name.
+     * If the screen is already displayed, it will not be added again.
+     *
+     * @param name The name of the screen to set as current.
+     */
     public void setScreen(String name) {
         // Get current user from session
         Users currentUser = UserSession.getInstance().getUser();

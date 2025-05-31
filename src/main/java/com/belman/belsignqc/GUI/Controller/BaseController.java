@@ -3,6 +3,11 @@ package com.belman.belsignqc.GUI.Controller;
 import com.belman.belsignqc.BE.Users;
 import com.belman.belsignqc.BLL.Util.ScreenManager;
 
+/**
+ * BaseController is an abstract class that serves as a base for all controllers in the application.
+ * It provides common functionality such as managing the screen manager and handling user data.
+ * Subclasses should extend this class to inherit its functionality.
+ */
 public abstract class BaseController {
     protected ScreenManager screenManager;
     protected Users currentUser;
