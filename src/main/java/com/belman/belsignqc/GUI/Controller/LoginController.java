@@ -4,6 +4,7 @@ import com.belman.belsignqc.BE.Users;
 import com.belman.belsignqc.BLL.Util.BCryptUtil;
 import com.belman.belsignqc.BLL.Util.UserSession;
 import com.belman.belsignqc.BLL.UserManager;
+import com.belman.belsignqc.GUI.Model.UserModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
@@ -17,11 +18,13 @@ public class LoginController extends BaseController {
     @FXML private ImageView loginButton;
 
     private UserManager userManager;
+    private UserModel userModel;
     private Users currentUser;
 
     public void initialize() {
         try {
             userManager = new UserManager();
+            userModel = new UserModel();
         } catch (Exception e) {
             showAlert("Error", "Failed to initialize user manager", e.getMessage());
         }
@@ -41,7 +44,7 @@ public class LoginController extends BaseController {
         // Regular authentication flow
         try {
             // Get user by username
-            Users user = userManager.getByUsername(username);
+            Users user = userModel.getUserByUsername(username);
             System.out.println("User found in database: " + (user != null ? "Yes" : "No"));
 
             // Check if user exists and password matches

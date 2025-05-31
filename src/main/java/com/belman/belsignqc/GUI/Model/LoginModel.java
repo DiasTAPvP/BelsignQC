@@ -7,6 +7,12 @@ import com.belman.belsignqc.BLL.Util.UserSession;
 
 import java.io.IOException;
 
+/**
+ * VERY IMPORTANT:
+ * This class is DEPRECATED and SHOULD NOT BE USED.
+ * It is kept for reference only.
+ * It used to have a purpose in the past, but is now obsolete.
+ */
 public class LoginModel {
     private UserManager userManager;
 

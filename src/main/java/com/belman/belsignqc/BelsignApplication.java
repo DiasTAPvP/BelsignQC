@@ -60,8 +60,6 @@ public class BelsignApplication extends Application {
             // Add screen with all three required parameters
             screenManager.addScreen(name, loadScreen, baseController);
         } else {
-            // Handle case where controller doesn't extend BaseController
-            // TODO exception handling or logging
             System.err.println("Warning: Controller for " + name + " does not extend BaseController");
         }
     }
