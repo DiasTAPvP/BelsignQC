@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 public class PhotoDAO implements IPhotoDataAccess {
 
-    private static DateTimeFormatter Filenameformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss-SSS");
+    private static DateTimeFormatter Filenameformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm");
 
     private DBConnector dbConnector;
     private final String baseRelativePath = "QC_Images";
