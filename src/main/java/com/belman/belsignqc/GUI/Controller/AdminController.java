@@ -480,4 +480,16 @@ public class AdminController extends BaseController {
         adminUserTable.setItems(sortedUsers);
     }
 
+    @FXML
+    private void onAdminAuditButton() {
+        //Make sure an order is selected
+        OrderModel selected = adminOrderTable.getSelectionModel().getSelectedItem();
+        if (selected == null) {
+            showAlert.display("No Order Selected","Please Select an order before opening the audit log.");
+            return;
+        }
+        String orderId = selected.getOrderNumber();
+        screenManager.setScreenWithData("auditLog", orderId);
+    }
+
 }

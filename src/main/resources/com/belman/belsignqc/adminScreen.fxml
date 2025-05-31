@@ -99,6 +99,9 @@
                <content>
                   <FlowPane fx:id="adminImageFlowPane" />
                </content>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="75.0" right="5.0" top="10.0" />
+               </VBox.margin>
             </ScrollPane>
          </children>
       </VBox>
@@ -116,7 +119,7 @@
          <right>
             <HBox spacing="4.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="145.0" styleClass="buttons" text="Audit LOG" />
+                  <Button fx:id="AdminAuditButton" mnemonicParsing="false" onAction="#onAdminAuditButton" prefHeight="40.0" prefWidth="145.0" styleClass="buttons" text="Audit LOG" />
                   <Button fx:id="adminDeleteButton" mnemonicParsing="false" onAction="#deleteSelectedPhotos" prefHeight="40.0" prefWidth="145.5" styleClass="buttons" text="Delete" />
                </children>
             </HBox>
