@@ -90,6 +90,32 @@ public class AdminController extends BaseController {
     }
 
     /**
+     * Called when this controller becomes active (screen is shown).
+     * Overrides method from BaseController to refresh user data when returning to this screen.
+     */
+    @Override
+    public void onScreenActivated() {
+        try {
+            // Refresh users data when returning to this screen
+            loadUsers();
+
+            // If there was a previously selected order, maintain that selection
+            OrderModel selectedOrder = adminOrderTable.getSelectionModel().getSelectedItem();
+            if (selectedOrder != null) {
+                try {
+                    displayImagesForOrder(selectedOrder.getOrderNumber());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showAlert.display("Error", "Failed to reload images: " + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert.display("Error", "Failed to refresh user data: " + e.getMessage());
+        }
+    }
+
+    /**
      * Displays all images associated with the selected order number.
      * Loads the images from the file system and adds them to the FlowPane.
      *
