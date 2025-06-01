@@ -151,7 +151,6 @@ public class CameraController extends BaseController implements Initializable {
         } catch (Exception e) {
             System.err.println("Error starting camera: " + e.getMessage());
             showAlert.display("Camera Error", "An error occurred while starting the camera: " + e.getMessage());
-            // TODO: Display a placeholder image on the imageview indicating no camera was found
             return;
         }
 
@@ -231,11 +230,6 @@ public class CameraController extends BaseController implements Initializable {
             imagesToSave.add(bufferedImage);
             btnConfirmation.setDisable(false);
 
-
-            //TODO 1. store image in a list, could be done through the sendToGallery method.
-
-            //TODO 2. make a save button that calls photoDAO (not directly) to save the images.
-
         } catch (Exception e) {
             System.err.println("Error capturing image: " + e.getMessage());
             showAlert.display("Image Capture Error", "An error occurred while capturing the image: " + e.getMessage());
@@ -312,7 +306,8 @@ public class CameraController extends BaseController implements Initializable {
             try {
                 strategy.stop();
             } catch (Exception e) {
-                //TODO exception
+                System.err.println("Error stopping camera: " + e.getMessage());
+                showAlert.display("Camera Error", "An error occurred while stopping the camera: " + e.getMessage());
             }
         }
     }
